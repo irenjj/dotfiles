@@ -1,0 +1,161 @@
+{   
+    // linux path: ~/.config/Code/User/settings.json
+
+    /*************************************** EDITOR ****************************************/
+    "editor.minimap.enabled": false,
+    "editor.fontSize": 18,
+    "editor.inlayHints.enabled": "off",
+    "editor.formatOnSaveMode": "modifications",
+    "editor.formatOnSave": true,
+    "editor.parameterHints.enabled": false,
+    "editor.quickSuggestions": {
+        "comments": "off",
+        "strings": "off",
+        "other": "off"
+    },
+    "editor.lineNumbers": "relative",
+    "editor.fontFamily": "'JetBrains Mono'",
+    "editor.fontLigatures": "JetBrains Mono",
+    "editor.unicodeHighlight.allowedLocales": {
+        "zh-hans": true,
+        "zh-hant": true
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.detectIndentation": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.allowedCharacters": {
+        "〇": true
+    },
+    "editor.minimap.autohide": true,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "editor.renderLineHighlight": "line",
+    "editor.occurrencesHighlight": false,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.guides.bracketPairs": false,
+    "editor.guides.bracketPairsHorizontal": false,
+    "editor.largeFileOptimizations": false,
+    "editor.fontWeight": "600",
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.semanticHighlighting.enabled": true,
+    "editor.semanticTokenColorCustomizations": {
+        "[Atom One Light]": {
+            "enabled": true,
+            "rules": {
+                "variable": "#7E7E7E",
+                "variable.readonly":{
+                    "fontStyle": "bold",
+                },
+                "parameter": "#7E7E7E",
+                "parameter.readonly":{
+                    "fontStyle": "bold"
+                },
+            }
+	    },
+
+    },
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#16C60C",
+    },
+    "workbench.settings.openDefaultSettings": true,
+    "workbench.settings.openDefaultKeybindings": true,
+    "workbench.list.openMode": "doubleClick",
+    "workbench.startupEditor": "none",
+    "workbench.layoutControl.enabled": false,
+    "workbench.panel.opensMaximized": "always",
+    "workbench.colorTheme": "Atom One Light",
+    "workbench.panel.defaultLocation": "right",
+    "workbench.sideBar.location": "right",
+    "explorer.confirmDelete": true,
+    "explorer.confirmDragAndDrop": false,
+    /*************************************** EDITOR ****************************************/
+
+
+
+    /**************************************** VIM ******************************************/
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "<C-r>",
+            ],
+            "commands": [
+                "workbench.action.openRecent",
+            ],
+        },
+    ],
+    "vim.useSystemClipboard": true,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+    "vim.easymotionMarkerForegroundColorOneChar": "#DF5452",
+    /**************************************** VIM ******************************************/
+
+
+    /**************************************** GIT ******************************************/
+    "git.ignoreLegacyWarning": true,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    /**************************************** GIT ******************************************/
+
+
+
+    /**************************************** C/CPP ****************************************/
+    "cmake.configureOnOpen": false,
+    "cmake.ctest.parallelJobs": 18,
+    "cmake.buildTask": true,
+    "cmake.buildDirectory": "${workspaceFolder}/build/build-vsc",
+    "cmake.configureArgs": [
+        "-G Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug"
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=${workspaceFolder}/build/build-vsc"
+    ],
+    "clang-format.language.cpp.fallbackStyle": "file",
+    "clang-format.language.cpp.style": "file",
+    "clang-format.language.c.style": "file",
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "files.associations": {
+        "*.cu": "cpp"
+    },
+    "debug.console.fontSize": 18,
+    "debug.toolBarLocation": "hidden",
+    /*************************************** COMPILE ***************************************/
+
+
+
+    /************************************** TERMINAL ***************************************/
+    "terminal.integrated.bellDuration": 100000,
+    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.fontWeight": "600",
+    /************************************** TERMINAL ***************************************/
+
+
+
+    /**************************************** OTHER ****************************************/
+    "security.workspace.trust.untrustedFiles": "open",
+    "breadcrumbs.enabled": true,
+    "extensions.ignoreRecommendations": true,
+    "settingsSync.ignoredExtensions": [
+        "ms-ceintl.vscode-language-pack-zh-hans"
+    ],
+    "notebook.formatOnSave.enabled": true,
+    "markdown.preview.fontSize": 18,
+    "chat.editor.fontSize": 18,
+    /**************************************** OTHER ****************************************/
+}
