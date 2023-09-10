@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  fdb-dev:
+    container_name: fdb
+    image:
+      fdb-build-image
+    privileged: true
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ~/work/code/foundationdb:/home/renjj/work/code/foundationdb:Z
+      - ./entrypoint.sh:/home/renjj/entrypoint.sh
+      - ./fdb.cluster:/etc/foundationdb/fdb.cluster
+    ports:
+      - 4000:4000/tcp
+      - "45678:22"
+    environment:
+      FDB_NETWORKING_MODE: host
+      FDB_COORDINATOR_PORT: 4000
+      FDB_PORT: 4000
+    entrypoint: /home/renjj/entrypoint.sh

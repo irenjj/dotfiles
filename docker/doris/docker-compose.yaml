@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  doris-dev:
+    container_name: doris
+    image:
+      doris-image
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ~/.m2:/home/renjj/.m2
+      - ~/work/code/doris:/home/renjj/work/code/doris
+      - ./entrypoint.sh:/home/renjj/entrypoint.sh
+    entrypoint: /home/renjj/entrypoint.sh
