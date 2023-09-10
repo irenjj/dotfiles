@@ -9,7 +9,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     volumes:
       - ~/work/code/foundationdb:/home/renjj/work/code/foundationdb:Z
       - ./entrypoint.sh:/home/renjj/entrypoint.sh

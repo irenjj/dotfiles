@@ -39,24 +39,18 @@
     "editor.guides.bracketPairs": false,
     "editor.guides.bracketPairsHorizontal": false,
     "editor.largeFileOptimizations": false,
-    "editor.fontWeight": "600",
+    "editor.fontWeight": "500",
     "editor.defaultFormatter": "xaver.clang-format",
     "editor.semanticHighlighting.enabled": true,
+    "editor.bracketPairColorization.enabled": false,
     "editor.semanticTokenColorCustomizations": {
         "[Atom One Light]": {
             "enabled": true,
             "rules": {
-                "variable": "#7E7E7E",
-                "variable.readonly":{
-                    "fontStyle": "bold",
-                },
-                "parameter": "#7E7E7E",
-                "parameter.readonly":{
-                    "fontStyle": "bold"
-                },
+                "variable": "#585858",
+                "parameter": "#585858",
             }
 	    },
-
     },
     "workbench.colorCustomizations": {
         "editorCursor.foreground": "#16C60C",
@@ -66,10 +60,11 @@
     "workbench.list.openMode": "doubleClick",
     "workbench.startupEditor": "none",
     "workbench.layoutControl.enabled": false,
-    "workbench.panel.opensMaximized": "always",
-    "workbench.colorTheme": "Atom One Light",
+    "workbench.panel.opensMaximized": "never",
     "workbench.panel.defaultLocation": "right",
     "workbench.sideBar.location": "right",
+    "workbench.colorTheme": "Atom One Light",
+    "workbench.activityBar.visible": false,
     "explorer.confirmDelete": true,
     "explorer.confirmDragAndDrop": false,
     /*************************************** EDITOR ****************************************/
