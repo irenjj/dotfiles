@@ -64,7 +64,6 @@
     "workbench.panel.defaultLocation": "right",
     "workbench.sideBar.location": "right",
     "workbench.colorTheme": "Atom One Light",
-    "workbench.activityBar.visible": false,
     "explorer.confirmDelete": true,
     "explorer.confirmDragAndDrop": false,
     /*************************************** EDITOR ****************************************/
@@ -153,5 +152,8 @@
     "notebook.formatOnSave.enabled": true,
     "markdown.preview.fontSize": 18,
     "chat.editor.fontSize": 18,
+    "workbench.activityBar.visible": false,
+    "window.titleBarStyle": "custom",
+    "window.customMenuBarAltFocus": false,
     /**************************************** OTHER ****************************************/
 }
