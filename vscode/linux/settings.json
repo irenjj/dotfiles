@@ -3,7 +3,7 @@
 
     /*************************************** EDITOR ****************************************/
     "editor.minimap.enabled": false,
-    "editor.fontSize": 18,
+    "editor.fontSize": 20,
     "editor.inlayHints.enabled": "off",
     "editor.formatOnSaveMode": "modifications",
     "editor.formatOnSave": true,
@@ -39,7 +39,7 @@
     "editor.guides.bracketPairs": false,
     "editor.guides.bracketPairsHorizontal": false,
     "editor.largeFileOptimizations": false,
-    "editor.fontWeight": "500",
+    "editor.fontWeight": "520",
     "editor.defaultFormatter": "xaver.clang-format",
     "editor.semanticHighlighting.enabled": true,
     "editor.bracketPairColorization.enabled": false,
@@ -47,13 +47,16 @@
         "[Atom One Light]": {
             "enabled": true,
             "rules": {
-                "variable": "#585858",
-                "parameter": "#585858",
-            }
+                "variable": "#2e2c2c",
+                "parameter": "#2e2c2c",
+           },
 	    },
     },
     "workbench.colorCustomizations": {
-        "editorCursor.foreground": "#16C60C",
+        "activityBar.background": "#FAFAFA",
+        "activityBar.foreground": "#121417",
+        "statusBar.background": "#c9c9c9",
+        "editorCursor.foreground": "#81D8D0"
     },
     "workbench.settings.openDefaultSettings": true,
     "workbench.settings.openDefaultKeybindings": true,
@@ -66,6 +69,17 @@
     "workbench.colorTheme": "Atom One Light",
     "explorer.confirmDelete": true,
     "explorer.confirmDragAndDrop": false,
+    "better-comments.tags": [
+        {
+            "tag": "/",
+            "color": "#206546",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+    ],
     /*************************************** EDITOR ****************************************/
 
 
@@ -136,7 +150,7 @@
     "terminal.integrated.bellDuration": 100000,
     "terminal.integrated.fontSize": 18,
     "terminal.integrated.enableMultiLinePasteWarning": false,
-    "terminal.integrated.fontWeight": "600",
+    "terminal.integrated.fontWeight": "540",
     "terminal.integrated.copyOnSelection": true,
     /************************************** TERMINAL ***************************************/
 
@@ -150,10 +164,16 @@
         "ms-ceintl.vscode-language-pack-zh-hans"
     ],
     "notebook.formatOnSave.enabled": true,
-    "markdown.preview.fontSize": 18,
-    "chat.editor.fontSize": 18,
-    "workbench.activityBar.visible": false,
+    "markdown.preview.fontSize": 20,
+    "chat.editor.fontSize": 20,
     "window.titleBarStyle": "custom",
     "window.customMenuBarAltFocus": false,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "workbench.activityBar.visible": false,
     /**************************************** OTHER ****************************************/
 }
