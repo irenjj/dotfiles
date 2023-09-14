@@ -1,9 +1,9 @@
-<scheme name="Atom One Light" version="142" parent_scheme="Default">
+<scheme name="Atom One Light copy" version="142" parent_scheme="Default">
   <metaInfo>
     <property name="created">2023-09-10T15:53:39</property>
     <property name="ide">CLion</property>
     <property name="ideVersion">2023.2.1.0.0</property>
-    <property name="modified">2023-09-10T15:53:43</property>
+    <property name="modified">2023-09-14T00:26:28</property>
   </metaInfo>
   <colors>
     <option name="CARET_ROW_COLOR" value="e8e5e5" />
@@ -303,7 +303,7 @@
     </option>
     <option name="OC.STRUCT_FIELD">
       <value>
-        <option name="FOREGROUND" value="d82050" />
+        <option name="FOREGROUND" value="b937d" />
       </value>
     </option>
     <option name="OC.STRUCT_LIKE">
