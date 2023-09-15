@@ -1,8 +1,4 @@
-{   
-    // linux path: ~/.config/Code/User/settings.json
-
-    /*************************************** EDITOR ****************************************/
-    "editor.minimap.enabled": false,
+{
     "editor.fontSize": 20,
     "editor.inlayHints.enabled": "off",
     "editor.formatOnSaveMode": "modifications",
@@ -39,7 +35,7 @@
     "editor.guides.bracketPairs": false,
     "editor.guides.bracketPairsHorizontal": false,
     "editor.largeFileOptimizations": false,
-    "editor.fontWeight": "520",
+    "editor.fontWeight": "550",
     "editor.defaultFormatter": "xaver.clang-format",
     "editor.semanticHighlighting.enabled": true,
     "editor.bracketPairColorization.enabled": false,
@@ -47,15 +43,12 @@
         "[Atom One Light]": {
             "enabled": true,
             "rules": {
-                "variable": "#2e2c2c",
-                "parameter": "#2e2c2c",
+                "variable": "#121417",
+                "parameter": "#121417",
            },
 	    },
     },
     "workbench.colorCustomizations": {
-        "activityBar.background": "#FAFAFA",
-        "activityBar.foreground": "#121417",
-        "statusBar.background": "#c9c9c9",
         "editorCursor.foreground": "#81D8D0"
     },
     "workbench.settings.openDefaultSettings": true,
@@ -64,7 +57,6 @@
     "workbench.startupEditor": "none",
     "workbench.layoutControl.enabled": false,
     "workbench.panel.opensMaximized": "never",
-    "workbench.panel.defaultLocation": "right",
     "workbench.sideBar.location": "right",
     "workbench.colorTheme": "Atom One Light",
     "explorer.confirmDelete": true,
@@ -121,7 +113,6 @@
 
     /**************************************** C/CPP ****************************************/
     "cmake.configureOnOpen": false,
-    "cmake.ctest.parallelJobs": 18,
     "cmake.buildTask": true,
     "cmake.buildDirectory": "${workspaceFolder}/build/build-vsc",
     "cmake.configureArgs": [
@@ -140,7 +131,7 @@
     "files.associations": {
         "*.cu": "cpp"
     },
-    "debug.console.fontSize": 18,
+    "debug.console.fontSize": 16,
     "debug.toolBarLocation": "hidden",
     /**************************************** C/CPP ****************************************/
 
@@ -148,9 +139,9 @@
 
     /************************************** TERMINAL ***************************************/
     "terminal.integrated.bellDuration": 100000,
-    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.fontSize": 16,
     "terminal.integrated.enableMultiLinePasteWarning": false,
-    "terminal.integrated.fontWeight": "540",
+    //"terminal.integrated.fontWeight": "550",
     "terminal.integrated.copyOnSelection": true,
     /************************************** TERMINAL ***************************************/
 
@@ -174,6 +165,6 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "workbench.activityBar.visible": false,
+    "editor.minimap.enabled": false,
     /**************************************** OTHER ****************************************/
 }

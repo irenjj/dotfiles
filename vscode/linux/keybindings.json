@@ -109,6 +109,40 @@
 
 
 
+    /**************************************** DEBUG ****************************************/
+    {
+        "key": "ctrl+d c",
+        "command": "workbench.action.debug.continue"
+    },
+    {
+        "key": "ctrl+d b",
+        "command": "editor.debug.action.toggleBreakpoint",
+        "when": "debuggersAvailable && editorTextFocus"
+    },
+    {
+        "key": "ctrl+d r",
+        "command": "workbench.debug.viewlet.action.removeAllBreakpoints"
+    },
+    {
+        "key": "ctrl+d s",
+        "command": "workbench.action.debug.stop"
+    },
+    {
+        "key": "ctrl+d d",
+        "command": "workbench.action.debug.start"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.debug.stepOver"
+    },
+    {
+        "key": "alt+s",
+        "command": "workbench.action.debug.stepInto"
+    },
+    /**************************************** DEBUG ****************************************/
+
+    
+
     /*************************************** REMOVE ****************************************/
     {
         "key": "ctrl+shift+f",
@@ -233,6 +267,10 @@
     {
         "key": "ctrl+numpad_subtract",
         "command": "-workbench.action.zoomOut"
-    }
-    /*************************************** REMOVE ****************************************/
+    },
+    {
+        "key": "f9",
+        "command": "-editor.debug.action.toggleBreakpoint",
+        "when": "debuggersAvailable && editorTextFocus"
+    },
 ]
