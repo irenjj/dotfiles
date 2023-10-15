@@ -3,10 +3,6 @@
 
     /*************************************** EDITOR ****************************************/
     {
-        "key": "alt+-",
-        "command": "workbench.action.toggleSidebarVisibility"
-    },
-    {
         "key": "alt+i",
         "command": "workbench.action.previousEditor"
     },
@@ -28,7 +24,10 @@
         "command": "workbench.action.quickOpen"
     },
 
-
+    {
+        "key": "ctrl+u -",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
     {
         "key": "ctrl+u f",
         "command": "workbench.files.action.focusFilesExplorer",
@@ -72,10 +71,10 @@
 
 
     /************************************** TERMINAL ***************************************/
-    {
-        "key": "alt+t",
-        "command": "workbench.action.terminal.toggleTerminal"
-    },
+//    {
+//        "key": "alt+t",
+//        "command": "workbench.action.terminal.toggleTerminal"
+//    },
     {
         "key": "alt+i",
         "command": "workbench.action.terminal.focusPrevious", 
@@ -89,11 +88,6 @@
     {
         "key": "alt+q",
         "command": "workbench.action.terminal.kill",
-        "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
-    },
-    {
-        "key": "alt+n",
-        "command": "workbench.action.terminal.new",
         "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
     },
     {
@@ -272,5 +266,67 @@
         "key": "f9",
         "command": "-editor.debug.action.toggleBreakpoint",
         "when": "debuggersAvailable && editorTextFocus"
+    },
+    {
+        "key": "alt+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "-workbench.action.terminal.toggleTerminal",
+        "when": "terminal.active"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "-workbench.action.showAllSymbols"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "-extension.vim_ctrl+t",
+        "when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
+    },
+    {
+        "key": "alt+e",
+        "command": "workbench.action.splitEditor"
+    },
+    {
+        "key": "ctrl+\\",
+        "command": "-workbench.action.splitEditor"
+    },
+    {
+        "key": "alt+f",
+        "command": "workbench.action.toggleFullScreen",
+        "when": "!isIOS"
+    },
+    {
+        "key": "f11",
+        "command": "-workbench.action.toggleFullScreen",
+        "when": "!isIOS"
+    },
+    {
+        "key": "ctrl+numpad_add",
+        "command": "-workbench.action.zoomIn"
+    },
+    {
+        "key": "ctrl+numpad0",
+        "command": "-workbench.action.zoomReset"
+    },
+    {
+        "key": "alt+=",
+        "command": "editor.action.fontZoomIn"
+    },
+    {
+        "key": "alt+-",
+        "command": "editor.action.fontZoomOut"
+    },
+    {
+        "key": "f1",
+        "command": "-workbench.action.showCommands"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalFocus",
     },
 ]

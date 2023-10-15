@@ -1,8 +1,6 @@
 {
-    "editor.fontSize": 20,
+    "editor.fontSize": 18,
     "editor.inlayHints.enabled": "off",
-    "editor.formatOnSaveMode": "modifications",
-    "editor.formatOnSave": true,
     "editor.parameterHints.enabled": false,
     "editor.quickSuggestions": {
         "comments": "off",
@@ -10,7 +8,6 @@
         "other": "off"
     },
     "editor.lineNumbers": "relative",
-    "editor.fontFamily": "'JetBrains Mono'",
     "editor.fontLigatures": "JetBrains Mono",
     "editor.unicodeHighlight.allowedLocales": {
         "zh-hans": true,
@@ -35,8 +32,6 @@
     "editor.guides.bracketPairs": false,
     "editor.guides.bracketPairsHorizontal": false,
     "editor.largeFileOptimizations": false,
-    "editor.fontWeight": "550",
-    "editor.defaultFormatter": "xaver.clang-format",
     "editor.semanticHighlighting.enabled": true,
     "editor.bracketPairColorization.enabled": false,
     "editor.semanticTokenColorCustomizations": {
@@ -49,7 +44,8 @@
 	    },
     },
     "workbench.colorCustomizations": {
-        "editorCursor.foreground": "#81D8D0"
+        "editorCursor.foreground": "#81D8D0",
+        "editor.background": "#ffffff",
     },
     "workbench.settings.openDefaultSettings": true,
     "workbench.settings.openDefaultKeybindings": true,
@@ -57,7 +53,6 @@
     "workbench.startupEditor": "none",
     "workbench.layoutControl.enabled": false,
     "workbench.panel.opensMaximized": "never",
-    "workbench.sideBar.location": "right",
     "workbench.colorTheme": "Atom One Light",
     "explorer.confirmDelete": true,
     "explorer.confirmDragAndDrop": false,
@@ -72,6 +67,7 @@
             "italic": false
         },
     ],
+    "editor.fontWeight": "500",
     /*************************************** EDITOR ****************************************/
 
 
@@ -126,22 +122,31 @@
     "clang-format.language.cpp.style": "file",
     "clang-format.language.c.style": "file",
     "[cpp]": {
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSaveMode": "modifications",
+        "editor.formatOnSave": true,
     },
     "files.associations": {
         "*.cu": "cpp"
     },
-    "debug.console.fontSize": 16,
+    "debug.console.fontSize": 18,
     "debug.toolBarLocation": "hidden",
+    "debug.focusEditorOnBreak": false,
     /**************************************** C/CPP ****************************************/
 
+
+    /***************************************** RUST ****************************************/
+    "[rust]": {
+        "editor.defaultFormatter": "statiolake.vscode-rustfmt",
+        "editor.formatOnSave": true,
+    },
+    /***************************************** RUST ****************************************/
 
 
     /************************************** TERMINAL ***************************************/
     "terminal.integrated.bellDuration": 100000,
-    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.fontSize": 18,
     "terminal.integrated.enableMultiLinePasteWarning": false,
-    //"terminal.integrated.fontWeight": "550",
     "terminal.integrated.copyOnSelection": true,
     /************************************** TERMINAL ***************************************/
 
@@ -155,16 +160,15 @@
         "ms-ceintl.vscode-language-pack-zh-hans"
     ],
     "notebook.formatOnSave.enabled": true,
-    "markdown.preview.fontSize": 20,
-    "chat.editor.fontSize": 20,
+    "markdown.preview.fontSize": 18,
+    "chat.editor.fontSize": 18,
     "window.titleBarStyle": "custom",
-    "window.customMenuBarAltFocus": false,
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
     "editor.minimap.enabled": false,
+    "workbench.sideBar.location": "right",
+    "debug.openDebug": "neverOpen",
+    "editor.inlineCompletionsAccessibilityVerbose": true,
+    "editor.fontFamily": "Jetbrains Mono, Menlo, Monaco, 'Courier New', monospace",
+    "window.customMenuBarAltFocus": false,
+    "workbench.activityBar.visible": false,
     /**************************************** OTHER ****************************************/
 }
