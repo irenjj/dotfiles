@@ -1,0 +1,284 @@
+[
+    /*************************************** EDITOR ****************************************/
+    {
+        "key": "ctrl+u -",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "cmd+i",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "cmd+o",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "cmd+w",
+        "command": "workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "cmd+d",
+        "command": "workbench.debug.action.toggleRepl",
+        "when": "workbench.panel.repl.view.active"
+    },
+    {
+        "key": "cmd+p",
+        "command": "workbench.action.quickOpen"
+    },
+
+
+    {
+        "key": "ctrl+u f",
+        "command": "workbench.files.action.focusFilesExplorer",
+        "when": "!filesExplorerFocus"
+    },
+    {
+        "key": "ctrl+u a",
+        "command": "workbench.action.toggleActivityBarVisibility",
+    },
+    {
+        "key": "ctrl+u s",
+        "command": "workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "editor.action.triggerParameterHints",
+        "when": "editorHasSignatureHelpProvider && editorTextFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "closeParameterHints",
+        "when": "editorFocus && parameterHintsVisible"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "editor.action.triggerSuggest",
+        "when": "editorHasCompletionItemProvider && textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "hideSuggestWidget",
+        "when": "suggestWidgetVisible && textInputFocus"
+    },
+    /*************************************** EDITOR ****************************************/
+
+
+
+    /************************************** TERMINAL ***************************************/
+    {
+        "key": "cmd+t",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "cmd+i",
+        "command": "workbench.action.terminal.focusPrevious", 
+        "when": "terminalFocus",
+    },
+    {
+        "key": "cmd+o",
+        "command": "workbench.action.terminal.focusNext", 
+        "when": "terminalFocus",
+    },
+    {
+        "key": "cmd+w",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+    },
+    {
+        "key": "cmd+m",
+        "command": "workbench.action.toggleMaximizedPanel"
+    },
+    {
+        "key": "ctrl+v",
+        "command": "workbench.action.terminal.paste",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+d c",
+        "command": "workbench.action.debug.continue"
+    },
+    {
+        "key": "ctrl+d b",
+        "command": "editor.debug.action.toggleBreakpoint",
+        "when": "debuggersAvailable && editorTextFocus"
+    },
+    {
+        "key": "ctrl+d r",
+        "command": "workbench.debug.viewlet.action.removeAllBreakpoints"
+    },
+    {
+        "key": "ctrl+d s",
+        "command": "workbench.action.debug.stop"
+    },
+    {
+        "key": "ctrl+d d",
+        "command": "workbench.action.debug.start"
+    },
+    {
+        "key": "cmd+n",
+        "command": "workbench.action.debug.stepOver"
+    },
+    {
+        "key": "cmd+s",
+        "command": "workbench.action.debug.stepInto"
+    },
+    /**************************************** DEBUG ****************************************/
+
+    
+
+    /*************************************** REMOVE ****************************************/
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "-workbench.action.zoomOut"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "-workbench.action.terminal.new",
+        "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "shift+f5",
+        "command": "-workbench.action.debug.stop",
+        "when": "inDebugMode && !focusedSessionIsAttach"
+    },
+    {
+        "key": "f6",
+        "command": "-workbench.action.debug.pause",
+        "when": "debugState == 'running'"
+    },
+    {
+        "key": "f5",
+        "command": "-workbench.action.debug.start",
+        "when": "debuggersAvailable && debugState == 'inactive'"
+    },
+    {
+        "key": "alt+s",
+        "command": "-gitlens.showQuickRepoStatus",
+        "when": "!gitlens:disabled && config.gitlens.keymap == 'alternate'"
+    },
+    {
+        "key": "f11",
+        "command": "-workbench.action.debug.stepInto",
+        "when": "debugState != 'inactive'"
+    },
+    {
+        "key": "f5",
+        "command": "-workbench.action.debug.continue",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "f10",
+        "command": "-workbench.action.debug.stepOver",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "shift+f11",
+        "command": "-workbench.action.debug.stepOut",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "ctrl+shift+v",
+        "command": "-workbench.action.terminal.paste",
+        "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+s",
+        "command": "-workbench.action.files.save"
+    },
+    {
+        "key": "alt+-",
+        "command": "-decreaseSearchEditorContextLines",
+        "when": "inSearchEditor"
+    },
+    {
+        "key": "alt+=",
+        "command": "-increaseSearchEditorContextLines",
+        "when": "inSearchEditor"
+    },
+    {
+        "key": "ctrl+shift+y",
+        "command": "-workbench.debug.action.toggleRepl",
+        "when": "workbench.panel.repl.view.active"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-workbench.action.togglePanel"
+    },
+    {
+        "key": "ctrl+k ctrl+h",
+        "command": "-workbench.action.output.toggleOutput",
+        "when": "workbench.panel.output.active"
+    },
+    {
+        "key": "ctrl+shift+m",
+        "command": "-workbench.actions.view.problems",
+        "when": "workbench.panel.markers.view.active"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "-commentsFocusFilter",
+        "when": "focusedView == 'workbench.panel.comments'"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "-actions.find",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.action.terminal.searchWorkspace",
+        "when": "terminalFocus && terminalProcessSupported && terminalTextSelected"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.view.search",
+        "when": "workbench.view.search.active && neverMatch =~ /doesNotMatch/"
+    },
+    {
+        "key": "ctrl+numpad_subtract",
+        "command": "-workbench.action.zoomOut"
+    },
+    {
+        "key": "f9",
+        "command": "-editor.debug.action.toggleBreakpoint",
+        "when": "debuggersAvailable && editorTextFocus",
+    },
+    {
+        "key": "cmd+n",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalFocus",
+    },
+    {
+        "key": "ctrl+u d",
+        "command": "workbench.view.debug",
+        "when": "viewContainer.workbench.view.debug.enabled"
+    },
+    {
+        "key": "shift+cmd+d",
+        "command": "-workbench.view.debug",
+        "when": "viewContainer.workbench.view.debug.enabled"
+    },
+    {
+        "key": "cmd+w",
+        "command": "-workbench.action.closeWindow",
+        "when": "!editorIsOpen && !multipleEditorGroups"
+    },
+]

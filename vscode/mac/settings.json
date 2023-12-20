@@ -1,0 +1,200 @@
+{
+    // mac path: ~/Library/Application\ Support/Code/User
+
+    "editor.fontSize": 18,
+    "editor.inlayHints.enabled": "on",
+    "editor.quickSuggestions": {
+        "comments": "off",
+        "strings": "off",
+        "other": "off"
+    },
+    "editor.lineNumbers": "relative",
+    "editor.fontLigatures": "JetBrains Mono",
+    "editor.unicodeHighlight.allowedLocales": {
+        "zh-hans": true,
+        "zh-hant": true
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.detectIndentation": false,
+    //"editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.allowedCharacters": {
+        "〇": true
+    },
+    "editor.minimap.autohide": true,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "visible",
+    "editor.scrollbar.verticalScrollbarSize": 10,
+    "editor.renderLineHighlight": "line",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.guides.bracketPairs": false,
+    "editor.guides.bracketPairsHorizontal": false,
+    "editor.largeFileOptimizations": false,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.bracketPairColorization.enabled": false,
+    "editor.semanticTokenColorCustomizations": {
+        "[Atom One Light]": {
+            "enabled": true,
+            "rules": {
+                "variable": "#121417",
+                "parameter": "#121417",
+           },
+	    },
+        "[One Dark Pro Flat]": {
+            "enabled": true,
+            "rules": {
+                "variable": "#A9A9A9",
+                "parameter": "#A9A9A9",
+            }
+        }
+    },
+    "workbench.colorCustomizations": {
+        //"editorCursor.foreground": "#81D8D0",
+        //"editor.background": "#ffffff",
+    },
+    "workbench.settings.openDefaultSettings": true,
+    "workbench.settings.openDefaultKeybindings": true,
+    "workbench.list.openMode": "doubleClick",
+    "workbench.startupEditor": "none",
+    "workbench.layoutControl.enabled": false,
+    "workbench.panel.opensMaximized": "never",
+    "workbench.colorTheme": "Atom One Light",
+    "explorer.confirmDelete": true,
+    "explorer.confirmDragAndDrop": false,
+    "better-comments.tags": [
+        {
+            "tag": "/",
+            "color": "#206546",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "!",
+            "color": "#206546",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+    ],
+    //"editor.fontWeight": "500",
+    //"editor.rulers": [120],
+    "editor.parameterHints.cycle": true,
+    "editor.lineHeight": 32,
+    "workbench.editor.enablePreview": false,
+    /*************************************** EDITOR ****************************************/
+
+
+
+    /**************************************** VIM ******************************************/
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [
+                "<leader>",
+                "<C-r>",
+            ],
+            "commands": [
+                "workbench.action.openRecent",
+            ],
+        },
+    ],
+    "vim.useSystemClipboard": true,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+    "vim.easymotionMarkerForegroundColorOneChar": "#DF5452",
+    /**************************************** VIM ******************************************/
+
+
+    /**************************************** GIT ******************************************/
+    "git.ignoreLegacyWarning": true,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    /**************************************** GIT ******************************************/
+
+
+
+    /**************************************** C/CPP ****************************************/
+    "cmake.configureOnOpen": false,
+    "cmake.buildTask": true,
+    "cmake.configureArgs": [
+        "-G Ninja",
+        "-DCMAKE_BUILD_TYPE=Debug"
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=${workspaceFolder}/build/build-vsc"
+    ],
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSaveMode": "modifications",
+        "editor.formatOnSave": true,
+    },
+    "files.associations": {
+        "*.cu": "cpp"
+    },
+    "debug.console.fontSize": 15,
+    "debug.toolBarLocation": "hidden",
+    "debug.focusEditorOnBreak": false,
+    /**************************************** C/CPP ****************************************/
+
+
+    /***************************************** RUST ****************************************/
+    "[rust]": {
+        "editor.defaultFormatter": "statiolake.vscode-rustfmt",
+        "editor.formatOnSave": true,
+    },
+    /***************************************** RUST ****************************************/
+
+
+    /************************************** TERMINAL ***************************************/
+    "terminal.integrated.bellDuration": 100000,
+    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.copyOnSelection": true,
+    /************************************** TERMINAL ***************************************/
+
+
+
+    /**************************************** OTHER ****************************************/
+    "security.workspace.trust.untrustedFiles": "open",
+    "breadcrumbs.enabled": true,
+    "extensions.ignoreRecommendations": true,
+    "settingsSync.ignoredExtensions": [
+        "ms-ceintl.vscode-language-pack-zh-hans"
+    ],
+    "notebook.formatOnSave.enabled": true,
+    "window.titleBarStyle": "custom",
+    "editor.minimap.enabled": false,
+    "workbench.sideBar.location": "right",
+    "debug.openDebug": "neverOpen",
+    "editor.inlineCompletionsAccessibilityVerbose": true,
+    "editor.fontFamily": "Jetbrains Mono, Menlo, Monaco, 'Courier New', monospace",
+    "cmake.buildEnvironment": {
+        "PATH": ""
+    },
+    "editor.accessibilitySupport": "off",
+    "cmake.configureOnEdit": false,
+    "cmake.showOptionsMovedNotification": false,
+    "window.zoomLevel": -1,
+    "editor.renderWhitespace": "none",
+    "evenBetterToml.formatter.alignEntries": true,
+    "redhat.telemetry.enabled": true,
+    "vs-kubernetes": {
+        "vscode-kubernetes.minikube-path-mac": "/Users/renjj/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
+        "vscode-kubernetes.helm-path-mac": "/Users/renjj/.vs-kubernetes/tools/helm/darwin-arm64/helm"
+    },
+    "workbench.activityBar.location": "top",
+    /**************************************** OTHER ****************************************/
+}
