@@ -22,20 +22,20 @@
         "editor.selectionBackground": "#E5E5E6",
         "editorCursor.foreground": "#526FFF",
         "editor.findMatchHighlightBackground": "#526FFF33",
-        "editorGroup.background": "#EAEAEB",
+        "editorGroup.background": "#F0F0F0",
         "editorGroup.border": "#DBDBDC",
-        "editorGroupHeader.tabsBackground": "#EAEAEB",
+        "editorGroupHeader.tabsBackground": "#F0F0F0",
         "editorIndentGuide.background": "#383A4233",
         "editorLineNumber.foreground": "#9D9D9F",
         "editorLineNumber.activeForeground": "#383A42",
         "editorWhitespace.foreground": "#383A4233",
         "editorRuler.foreground": "#383A4233",
-        "editorHoverWidget.background": "#EAEAEB",
+        "editorHoverWidget.background": "#F0F0F0",
         "editorHoverWidget.border": "#DBDBDC",
-        "editorSuggestWidget.background": "#EAEAEB",
+        "editorSuggestWidget.background": "#F0F0F0",
         "editorSuggestWidget.border": "#DBDBDC",
         "editorSuggestWidget.selectedBackground": "#FFFFFF",
-        "editorWidget.background": "#EAEAEB",
+        "editorWidget.background": "#F0F0F0",
         "editorWidget.border": "#E5E5E6",
         "input.background": "#FFFFFF",
         "input.border": "#DBDBDC",
@@ -52,19 +52,19 @@
         "scrollbarSlider.background": "#4E566680",
         "scrollbarSlider.activeBackground": "#747D9180",
         "scrollbarSlider.hoverBackground": "#5A637580",
-        "sideBar.background": "#EAEAEB",
+        "sideBar.background": "#F0F0F0",
         "sideBarSectionHeader.background": "#FAFAFA",
-        "statusBar.background": "#EAEAEB",
+        "statusBar.background": "#F0F0F0",
         "statusBar.foreground": "#424243",
         "statusBarItem.hoverBackground": "#DBDBDC",
-        "statusBar.noFolderBackground": "#EAEAEB",
+        "statusBar.noFolderBackground": "#F0F0F0",
         "tab.activeBackground": "#FAFAFA",
         "tab.activeForeground": "#121417",
         "tab.border": "#DBDBDC",
-        "tab.inactiveBackground": "#EAEAEB",
-        "titleBar.activeBackground": "#EAEAEB",
+        "tab.inactiveBackground": "#F0F0F0",
+        "titleBar.activeBackground": "#F0F0F0",
         "titleBar.activeForeground": "#424243",
-        "titleBar.inactiveBackground": "#EAEAEB",
+        "titleBar.inactiveBackground": "#F0F0F0",
         "titleBar.inactiveForeground": "#424243",
         "statusBar.debuggingForeground": "#FFFFFF",
         "extensionButton.prominentBackground": "#3BBA54",
@@ -72,7 +72,7 @@
         "badge.background": "#526FFF",
         "badge.foreground": "#FFFFFF",
         "peekView.border": "#526FFF",
-        "peekViewResult.background": "#EAEAEB",
+        "peekViewResult.background": "#F0F0F0",
         "peekViewResult.selectionBackground": "#DBDBDC",
         "peekViewTitle.background": "#FFFFFF",
         "peekViewEditor.background": "#FFFFFF"
@@ -157,7 +157,7 @@
                 "keyword.other.unit"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -195,7 +195,7 @@
                 "constant"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -204,7 +204,7 @@
                 "constant.variable"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -222,7 +222,7 @@
                 "constant.numeric"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -249,7 +249,7 @@
                 "variable"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -276,7 +276,7 @@
                 "string"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -313,7 +313,7 @@
                 "string.other.link"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -404,7 +404,8 @@
                 "support.type"
             ],
             "settings": {
-                "foreground": "#0184BC"
+                "foreground": "#0184BC",
+                "foreground": "#785201"
             }
         },
         {
@@ -413,7 +414,8 @@
                 "support.function"
             ],
             "settings": {
-                "foreground": "#043ABD"
+                "foreground": "#0184BC",
+                "foreground": "#C15200"
             }
         },
         {
@@ -459,7 +461,7 @@
                 "entity.name.tag"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -468,7 +470,7 @@
                 "entity.other.attribute-name"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -514,7 +516,7 @@
                 "meta.definition.variable"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -523,7 +525,7 @@
                 "meta.link"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -606,7 +608,7 @@
                 "markup.bold"
             ],
             "settings": {
-                "foreground": "#785201",
+                "foreground": "#986801",
                 "fontStyle": "bold"
             }
         },
@@ -625,7 +627,7 @@
                 "markup.deleted"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -644,7 +646,7 @@
                 "markup.heading"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -671,7 +673,7 @@
                 "markup.inserted"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -680,7 +682,7 @@
                 "markup.quote"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -689,7 +691,7 @@
                 "markup.raw"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -775,7 +777,7 @@
                 "source.elixir parameter.variable.function"
             ],
             "settings": {
-                "foreground": "#785201",
+                "foreground": "#986801",
                 "fontStyle": "italic"
             }
         },
@@ -785,7 +787,7 @@
                 "source.elixir quoted"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -796,7 +798,7 @@
                 "source.elixir embedded.source.empty"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -805,7 +807,7 @@
                 "source.elixir readwrite.module punctuation"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -825,7 +827,7 @@
                 "source.elixir keyword.operator"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -881,7 +883,7 @@
                 "source.ini keyword.other.definition.ini"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -917,7 +919,7 @@
                 "source.java-properties meta.key-pair"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -977,7 +979,7 @@
                 "source.json meta.structure.dictionary.json > string.quoted.json"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -986,7 +988,7 @@
                 "source.json meta.structure.dictionary.json > string.quoted.json > punctuation.string"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -998,7 +1000,7 @@
                 "source.json meta.structure.array.json > value.json > string.quoted.json > punctuation"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -1017,7 +1019,7 @@
                 "ng.interpolation"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1036,7 +1038,7 @@
                 "ng.interpolation function"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1055,7 +1057,7 @@
                 "ng.interpolation bool"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1147,7 +1149,7 @@
                 "source.python variable.parameter"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1168,28 +1170,28 @@
             "name": "[VSCODE-CUSTOM] Punctuation for Quoted String",
             "scope": "string.quoted.double punctuation",
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Support Constant",
             "scope": "support.constant",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] JSON Property Name",
             "scope": "support.type.property-name.json",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] JSON Punctuation for Property Name",
             "scope": "support.type.property-name.json punctuation",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1231,7 +1233,7 @@
                 "support.variable.dom.ts"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1241,7 +1243,7 @@
                 "support.variable.property.dom.ts"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1295,7 +1297,7 @@
                 "support.variable.property.tsx"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1306,7 +1308,7 @@
                 "keyword.control.default.tsx"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1378,7 +1380,7 @@
                 "meta.array-binding-pattern-variable.tsx variable.other.readwrite.tsx"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1389,7 +1391,7 @@
                 "source.tsx support.variable"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1400,7 +1402,7 @@
                 "variable.other.constant.property.tsx"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1442,7 +1444,7 @@
                 "constant.language.import-export-all.ts"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1476,7 +1478,7 @@
                 "variable.other.readwrite.alias.tsx"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1488,7 +1490,7 @@
                 "variable.other.constant.tsx"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1498,7 +1500,7 @@
                 "meta.export.default.ts variable.other.readwrite.ts"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1509,7 +1511,7 @@
                 "source.tsx meta.template.expression.tsx punctuation.accessor"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -1528,7 +1530,7 @@
             "name": "[VSCODE-CUSTOM] JS/TS Type Module",
             "scope": "entity.name.type.module.js,entity.name.type.module.ts,entity.name.type.module.jsx,entity.name.type.module.tsx",
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -1607,7 +1609,7 @@
                 "support.type.object.module.tsx"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1628,7 +1630,7 @@
                 "variable.other.constant.object.tsx"
             ],
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1652,7 +1654,7 @@
                 "meta.template.expression.tsx string.quoted punctuation.definition"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -1664,7 +1666,7 @@
                 "meta.template.expression.tsx string.template punctuation.definition.string.template"
             ],
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
@@ -1696,7 +1698,7 @@
                 "meta.object-literal.key.ts"
             ],
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1710,28 +1712,28 @@
             "name": "[VSCODE-CUSTOM] Python Constants",
             "scope": "source.python constant",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Python Placeholder Character",
             "scope": "constant.character.format.placeholder.other.python storage",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Python Magic",
             "scope": "support.variable.magic.python",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Python Meta Function Parameters",
             "scope": "meta.function.parameters.python",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1752,7 +1754,7 @@
             "name": "[VSCODE-CUSTOM] CSharp Fields",
             "scope": "entity.name.variable.field.cs",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1815,7 +1817,8 @@
             "name": "[VSCODE-CUSTOM] Rust Storage Modifier Lifetime",
             "scope": "storage.modifier.lifetime.rust",
             "settings": {
-                "foreground": "#383A42"
+                "foreground": "#383A42",
+                "foreground": "#0184BC"
             }
         },
         {
@@ -1857,7 +1860,7 @@
             "name": "[VSCODE-CUSTOM] Shell Variables Punctuation Definition",
             "scope": "punctuation.definition.variable.shell",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1871,21 +1874,21 @@
             "name": "[VSCODE-CUSTOM] Css Punctuation Definition Constant",
             "scope": "punctuation.definition.constant.css",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Sass Punctuation for key-value",
             "scope": "punctuation.separator.key-value.scss",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Sass Punctuation for constants",
             "scope": "punctuation.definition.constant.scss",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
@@ -1906,14 +1909,14 @@
             "name": "[VSCODE-CUSTOM] Markdown headings",
             "scope": "entity.name.section.markdown",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Markdown heading Punctuation Definition",
             "scope": "punctuation.definition.heading.markdown",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1927,21 +1930,21 @@
             "name": "[VSCODE-CUSTOM] Markdown Punctuation Definition Bold",
             "scope": "punctuation.definition.bold.markdown",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Markdown Inline Raw",
             "scope": "markup.inline.raw.markdown",
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Markdown List Punctuation Definition",
             "scope": "beginning.punctuation.definition.list.markdown",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -1994,28 +1997,28 @@
             "name": "[VSCODE-CUSTOM] Ruby Punctuation Separator Variable",
             "scope": "punctuation.separator.variable.ruby",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Ruby Other Constant Variable",
             "scope": "variable.other.constant.ruby",
             "settings": {
-                "foreground": "#785201"
+                "foreground": "#986801"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] Ruby Keyword Operator Other",
             "scope": "keyword.operator.other.ruby",
             "settings": {
-                "foreground": "#1e821d"
+                "foreground": "#067C21"
             }
         },
         {
             "name": "[VSCODE-CUSTOM] PHP Punctuation Variable Definition",
             "scope": "punctuation.definition.variable.php",
             "settings": {
-                "foreground": "#67088a"
+                "foreground": "#871094"
             }
         },
         {
@@ -2024,6 +2027,24 @@
             "settings": {
                 "foreground": "#383A42"
             }
+        },
+        {
+           "scope": [
+             "constant.other.reference.link",
+             "string.other.link"
+           ],
+           "settings": {
+             "foreground": "#032f62",
+             "fontStyle": "underline"
+           }
+        },
+        {
+           "scope": [
+             "markup.underline"
+           ],
+           "settings": {
+             "fontStyle": "underline"
+          }
         }
     ],
     "uuid": "1446a9a1-9d70-421a-bae3-87b3b112ddb0"
