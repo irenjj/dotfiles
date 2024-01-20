@@ -13,7 +13,7 @@ fi
 
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 source $HOME/.cargo/env
-
+export PATH=/usr/local/lib:$PATH
 
 # --------------------------------------------------
 # alias
@@ -22,6 +22,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias n=nvim
 
 
 if [ "$(uname)"=="Darwin" ]; then
