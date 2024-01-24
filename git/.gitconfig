@@ -2,8 +2,10 @@
 	name = irenjj
 	email = renj.jiang@gmail.com
 [http]
+	postBuffer = 50000000000
+[http "https://github.com"]
 	proxy = socks5://127.0.0.1:7890
-[https]
+[https "https://github.com"]
 	proxy = socks5://127.0.0.1:7890
-[submodule]
-    	recurse = true
+[core]
+	excludesfile = ~/.gitignore_global

@@ -26,9 +26,9 @@ alias n=nvim
 
 
 if [ "$(uname)"=="Darwin" ]; then
-alias ls='exa --group-directories-first --classify'
-alias la='exa --group-directories-first --classify --all' # 'ls -A'
-alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
+    alias ls='exa --group-directories-first --classify'
+    alias la='exa --group-directories-first --classify --all' # 'ls -A'
+    alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
 fi
 
 # --------------------------------------------------

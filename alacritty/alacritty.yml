@@ -1,38 +1,76 @@
-# Colors (Aura Theme)
+## Colors (Aura Theme)
+#colors:
+#  # Default colors
+#  primary:
+#    background: '#1f2329'
+#    foreground: '#abb2bf'
+#
+#  cursor:
+#    cursor: '#a277ff'
+#
+#  selection:
+#    #text: CellForeground
+#    background: '#a1a1a6'
+#
+#  # Normal colors
+#  normal:
+#    black: '#110f18'
+#    red: '#ff6767'
+#    green: '#61ffca'
+#    yellow: '#ffca85'
+#    blue: '#a277ff'
+#    magenta: '#a277ff'
+#    cyan: '#61ffca'
+#    white: '#edecee'
+#
+#  # Bright colors
+#  bright:
+#    black: '#4d4d4d'
+#    red: '#ff6767'
+#    green: '#61ffca'
+#    yellow: '#ffca85'
+#    blue: '#a277ff'
+#    magenta: '#a277ff'
+#    cyan: '#61ffca'
+#    white: '#edecee'
+#
+#  search:
+#    matches:
+#      foreground: '#000000'
+#      background: '#ffffff'
+#    focused_match:
+#      foreground: '#ffffff'
+#      background: '#9F7AF5'
+
+# Colors (One Dark)
+
 colors:
-  # Default colors
   primary:
     background: '#1f2329'
-    foreground: '#edecee'
+    foreground: '#cacccf'
 
   cursor:
     cursor: '#a277ff'
 
-  selection:
-    #text: CellForeground
-    background: '#a1a1a6'
-
-  # Normal colors
   normal:
-    black: '#110f18'
-    red: '#ff6767'
-    green: '#61ffca'
-    yellow: '#ffca85'
-    blue: '#a277ff'
-    magenta: '#a277ff'
-    cyan: '#61ffca'
-    white: '#edecee'
+    black: '#1e2127'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#abb2bf'
 
-  # Bright colors
   bright:
-    black: '#4d4d4d'
-    red: '#ff6767'
-    green: '#61ffca'
-    yellow: '#ffca85'
-    blue: '#a277ff'
-    magenta: '#a277ff'
-    cyan: '#61ffca'
-    white: '#edecee'
+    black: '#5c6370'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#ffffff'
 
   search:
     matches:
@@ -115,7 +153,7 @@ key_bindings:
   - { key: Q,        mods: Command,       chars: "\x1cd"    } # close the window
 
   # ----- copy mode -----
-  - { key: v,        mods: Command|Shift, chars: "\x1cc"   } # enter vi copy mode, and search from up to down
+  - { key: Y,        mods: Command       , chars: "\x1cc"   } # enter vi copy mode, and search from up to down
 
   # ----- navigate panes -----
   - { key: H,        mods: Command,       chars: "\x1ch"    } # go to the pane left
