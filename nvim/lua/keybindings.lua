@@ -28,9 +28,9 @@ pluginKeys.telescopeList = {
     },
 }
 -- Find file
-vim.api.nvim_set_keymap("n", "<C-u>p", ":Telescope find_files<CR>", opt)
+vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<CR>", opt)
 -- Global search
-vim.api.nvim_set_keymap("n", "<C-u>g", ":Telescope live_grep<CR>", opt)
+vim.api.nvim_set_keymap("n", "<C-g>", ":Telescope live_grep<CR>", opt)
 
 -- ----------------- Nvim-tree -----------------
 pluginKeys.nvimTreeList = {
@@ -40,17 +40,17 @@ pluginKeys.nvimTreeList = {
     { key = "i", action = "toggle_custom" },
     { key = ".", action = "toggle_dotfiles" },
     -- File operations
-    { key = "<F5>", action = "refresh" },
+--    { key = "<F5>", action = "refresh" },
     { key = "a", action = "create" },
-    { key = "d", action = "remove" },
-    { key = "r", action = "rename" },
-    { key = "x", action = "cut" },
-    { key = "c", action = "copy" },
-    { key = "p", action = "paste" },
-    { key = "s", action = "system_open" },
+--    { key = "d", action = "remove" },
+--    { key = "r", action = "rename" },
+--    { key = "x", action = "cut" },
+--    { key = "c", action = "copy" },
+--    { key = "p", action = "paste" },
+--    { key = "s", action = "system_open" },
 }
 -- Open/close tree
-vim.api.nvim_set_keymap("n", "<C-u>f", ":NvimTreeToggle<CR>", opt)
+vim.api.nvim_set_keymap("n", "<C-f>", ":NvimTreeToggle<CR>", opt)
 
 -- ----------------- lsp -----------------
 pluginKeys.mapLSP = function(mapbuf)
@@ -93,8 +93,8 @@ pluginKeys.cmp = function(cmp)
             behavior = cmp.ConfirmBehavior.Replace,
         }),
         -- scroll 
-        ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-        ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+ --       ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+ --       ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     }
 end
 
