@@ -28,7 +28,10 @@ require("lazy").setup({
 
     -- Editor
     { "windwp/nvim-autopairs" },
-    { "lukas-reineke/indent-blankline.nvim" },
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+    { "ahmedkhalf/project.nvim" },
+    { "nvim-lualine/lualine.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
+    { "arkav/lualine-lsp-progress" },
 --    { "Pocco81/auto-save.nvim" },
 
     -- Git
@@ -62,8 +65,10 @@ require('keybindings')
 require('colorscheme')
 require('plugins/nvim_tree')
 require('plugins/bufferline')
-require('plugins/indent_blankline')
 require('plugins/autopairs')
+require('plugins/indent_blankline')
+require('plugins/project')
+require('plugins/lualine')
 require('plugins/gitsigns')
 require('plugins/lsp/setup')
 require('plugins/lsp/cmp')
