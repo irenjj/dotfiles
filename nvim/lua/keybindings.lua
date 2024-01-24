@@ -8,6 +8,8 @@ local opt = { noremap = true, silent = true }
 -- Switch between tabs
 vim.api.nvim_set_keymap("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
 vim.api.nvim_set_keymap("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 -- Close current tab
 vim.api.nvim_set_keymap("n", "<C-w>", ":Bdelete!<CR>", opt)
 

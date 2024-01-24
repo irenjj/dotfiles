@@ -12,16 +12,16 @@ lualine.setup({
     extensions = { "nvim-tree", "toggleterm" },
     sections = {
         lualine_c = {
---            {
---                "lsp_progress",
---            },
+            "lsp_progress",
         },
         lualine_x = {
+            "fileformat",
             {
-                "fileformat",
-            },
-            symbols = {
-                mac = "", -- e711
+                symbols = {
+                    unix = ' ',
+                    dos = ' ',
+                    mac = ' ',
+                },
             },
         },
     },
