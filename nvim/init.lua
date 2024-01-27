@@ -103,6 +103,8 @@ local opt = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
+vim.keymap.set("n", "<C-J>", "<C-w>h", opt)
+vim.keymap.set("n", "<C-K>", "<C-w>l", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -458,6 +460,34 @@ require("lazy").setup({
 					"cpp",
 				},
 				highlight = { enable = true },
+			})
+		end,
+	},
+
+	-- Null-ls(TODO: archived)
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
+		config = function()
+			local null_ls = require("null-ls")
+			local formatting = null_ls.builtins.formatting
+
+			null_ls.setup({
+				debug = false,
+				sources = {
+					-- Formatting ---------------------
+					--  brew install shfmt
+					formatting.shfmt,
+					-- StyLua
+					formatting.stylua,
+					-- rustfmt
+					formatting.rustfmt,
+					-- go fmt
+					formatting.goimports,
+					-- frontend
+					-- formatting.fixjson,
+					-- formatting.black.with({ extra_args = { "--fast" } }),
+				},
 			})
 		end,
 	},
