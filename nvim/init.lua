@@ -78,6 +78,19 @@ require("lazy").setup({
         end
     },
 
+    -- Project
+    {
+        "ahmedkhalf/project.nvim",
+        config = function()
+            vim.g.nvim_tree_respect_buf_cwd = 1
+            --require("") 
+            require("project_nvim").setup({
+                detection_methods = { "pattern" },
+                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
+            })
+        end
+    },
+
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
@@ -90,6 +103,7 @@ require("lazy").setup({
                     mappings = require("keybindings").telescopeList,
                 },
             })
+            require("telescope").load_extension("projects")
         end
     },
 
@@ -97,10 +111,39 @@ require("lazy").setup({
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup({
+                check_ts = true,
+                ts_config = {
+                    lua = { "string", "source" },
+                },
+                disable_filetype = { "TelescopePrompt", "spectre_panel", "dap-repl", "guihua", "guihua_rust", "clap_input" },
+                fast_wrap = {
+                    map = "<M-e>",
+                    chars = { "{", "[", "(", '"', "'" },
+                    pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+                    offset = 0, -- Offset from pattern match
+                    end_key = "$",
+                    keys = "qwertyuiopzxcvbnmasdfghjkl",
+                    check_comma = true,
+                    highlight = "PmenuSel",
+                    highlight_grey = "LineNr",
+                },
+            })
+        end
     },
 
-    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-    { "ahmedkhalf/project.nvim" },
+    -- Indent-blankline
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {},
+        config = function()
+            require("ibl").setup({
+                scope = { enabled = false },
+            })
+        end
+    },
 
     -- Git
     { "lewis6991/gitsigns.nvim" },
@@ -128,9 +171,6 @@ require("nvim-treesitter.install").prefer_git = true
 
 require("options")
 require("keybindings")
-require("plugins/autopairs")
-require("plugins/indent_blankline")
-require("plugins/project")
 require("plugins/gitsigns")
 require("plugins/lsp/setup")
 require("plugins/lsp/cmp")
