@@ -146,7 +146,12 @@ require("lazy").setup({
     },
 
     -- Git
-    { "lewis6991/gitsigns.nvim" },
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup({})
+        end
+    },
 
     -- LSP
     { "williamboman/mason.nvim" },
@@ -171,7 +176,6 @@ require("nvim-treesitter.install").prefer_git = true
 
 require("options")
 require("keybindings")
-require("plugins/gitsigns")
 require("plugins/lsp/setup")
 require("plugins/lsp/cmp")
 require("plugins/lsp/nvim_treesitter")
