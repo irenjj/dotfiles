@@ -94,5 +94,3 @@ vim.o.pumheight = 10
 -- Always display the tabline
 vim.o.showtabline = 2
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1

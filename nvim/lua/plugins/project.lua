@@ -1,10 +1,10 @@
-local status, project = pcall(require, "project_nvim")
-if not status then
+local status1, project = pcall(require, "project_nvim")
+if not status1 then
     vim.notify("no project_nvim found")
   return
 end
 
--- nvim-tree 支持
+-- nvim-tree
 vim.g.nvim_tree_respect_buf_cwd = 1
 
 project.setup({
@@ -12,8 +12,8 @@ project.setup({
   patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
 })
 
-local status, telescope = pcall(require, "telescope")
-if not status then
+local status2, telescope = pcall(require, "telescope")
+if not status2 then
   vim.notify("no telescope found")
   return
 end

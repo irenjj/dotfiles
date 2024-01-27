@@ -1,11 +1,16 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
 local status, nvim_tree = pcall(require, "nvim-tree")
 if not status then
     vim.notify("no nvim-tree found")
     return
 end
 
--- Keybindings
-local list_keys = require("keybindings").nvimTreeList
 nvim_tree.setup({
     sort_by = "case_sensitive",
     git = {
@@ -16,10 +21,10 @@ nvim_tree.setup({
         enable = true,
         update_cwd = true,
     },
-    filters = {
-        dotfiles = true,
-        custom = { "node_modules" },
-    },
+--    filters = {
+--        dotfiles = true,
+--        custom = { "node_modules" },
+--    },
     view = {
         width = 30,
         side = "left",
@@ -35,22 +40,6 @@ nvim_tree.setup({
                 file = true,
                 folder = true,
                 folder_arrow = true,
-            },
-            glyphs = {
-                bookmark = " ",
-                folder = {
-                    arrow_closed = "⏵",
-                    arrow_open = "⏷",
-                },
-                git = {
-                    unstaged = "✗",
-                    staged = "✓",
-                    unmerged = "⌥",
-                    renamed = "➜",
-                    untracked = "★",
-                    deleted = "⊖",
-                    ignored = "◌",
-                },
             },
         },
     },
