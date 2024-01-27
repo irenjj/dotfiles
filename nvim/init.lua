@@ -49,7 +49,6 @@ require("lazy").setup({
         config = function()
             require("bufferline").setup({
                 options = {
-                   close_command = "Bdelete! %d",
                    diagnostics = "nvim_lsp",
                 },
             })
@@ -84,6 +83,14 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("telescope").setup({
+                defaults = {
+                    initial_mode = "insert",
+                    mappings = require("keybindings").telescopeList,
+                },
+            })
+        end
     },
 
     -- Autopairs
