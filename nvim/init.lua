@@ -162,6 +162,11 @@ require("lazy").setup({
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
+            'hrsh7th/cmp-nvim-lsp-signature-help',
+            "hrsh7th/vim-vsnip",
+            "hrsh7th/cmp-vsnip",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
        },
        config = function()
             -- Mason 
@@ -238,18 +243,24 @@ require("lazy").setup({
            -- Cmp
            local cmp = require("cmp")
            cmp.setup({
-               snippet = {
-                   expand = function(args)
-                       -- For `vsnip` users.
-                       vim.fn["vsnip#anonymous"](args.body)
-                   end,
-               },
-               sources = cmp.config.sources({
-                   { name = "nvim_lsp" },
-                   -- For vsnip users.
-                   { name = "vsnip" },
-               }, { { name = "buffer" }, { name = "path" } }),
-               mapping = require("keybindings").cmp(cmp),
+        	snippet = {
+        		expand = function(args)
+        			-- For `vsnip` users.
+        			vim.fn["vsnip#anonymous"](args.body)
+        		end,
+        	},
+        	sources = cmp.config.sources(
+                {
+            		{ name = "nvim_lsp" },
+            		-- For vsnip users.
+            		{ name = "vsnip" },
+            	},
+                {
+                    { name = "buffer" },
+                    { name = "path" }
+                }
+            ),
+            mapping = require("keybindings").cmp(cmp),
            })
        end
     },
@@ -261,14 +272,13 @@ require("lazy").setup({
         config = function()
             require("nvim-treesitter.install").prefer_git = true
             require("nvim-treesitter.configs").setup({
-                ensure_installed =  "all",
-                {
---                    "json",
---                    "vim",
---                    "lua",
---                    "rust",
---                    "c",
---                    "cpp",
+                ensure_installed = {
+                    "json",
+                    "vim",
+                    "lua",
+                    "rust",
+                    "c",
+                    "cpp",
                 },
                 highlight = { enable = true },
             })
