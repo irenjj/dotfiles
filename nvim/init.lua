@@ -13,12 +13,22 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     -- Theme
-    {'navarasu/onedark.nvim'},
+    {
+        'navarasu/onedark.nvim',
+        priority = 1000, -- as the first plugin
+        config = function ()
+            vim.cmd.colorscheme('onedark')
+            require('onedark').setup  {
+                style = 'darker',
+            }
+        end
+    },
 
     -- Nvim-tree
     {
         "kyazdani42/nvim-tree.lua",
         event = "VimEnter",
+        
     },
 
     -- Bufferline
@@ -76,7 +86,6 @@ require("nvim-treesitter.install").prefer_git = true
 
 require('options')
 require('keybindings')
-require('colorscheme')
 require('plugins/tree')
 require('plugins/bufferline')
 require('plugins/autopairs')
