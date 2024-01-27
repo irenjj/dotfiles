@@ -28,7 +28,17 @@ require("lazy").setup({
     {
         "kyazdani42/nvim-tree.lua",
         event = "VimEnter",
-        
+        config = function()
+            require('nvim-tree').setup {
+                sort_by = "case_sensitive",
+                actions = {
+                    open_file = {
+                        resize_window = true,
+                        quit_on_open = true,
+                    },
+                },
+            }
+        end
     },
 
     -- Bufferline
@@ -86,7 +96,6 @@ require("nvim-treesitter.install").prefer_git = true
 
 require('options')
 require('keybindings')
-require('plugins/tree')
 require('plugins/bufferline')
 require('plugins/autopairs')
 require('plugins/indent_blankline')
