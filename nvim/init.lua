@@ -14,14 +14,14 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- Colorscheme
     {
-        'navarasu/onedark.nvim',
+        "navarasu/onedark.nvim",
         priority = 1000, -- as the first plugin
         config = function()
-            vim.cmd.colorscheme('onedark')
-            require('onedark').setup({
-                style = 'darker',
+            vim.cmd.colorscheme("onedark")
+            require("onedark").setup({
+                style = "darker",
             })
-        end,
+        end
     },
 
     -- Nvim-tree
@@ -29,7 +29,7 @@ require("lazy").setup({
         "kyazdani42/nvim-tree.lua",
         event = "VimEnter",
         config = function()
-            require('nvim-tree').setup({
+            require("nvim-tree").setup({
                 sort_by = "case_sensitive",
                 actions = {
                     open_file = {
@@ -38,7 +38,7 @@ require("lazy").setup({
                     },
                 },
             })
-        end,
+        end
     },
 
     -- Bufferline
@@ -47,26 +47,43 @@ require("lazy").setup({
         version = "*",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require('bufferline').setup({
+            require("bufferline").setup({
                 options = {
                    close_command = "Bdelete! %d",
                    diagnostics = "nvim_lsp",
                 },
             })
-        end,
+        end
     },
 
     -- Lualine
     {
         "nvim-lualine/lualine.nvim",
         dependencies = "nvim-tree/nvim-web-devicons",
+        config = function()
+            require("lualine").setup({
+                options = {
+                    component_separators = { left = "|", right = "|" },
+                },
+                extensions = { "nvim-tree" },
+                sections = {
+                    lualine_c = {},
+                    lualine_x = {
+                        {
+                            "filename",
+                            path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
+                        }
+                    },
+                },
+            })
+        end
     },
 
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
-        dependencies = { 'nvim-lua/plenary.nvim' },
+        dependencies = { "nvim-lua/plenary.nvim" },
     },
 
     -- Autopairs
@@ -102,14 +119,12 @@ require("lazy").setup({
 
 require("nvim-treesitter.install").prefer_git = true
 
-require('options')
-require('keybindings')
---require('plugins/bufferline')
-require('plugins/autopairs')
-require('plugins/indent_blankline')
-require('plugins/project')
-require('plugins/lualine')
-require('plugins/gitsigns')
-require('plugins/lsp/setup')
-require('plugins/lsp/cmp')
-require('plugins/lsp/nvim_treesitter')
+require("options")
+require("keybindings")
+require("plugins/autopairs")
+require("plugins/indent_blankline")
+require("plugins/project")
+require("plugins/gitsigns")
+require("plugins/lsp/setup")
+require("plugins/lsp/cmp")
+require("plugins/lsp/nvim_treesitter")
