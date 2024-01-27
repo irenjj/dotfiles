@@ -12,16 +12,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- Theme
+    -- Colorscheme
     {
         'navarasu/onedark.nvim',
         priority = 1000, -- as the first plugin
-        config = function ()
+        config = function()
             vim.cmd.colorscheme('onedark')
-            require('onedark').setup  {
+            require('onedark').setup({
                 style = 'darker',
-            }
-        end
+            })
+        end,
     },
 
     -- Nvim-tree
@@ -29,7 +29,7 @@ require("lazy").setup({
         "kyazdani42/nvim-tree.lua",
         event = "VimEnter",
         config = function()
-            require('nvim-tree').setup {
+            require('nvim-tree').setup({
                 sort_by = "case_sensitive",
                 actions = {
                     open_file = {
@@ -37,15 +37,23 @@ require("lazy").setup({
                         quit_on_open = true,
                     },
                 },
-            }
-        end
+            })
+        end,
     },
 
     -- Bufferline
     {
         "akinsho/bufferline.nvim",
         version = "*",
-        dependencies = { "nvim-tree/nvim-web-devicons", "moll/vim-bbye" },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require('bufferline').setup({
+                options = {
+                   close_command = "Bdelete! %d",
+                   diagnostics = "nvim_lsp",
+                },
+            })
+        end,
     },
 
     -- Lualine
@@ -96,7 +104,7 @@ require("nvim-treesitter.install").prefer_git = true
 
 require('options')
 require('keybindings')
-require('plugins/bufferline')
+--require('plugins/bufferline')
 require('plugins/autopairs')
 require('plugins/indent_blankline')
 require('plugins/project')
