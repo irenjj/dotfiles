@@ -61,9 +61,9 @@ vim.o.hidden = true
 vim.o.mouse = "a"
 
 -- forbide creating backup files
--- vim.o.backup = false
--- vim.o.writebackup = false
--- vim.o.swapfile = false
+vim.o.backup = false
+vim.o.writebackup = false
+vim.o.swapfile = false
 
 -- smaller updatetime
 vim.o.updatetime = 300
@@ -444,6 +444,17 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		"nvimdev/lspsaga.nvim",
+		config = function()
+			require("lspsaga").setup({})
+		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -458,6 +469,7 @@ require("lazy").setup({
 					"rust",
 					"c",
 					"cpp",
+					"toml",
 				},
 				highlight = { enable = true },
 			})

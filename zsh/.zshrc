@@ -1,6 +1,6 @@
 # --------------------------------------------------
 # enviroment path
-if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
+if [ "$(uname)"=="Darwin" ]; then
     export PATH="/opt/homebrew/bin:$PATH"
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export PATH=/opt/homebrew/Cellar/binutils/2.41/bin:$PATH
@@ -14,6 +14,7 @@ fi
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 source $HOME/.cargo/env
 export PATH=/usr/local/lib:$PATH
+export CARGO_HTTP_MULTIPLEXING=false
 
 # --------------------------------------------------
 # alias
@@ -23,6 +24,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias n=nvim
+alias vim=nvim
 
 
 if [ "$(uname)"=="Darwin" ]; then
