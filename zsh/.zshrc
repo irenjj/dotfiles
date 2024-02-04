@@ -45,3 +45,6 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

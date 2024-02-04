@@ -122,16 +122,29 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- Colorscheme
-	{
-		"navarasu/onedark.nvim",
-		priority = 1000, -- as the first plugin
-		config = function()
-			vim.cmd.colorscheme("onedark")
-			require("onedark").setup({
-				style = "darker",
-			})
-		end,
-	},
+	    {
+			"navarasu/onedark.nvim",
+			priority = 1000, -- as the first plugin
+			config = function()
+				vim.cmd.colorscheme("onedark")
+				require("onedark").setup({
+					style = "darker",
+				})
+			end,
+		},
+
+--	{
+--		"projekt0n/github-nvim-theme",
+--		lazy = false, -- make sure we load this during startup if it is your main colorscheme
+--		priority = 1000, -- make sure to load this before all the other start plugins
+--		config = function()
+--			require("github-theme").setup({
+--				-- ...
+--			})
+--
+--			vim.cmd("colorscheme github_light")
+--		end,
+--	},
 
 	-- Nvim-tree
 	{
@@ -505,4 +518,4 @@ require("lazy").setup({
 	},
 })
 
-vim.o.background = "dark"
+--vim.o.background = "dark"
