@@ -100,7 +100,7 @@ font:
 
 window:
   #startup_mode: SimpleFullscreen
-  decorations: none
+  #decorations: none
 
 scrolling:
   history: 100000
@@ -110,12 +110,12 @@ selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'
   save_to_clipboard: true
 
-    #shell:
-  #  program: /bin/bash
-  #  args:
-  #    - --login
-  #    - -c
-  #    - "tmux new-session -A -D -s main"
+shell:
+  program: /bin/bash
+  args:
+    - --login
+    - -c
+    - "tmux new-session -A -D -s main"
 
 live_config_reload: true
 
