@@ -66,7 +66,7 @@ vim.o.writebackup = false
 vim.o.swapfile = false
 
 -- smaller updatetime
---vim.o.updatetime = 300
+vim.o.updatetime = 300
 
 -- Wait for keyboard shortcut combo time
 -- vim.o.timeoutlen = 500
@@ -122,29 +122,27 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- Colorscheme
---	    {
---			"navarasu/onedark.nvim",
---			priority = 1000, -- as the first plugin
---			config = function()
---				vim.cmd.colorscheme("onedark")
---				require("onedark").setup({
---					style = "darker",
---				})
---			end,
---		},
+--		    {
+--				"navarasu/onedark.nvim",
+--				priority = 1000, -- as the first plugin
+--				config = function()
+--					vim.cmd.colorscheme("onedark")
+--					require("onedark").setup({
+--						style = "darker",
+--					})
+--				end,
+--			},
 
-	{
-		"projekt0n/github-nvim-theme",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-		config = function()
-			require("github-theme").setup({
-				-- ...
-			})
 
-			vim.cmd("colorscheme github_light")
-		end,
-	},
+		    {
+				"AstroNvim/astrotheme",
+				priority = 1000, -- as the first plugin
+				config = function()
+					require("astrotheme").setup({})
+					vim.cmd.colorscheme("astrodark")
+				end,
+			},
+
 
 	-- Nvim-tree
 	{
@@ -306,166 +304,170 @@ require("lazy").setup({
 		end,
 	},
 
+
 	-- LSP
 	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
-			"hrsh7th/vim-vsnip",
-			"hrsh7th/cmp-vsnip",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-		},
+		'neovim/nvim-lspconfig',
 		config = function()
-			-- Mason
-			require("mason").setup()
+			-- Setup language servers.
+			local lspconfig = require('lspconfig')
 
-			-- Mason-lspconfig
-			require("mason-lspconfig").setup({
-				automatic_installation = true,
-				ensure_installed = { "lua_ls", "rust_analyzer", "clangd" },
-			})
-
-			-- Lsp keybindings
-			local function on_attach(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-				local opts = { buffer = bufnr }
-				-- go xx
-				vim.keymap.set("n", "gd", ":Lspsaga goto_definition<CR>", opts)
-				vim.keymap.set("n", "gh", ":Lspsaga hover_doc<CR>", opts)
-				vim.keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts)
-				vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-				vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-				vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-				-- diagnostic
-				vim.keymap.set("n", "gp", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
-				vim.keymap.set("n", "gk", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-				vim.keymap.set("n", "gj", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-				vim.keymap.set("n", "<leader>=", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opt)
-				vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opt)
-			end
-
-			-- Lua lsp
-			require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						runtime = {
-							-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							-- Get the language server to recognize the `vim` global
-							globals = { "vim" },
-						},
-						workspace = {
-							-- Make the server aware of Neovim runtime files
-							library = vim.api.nvim_get_runtime_file("", true),
-						},
-						-- Do not send telemetry data containing a randomized but unique identifier
-						telemetry = {
-							enable = false,
-						},
-					},
-				},
-				flags = {
-					debounce_text_changes = 160,
-				},
-				on_attach = on_attach,
-			})
-
-			-- Rust lsp
-			require("lspconfig").rust_analyzer.setup({
+			-- Rust
+			lspconfig.rust_analyzer.setup {
+				-- Server-specific settings. See `:help lspconfig-setup`
 				settings = {
 					["rust-analyzer"] = {
-						imports = {
-							granularity = {
-								group = "module",
-							},
-							prefix = "self",
-						},
 						cargo = {
-							buildScripts = {
-								enable = true,
+							allFeatures = true,
+						},
+						imports = {
+							group = {
+								enable = false,
 							},
 						},
-						procMacro = {
-							enable = true,
+						completion = {
+							postfix = {
+								enable = false,
+							},
 						},
 					},
 				},
-				on_attach = on_attach,
-			})
+			}
 
-			-- Cmp
-			local cmp = require("cmp")
+			-- Bash LSP
+			local configs = require 'lspconfig.configs'
+			if not configs.bash_lsp and vim.fn.executable('bash-language-server') == 1 then
+				configs.bash_lsp = {
+					default_config = {
+						cmd = { 'bash-language-server', 'start' },
+						filetypes = { 'sh' },
+						root_dir = require('lspconfig').util.find_git_ancestor,
+						init_options = {
+							settings = {
+								args = {}
+							}
+						}
+					}
+				}
+			end
+			if configs.bash_lsp then
+				lspconfig.bash_lsp.setup {}
+			end
+
+			-- Global mappings.
+			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+			vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+			vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+			vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+			vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+			-- Use LspAttach autocommand to only map the following keys
+			-- after the language server attaches to the current buffer
+			vim.api.nvim_create_autocmd('LspAttach', {
+				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+				callback = function(ev)
+					-- Enable completion triggered by <c-x><c-o>
+					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+					-- Buffer local mappings.
+					-- See `:help vim.lsp.*` for documentation on any of the below functions
+					local opts = { buffer = ev.buf }
+					vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+					vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+					vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
+					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+					vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+					vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+					vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+					vim.keymap.set('n', '<leader>wl', function()
+						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+					end, opts)
+					--vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+					vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
+					vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
+					vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+					vim.keymap.set('n', '<leader>f', function()
+						vim.lsp.buf.format { async = true }
+					end, opts)
+
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+					-- When https://neovim.io/doc/user/lsp.html#lsp-inlay_hint stabilizes
+					-- *and* there's some way to make it only apply to the current line.
+					-- if client.server_capabilities.inlayHintProvider then
+					--     vim.lsp.inlay_hint(ev.buf, true)
+					-- end
+
+					-- None of this semantics tokens business.
+					-- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
+					client.server_capabilities.semanticTokensProvider = nil
+				end,
+			})
+		end
+	},
+	-- LSP-based code-completion
+	{
+		"hrsh7th/nvim-cmp",
+		-- load cmp on InsertEnter
+		event = "InsertEnter",
+		-- these dependencies will only be loaded when cmp loads
+		-- dependencies are always lazy-loaded unless specified otherwise
+		dependencies = {
+			'neovim/nvim-lspconfig',
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+		},
+		config = function()
+			local cmp = require'cmp'
 			cmp.setup({
 				snippet = {
+					-- REQUIRED by nvim-cmp. get rid of it once we can
 					expand = function(args)
-						-- For `vsnip` users.
 						vim.fn["vsnip#anonymous"](args.body)
 					end,
 				},
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					-- For vsnip users.
-					{ name = "vsnip" },
-				}, {
-					{ name = "buffer" },
-					{ name = "path" },
+				mapping = cmp.mapping.preset.insert({
+					['<C-b>'] = cmp.mapping.scroll_docs(-4),
+					['<C-f>'] = cmp.mapping.scroll_docs(4),
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-e>'] = cmp.mapping.abort(),
+					-- Accept currently selected item.
+					-- Set `select` to `false` to only confirm explicitly selected items.
+					['<CR>'] = cmp.mapping.confirm({ select = true }),
 				}),
-				--mapping = require("keybindings").cmp(cmp),
-				mapping = {
-					-- auto-completion
-					["<C-.>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-					-- cancel
-					["<C-,>"] = cmp.mapping({
-						i = cmp.mapping.abort(),
-						c = cmp.mapping.close(),
-					}),
-					-- prev one
-					["<Up>"] = cmp.mapping.select_prev_item(),
-					-- last one
-					["<Down>"] = cmp.mapping.select_next_item(),
-					["<CR>"] = cmp.mapping.confirm({
-						select = true,
-						behavior = cmp.ConfirmBehavior.Replace,
-					}),
+				sources = cmp.config.sources({
+					{ name = 'nvim_lsp' },
+				}, {
+					{ name = 'path' },
+				}),
+				experimental = {
+					ghost_text = true,
 				},
 			})
 
-			cmp.setup.cmdline("/", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
-				},
-			})
-
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
+			-- Enable completing paths in :
+			cmp.setup.cmdline(':', {
 				sources = cmp.config.sources({
-					{ name = "path" },
-				}, {
-					{ name = "cmdline" },
-				}),
+					{ name = 'path' }
+				})
 			})
-		end,
+		end
 	},
-
+	-- inline function signatures
 	{
-		"nvimdev/lspsaga.nvim",
-		config = function()
-			require("lspsaga").setup({})
-		end,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
+		"ray-x/lsp_signature.nvim",
+		event = "VeryLazy",
+		opts = {},
+		config = function(_, opts)
+			-- Get signatures (and _only_ signatures) when in argument lists.
+			require "lsp_signature".setup({
+				doc_lines = 0,
+				handler_opts = {
+					border = "none"
+				},
+			})
+		end
 	},
 
 	-- Treesitter
@@ -488,34 +490,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	-- Null-ls(TODO: archived)
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = "nvim-lua/plenary.nvim",
-		config = function()
-			local null_ls = require("null-ls")
-			local formatting = null_ls.builtins.formatting
-
-			null_ls.setup({
-				debug = false,
-				sources = {
-					-- Formatting ---------------------
-					--  brew install shfmt
-					formatting.shfmt,
-					-- StyLua
-					formatting.stylua,
-					-- rustfmt
-					formatting.rustfmt,
-					-- go fmt
-					formatting.goimports,
-					-- frontend
-					-- formatting.fixjson,
-					-- formatting.black.with({ extra_args = { "--fast" } }),
-				},
-			})
-		end,
-	},
 })
 
---vim.o.background = "dark"
+vim.o.background = "dark"

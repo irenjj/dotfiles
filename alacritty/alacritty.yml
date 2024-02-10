@@ -1,71 +1,32 @@
 # Colors (One Dark)
-
-#colors:
-#  primary:
-#    background: '#1f2329'
-#    foreground: '#cacccf'
-#
-#  cursor:
-#    cursor: '#a277ff'
-#
-#  normal:
-#    black: '#1e2127'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#abb2bf'
-#
-#  bright:
-#    black: '#5c6370'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#ffffff'
-#
-#  search:
-#    matches:
-#      foreground: '#000000'
-#      background: '#ffffff'
-#    focused_match:
-#      foreground: '#ffffff'
-#      background: '#9F7AF5'
-
-
-        # Colors (Github Light)
-        
 colors:
   primary:
-    background: '#fafafa'
-    foreground: '#000000'
+   # background: '#1f2329'
+    background: '#1A1D23'
+    foreground: '#cacccf'
 
   cursor:
     cursor: '#a277ff'
 
   normal:
-    black: '#000000'
-    red: '#d71e00'
-    green: '#457d00'
-    yellow: '#cfad00'
-    blue: '#417ab3'
-    magenta: '#88658d'
-    cyan: '#209fa1'
-    white: '#dbded8'
+    black: '#1e2127'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#abb2bf'
 
   bright:
-    black: '#676965'
-    red: '#da1e11'
-    green: '#3a7c0f'
-    yellow: '#908530'
-    blue: '#23629d'
-    magenta: '#af2f9e'
-    cyan: '#148182'
-    white: '#f1f1ef'
+    black: '#5c6370'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#ffffff'
 
   search:
     matches:
@@ -89,7 +50,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 14.5
+  size: 14
 
   offset:
     x: 0
