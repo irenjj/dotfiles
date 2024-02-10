@@ -98,13 +98,17 @@ vim.o.pumheight = 10
 -- Always display the tabline
 vim.o.showtabline = 2
 
+
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
-vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
-vim.keymap.set("n", "<C-J>", "<C-w>h", opt)
-vim.keymap.set("n", "<C-K>", "<C-w>l", opt)
+vim.keymap.set("n", "<C-n>", "<C-w>j", opt)
+vim.keymap.set('n', '<C-o>', '<C-o>zz')
+vim.keymap.set('n', '<C-i>', '<C-i>zz')
+
+-- More same behavior of 'k' and 'j' in wrapped lines
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -122,27 +126,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	-- Colorscheme
---		    {
---				"navarasu/onedark.nvim",
---				priority = 1000, -- as the first plugin
---				config = function()
---					vim.cmd.colorscheme("onedark")
---					require("onedark").setup({
---						style = "darker",
---					})
---				end,
---			},
-
-
-		    {
-				"AstroNvim/astrotheme",
-				priority = 1000, -- as the first plugin
-				config = function()
-					require("astrotheme").setup({})
-					vim.cmd.colorscheme("astrodark")
-				end,
-			},
-
+    {
+		"AstroNvim/astrotheme",
+		priority = 1000, -- as the first plugin
+		config = function()
+			require("astrotheme").setup({})
+			vim.cmd.colorscheme("astrodark")
+		end,
+	},
 
 	-- Nvim-tree
 	{
@@ -192,15 +183,19 @@ require("lazy").setup({
 		config = function()
 			require("lualine").setup({
 				options = {
+                    theme = "auto",
 					component_separators = { left = "|", right = "|" },
 				},
 				extensions = { "nvim-tree" },
 				sections = {
-					lualine_c = {},
+					lualine_c = {
+                        {
+				            "lsp_progress",
+                        }
+                    },
 					lualine_x = {
 						{
-							"filename",
-							path = 2, -- 0 = just filename, 1 = relative path, 2 = absolute path
+				            "lsp_progress",
 						},
 					},
 				},
@@ -251,51 +246,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Autopairs
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = function()
-			require("nvim-autopairs").setup({
-				check_ts = true,
-				ts_config = {
-					lua = { "string", "source" },
-				},
-				disable_filetype = {
-					"TelescopePrompt",
-					"spectre_panel",
-					"dap-repl",
-					"guihua",
-					"guihua_rust",
-					"clap_input",
-				},
-				fast_wrap = {
-					map = "<M-e>",
-					chars = { "{", "[", "(", '"', "'" },
-					pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-					offset = 0, -- Offset from pattern match
-					end_key = "$",
-					keys = "qwertyuiopzxcvbnmasdfghjkl",
-					check_comma = true,
-					highlight = "PmenuSel",
-					highlight_grey = "LineNr",
-				},
-			})
-		end,
-	},
-
-	-- Indent-blankline
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = {},
-		config = function()
-			require("ibl").setup({
-				scope = { enabled = false },
-			})
-		end,
-	},
-
 	-- Gitsigns
 	{
 		"lewis6991/gitsigns.nvim",
@@ -303,7 +253,6 @@ require("lazy").setup({
 			require("gitsigns").setup()
 		end,
 	},
-
 
 	-- LSP
 	{
@@ -376,13 +325,12 @@ require("lazy").setup({
 					vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 					vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
 					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-					vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+--					vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 					vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
 					vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
 					vim.keymap.set('n', '<leader>wl', function()
 						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 					end, opts)
-					--vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
 					vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
 					vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
 					vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
@@ -490,6 +438,32 @@ require("lazy").setup({
 			})
 		end,
 	},
-})
 
-vim.o.background = "dark"
+    {
+        -- Remember last cursor position
+        -- https://github.com/neovim/neovim/issues/16339
+        'ethanholz/nvim-lastplace',
+        config = function()
+            require('nvim-lastplace').setup()
+        end
+    },
+
+    {
+        'echasnovski/mini.nvim',
+        config = function()
+            require('mini.bracketed').setup()
+            require('mini.comment').setup()
+            require('mini.jump2d').setup()
+            require('mini.move').setup()
+            require('mini.pairs').setup()
+            require('mini.surround').setup()
+            require('mini.indentscope').setup({
+                draw = { animation = function() return 0 end },
+                symbol ='│'
+            })
+            require('mini.misc').setup()
+            MiniMisc.setup_auto_root()
+            -- TODO try pick and extra
+        end
+    },
+})
