@@ -83,8 +83,8 @@ vim.o.termguicolors = true
 vim.opt.termguicolors = true
 
 -- Display of invisible characters, showing only spaces as dots here
-vim.o.list = false
-vim.o.listchars = "space:·,tab:>-"
+vim.o.list = true
+vim.opt.listchars = {trail = '~', tab = '▸ ', space = '·'}
 
 -- Enhanced autocomplete
 vim.o.wildmenu = true
@@ -97,7 +97,6 @@ vim.o.pumheight = 10
 
 -- Always display the tabline
 vim.o.showtabline = 2
-
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -130,7 +129,15 @@ require("lazy").setup({
 		"AstroNvim/astrotheme",
 		priority = 1000, -- as the first plugin
 		config = function()
-			require("astrotheme").setup({})
+			require("astrotheme").setup({
+                palettes = {
+                    astrodark = {
+                        ui = {
+                            --base = "#282c34",
+                        }
+                    }
+                }
+            })
 			vim.cmd.colorscheme("astrodark")
 		end,
 	},
@@ -257,6 +264,9 @@ require("lazy").setup({
 	-- LSP
 	{
 		'neovim/nvim-lspconfig',
+	        opts = {
+	            inlay_hints = { enable = true },
+	        },
 		config = function()
 			-- Setup language servers.
 			local lspconfig = require('lspconfig')
@@ -279,6 +289,9 @@ require("lazy").setup({
 								enable = false,
 							},
 						},
+                        diagnostics = {
+                            enable = true;
+                        },
 					},
 				},
 			}

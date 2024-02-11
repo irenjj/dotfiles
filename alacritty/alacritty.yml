@@ -1,7 +1,6 @@
 # Colors (One Dark)
 colors:
   primary:
-   # background: '#1f2329'
     background: '#1A1D23'
     foreground: '#cacccf'
 
@@ -60,8 +59,9 @@ font:
     y: 0
 
 window:
-  #startup_mode: SimpleFullscreen
+  startup_mode: SimpleFullscreen
   #decorations: none
+  decorations: buttonless
 
 scrolling:
   history: 100000
