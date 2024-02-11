@@ -59,7 +59,7 @@ font:
     y: 0
 
 window:
-  startup_mode: SimpleFullscreen
+  #startup_mode: SimpleFullscreen
   #decorations: none
   decorations: buttonless
 
