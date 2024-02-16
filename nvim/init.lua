@@ -101,7 +101,13 @@ vim.o.showtabline = 2
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
-vim.keymap.set("n", "<C-n>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-f>", "", opt)
+
+vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
+vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
+vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
+vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+
 vim.keymap.set('n', '<C-o>', '<C-o>zz')
 vim.keymap.set('n', '<C-i>', '<C-i>zz')
 
@@ -167,60 +173,56 @@ require("lazy").setup({
         config = function()
             require("bufferline").setup({
                 options = {
-                    diagnostics = "nvim_lsp",
+--                    diagnostics = "nvim_lsp",
                 },
             })
 
             -- Open/close tree
-            vim.api.nvim_set_keymap("n", "<C-f>", ":NvimTreeToggle<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<C-f>f", ":NvimTreeToggle<CR>", opt)
             -- Switch between tabs
-            vim.api.nvim_set_keymap("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<C-l>", ":BufferLineCycleNext<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<C-f>i", ":BufferLineCyclePrev<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<C-f>o", ":BufferLineCycleNext<CR>", opt)
             -- Close current tab
-            vim.api.nvim_set_keymap("n", "<C-w>", ":bdelete!<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<C-e>", ":BufferLineCloseOthers<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<C-f>", ":NvimTreeToggle<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<C-f>w", ":bdelete!<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<C-f>e", ":BufferLineCloseOthers<CR>", opt)
         end,
     },
 
---  -- Lualine
---  {
---      "nvim-lualine/lualine.nvim",
---      dependencies = "nvim-tree/nvim-web-devicons",
---      config = function()
---          require("lualine").setup({
---              options = {
---                    theme = "auto",
---                  component_separators = { left = "|", right = "|" },
---              },
---              extensions = { "nvim-tree" },
---              sections = {
---                  lualine_c = {
---                        {
---                          "lsp_progress",
---                        }
---                    },
---                  lualine_x = {
---                      {
---                          "lsp_progress",
---                      },
---                  },
---              },
---          })
---      end,
---  },
-
-    -- Project
+    -- Lualine
     {
-        "ahmedkhalf/project.nvim",
+        "nvim-lualine/lualine.nvim",
+        dependencies = "nvim-tree/nvim-web-devicons",
         config = function()
-            vim.g.nvim_tree_respect_buf_cwd = 1
-            require("project_nvim").setup({
-                detection_methods = { "pattern" },
-                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
+            require("lualine").setup({
+                options = {
+                      theme = "auto",
+                    component_separators = { left = "|", right = "|" },
+                },
+                extensions = { "nvim-tree" },
+                sections = {
+                    lualine_c = {},
+                    lualine_x = {
+                        {
+                            "filename",
+                            path = 1,
+                        },
+                    },
+                },
             })
         end,
     },
+
+    -- Project
+--    {
+--        "ahmedkhalf/project.nvim",
+--        config = function()
+--            vim.g.nvim_tree_respect_buf_cwd = 1
+--            require("project_nvim").setup({
+--                detection_methods = { "pattern" },
+--                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
+--            })
+--        end,
+--    },
 
     -- Telescope
     {
@@ -245,7 +247,7 @@ require("lazy").setup({
                     },
                 },
             })
-            require("telescope").load_extension("projects")
+--            require("telescope").load_extension("projects")
             -- Find file
             vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<CR>", opt)
             -- Global search
@@ -477,7 +479,7 @@ require("lazy").setup({
 --            require('mini.misc').setup()
 --            MiniMisc.setup_auto_root()
             require('mini.cursorword').setup()
-            require('mini.statusline').setup()
+--            require('mini.statusline').setup()
             -- TODO try pick and extra
         end
     },
