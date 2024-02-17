@@ -115,6 +115,8 @@ vim.keymap.set('n', '<C-i>', '<C-i>zz')
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
+vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
+
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -189,10 +191,7 @@ require("lazy").setup({
     },
 
     -- Lualine
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = "nvim-tree/nvim-web-devicons",
-        config = function()
+    { "nvim-lualine/lualine.nvim", dependencies = "nvim-tree/nvim-web-devicons", config = function()
             require("lualine").setup({
                 options = {
                       theme = "auto",
@@ -213,16 +212,16 @@ require("lazy").setup({
     },
 
     -- Project
---    {
---        "ahmedkhalf/project.nvim",
---        config = function()
---            vim.g.nvim_tree_respect_buf_cwd = 1
---            require("project_nvim").setup({
---                detection_methods = { "pattern" },
---                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
---            })
---        end,
---    },
+    {
+        "ahmedkhalf/project.nvim",
+        config = function()
+            vim.g.nvim_tree_respect_buf_cwd = 1
+            require("project_nvim").setup({
+                detection_methods = { "pattern" },
+                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
+            })
+        end,
+    },
 
     -- Telescope
     {
@@ -230,29 +229,37 @@ require("lazy").setup({
         branch = "0.1.x",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            require("telescope").setup({
-                defaults = {
-                    initial_mode = "insert",
-                    mappings = {
-                        i = {
-                            -- Move cursor
-                            ["<Down>"] = "move_selection_next",
-                            ["<Up>"] = "move_selection_previous",
-                            -- History record
-                            ["<C-n>"] = "cycle_history_next",
-                            ["<C-p>"] = "cycle_history_prev",
-                            -- Close window
-                            ["<C-c>"] = "close",
-                        },
-                    },
+            local actions = require('telescope.actions')
+            require 'telescope'.setup({
+              defaults = {
+                preview = false,
+                mappings = {
+                  i = {
+                    ['<esc>'] = actions.close, -- close on single <esc> press (instead of two)
+                  },
                 },
+              },
+              pickers = {
+                git_files = {
+                  theme = 'ivy',
+                },
+                buffers = {
+                  theme = 'ivy',
+                  sort_mru = true,
+                },
+                live_grep = {
+                  theme = 'ivy',
+                  preview = true
+                }
+              },
             })
---            require("telescope").load_extension("projects")
             -- Find file
             vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<CR>", opt)
             -- Global search
             vim.api.nvim_set_keymap("n", "<C-g>", ":Telescope live_grep<CR>", opt)
-        end,
+
+            require("telescope").load_extension("projects")
+        end
     },
 
     -- Gitsigns
@@ -440,15 +447,7 @@ require("lazy").setup({
         config = function()
             require("nvim-treesitter.install").prefer_git = true
             require("nvim-treesitter.configs").setup({
-                ensure_installed = {
-                    "json",
-                    "vim",
-                    "lua",
-                    "rust",
-                    "c",
-                    "cpp",
-                    "toml",
-                },
+                ensure_installed = 'all',
                 highlight = { enable = true },
             })
         end,
@@ -483,4 +482,16 @@ require("lazy").setup({
             -- TODO try pick and extra
         end
     },
+
+    {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require('blame').setup()
+            vim.api.nvim_set_keymap("n", "<leader>b", ":ToggleBlame window<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<leader>c", ":DisableBlame<CR>", opt)
+        end
+    },
 })
+
+-- Reopen last Telescope window, super useful for live grep
+vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)

@@ -23,6 +23,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias n=nvim
+alias lg=lazygit
 
 
 if [ "$(uname)"=="Darwin" ]; then
