@@ -87,6 +87,8 @@ PS1=$PS1'`__git_ps1 " (%s)"`'
 # last command status
 export PS1=$PS1'\n\[\033[01;05m\]\$ \[\033[00m\]' # UID symbol
 
+# --------------------------------------------------
+# fzf configuration
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER='~~'
 

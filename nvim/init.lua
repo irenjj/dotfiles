@@ -116,6 +116,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
+vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -327,7 +328,7 @@ require("lazy").setup({
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+--            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
             vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
@@ -348,12 +349,21 @@ require("lazy").setup({
                     vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
                     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                     -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                    vim.keymap.set('n', '<leader>wl', function()
-                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                    end, opts)
+--                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+--                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+--                    vim.keymap.set('n', '<leader>wl', function()
+--                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+--                    end, opts)
                     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
+
+                    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
+                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+                    vim.keymap.set('n', '<leader>f', function()
+                        vim.lsp.buf.format { async = true }
+                    end, opts)
+
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
                     vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
                     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                     vim.keymap.set('n', '<leader>f', function()
@@ -375,6 +385,7 @@ require("lazy").setup({
             })
         end
     },
+
     -- LSP-based code-completion
     {
         "hrsh7th/nvim-cmp",
@@ -424,21 +435,6 @@ require("lazy").setup({
             })
         end
     },
---  -- inline function signatures
---  {
---      "ray-x/lsp_signature.nvim",
---      event = "VeryLazy",
---      opts = {},
---      config = function(_, opts)
---          -- Get signatures (and _only_ signatures) when in argument lists.
---          require "lsp_signature".setup({
---              doc_lines = 0,
---              handler_opts = {
---                  border = "none"
---              },
---          })
---      end
---  },
 
     -- Treesitter
     {
@@ -453,14 +449,14 @@ require("lazy").setup({
         end,
     },
 
-    {
-        -- Remember last cursor position
-        -- https://github.com/neovim/neovim/issues/16339
-        'ethanholz/nvim-lastplace',
-        config = function()
-            require('nvim-lastplace').setup()
-        end
-    },
+--    {
+--        -- Remember last cursor position
+--        -- https://github.com/neovim/neovim/issues/16339
+--        'ethanholz/nvim-lastplace',
+--        config = function()
+--            require('nvim-lastplace').setup()
+--        end
+--    },
 
     {
         'echasnovski/mini.nvim',
@@ -475,11 +471,7 @@ require("lazy").setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
             })
---            require('mini.misc').setup()
---            MiniMisc.setup_auto_root()
             require('mini.cursorword').setup()
---            require('mini.statusline').setup()
-            -- TODO try pick and extra
         end
     },
 
