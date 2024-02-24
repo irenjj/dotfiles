@@ -1,31 +1,66 @@
-# Colors (One Dark)
+## Colors (One Dark)
+#colors:
+#  primary:
+#    background: '#1A1D23'
+#    foreground: '#cacccf'
+#
+#  cursor:
+#    cursor: '#a277ff'
+#
+#  normal:
+#    black: '#1e2127'
+#    red: '#e06c75'
+#    green: '#98c379'
+#    yellow: '#d19a66'
+#    blue: '#61afef'
+#    magenta: '#c678dd'
+#    cyan: '#56b6c2'
+#    white: '#abb2bf'
+#
+#  bright:
+#    black: '#5c6370'
+#    red: '#e06c75'
+#    green: '#98c379'
+#    yellow: '#d19a66'
+#    blue: '#61afef'
+#    magenta: '#c678dd'
+#    cyan: '#56b6c2'
+#    white: '#ffffff'
+#
+#  search:
+#    matches:
+#      foreground: '#000000'
+#      background: '#ffffff'
+#    focused_match:
+#      foreground: '#ffffff'
+#      background: '#9F7AF5'
+
+# github Alacritty Colors
+
 colors:
   primary:
-    background: '#1A1D23'
-    foreground: '#cacccf'
-
-  cursor:
-    cursor: '#a277ff'
+    background : '#f8f8f8'
+    foreground : '#24292f'
 
   normal:
-    black: '#1e2127'
-    red: '#e06c75'
-    green: '#98c379'
-    yellow: '#d19a66'
-    blue: '#61afef'
-    magenta: '#c678dd'
-    cyan: '#56b6c2'
-    white: '#abb2bf'
+    black   : '#24292e'
+    red     : '#d73a49'
+    green   : '#28a745'
+    yellow  : '#dbab09'
+    blue    : '#0366d6'
+    magenta : '#5a32a3'
+    cyan    : '#0598bc'
+    white   : '#6a737d'
 
   bright:
-    black: '#5c6370'
-    red: '#e06c75'
-    green: '#98c379'
-    yellow: '#d19a66'
-    blue: '#61afef'
-    magenta: '#c678dd'
-    cyan: '#56b6c2'
-    white: '#ffffff'
+    black   : '#959da5'
+    red     : '#cb2431'
+    green   : '#22863a'
+    yellow  : '#b08800'
+    blue    : '#005cc5'
+    magenta : '#5a32a3'
+    cyan    : '#3192aa'
+    white   : '#d1d5da'
 
   search:
     matches:
@@ -49,7 +84,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 13.5
+  size: 14
 
   offset:
     x: 0
@@ -59,7 +94,7 @@ font:
     y: 0
 
 window:
-  startup_mode: SimpleFullscreen
+  #startup_mode: SimpleFullscreen
   #decorations: none
   decorations: buttonless
 
@@ -71,12 +106,12 @@ selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'
   save_to_clipboard: true
 
-shell:
-  program: /bin/bash
-  args:
-    - --login
-    - -c
-    - "tmux new-session -A -D -s main"
+#shell:
+#  program: /bin/bash
+#  args:
+#    - --login
+#    - -c
+#    - "tmux new-session -A -D -s main"
 
 live_config_reload: true
 
@@ -116,20 +151,16 @@ key_bindings:
   - { key: J,        mods: Command,       chars: "\x1cj"    } # go to the pane above
   - { key: K,        mods: Command,       chars: "\x1ck"    } # go to the pane below
   - { key: L,        mods: Command,       chars: "\x1cl"    } # go to the pane right
-  - { key: Left,     mods: Command,       chars: "\x1ch"    }
-  - { key: Down,     mods: Command,       chars: "\x1cj"    }
-  - { key: Up,       mods: Command,       chars: "\x1ck"    }
-  - { key: Right,    mods: Command,       chars: "\x1cl"    }
 
   # ----- resize panes -----
-  - { key: H,        mods: Command|Shift, chars: "\x1cH"    } # resize the current pane left
-  - { key: J,        mods: Command|Shift, chars: "\x1cJ"    } # resize the current pane above
-  - { key: K,        mods: Command|Shift, chars: "\x1cK"    } # resize the current pane below
-  - { key: L,        mods: Command|Shift, chars: "\x1cL"    } # resize the current pane right
-  - { key: Left,     mods: Command|Shift, chars: "\x1cH"    }
-  - { key: Down,     mods: Command|Shift, chars: "\x1cJ"    }
-  - { key: Up,       mods: Command|Shift, chars: "\x1cK"    }
-  - { key: Right,    mods: Command|Shift, chars: "\x1cL"    }
+  - { key: H,        mods: Command|Shift, chars: "\x1cH"         } # resize the current pane left
+  - { key: J,        mods: Command|Shift, chars: "\x1cJ"         } # resize the current pane above
+  - { key: K,        mods: Command|Shift, chars: "\x1cK"         } # resize the current pane below
+  - { key: L,        mods: Command|Shift, chars: "\x1cL"         } # resize the current pane right
+  - { key: Left,     mods: Command|Shift, chars: "\x1c\x1b[D"    }
+  - { key: Down,     mods: Command|Shift, chars: "\x1c\x1b[B"    }
+  - { key: Up,       mods: Command|Shift, chars: "\x1c\x1b[A"    }
+  - { key: Right,    mods: Command|Shift, chars: "\x1c\x1b[C"    }
 
   # ----- navigate tabs -----
   - { key: i,        mods: Command,       chars: "\x1ci"    } # go to previous tab
