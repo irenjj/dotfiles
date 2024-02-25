@@ -122,7 +122,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
 
-vim.keymap.set("n", "<leader>e", ":lua require'rust-tools'.expand_macro.expand_macro()<CR>", opt)
+vim.keymap.set("n", "<leader>e", ":RustLsp expandMacro<CR>", opt)
+
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -288,29 +289,29 @@ require("lazy").setup({
             local lspconfig = require('lspconfig')
 
             -- Rust
-            lspconfig.rust_analyzer.setup {
-                -- Server-specific settings. See `:help lspconfig-setup`
-                settings = {
-                    ["rust-analyzer"] = {
-                        cargo = {
-                            allFeatures = true,
-                        },
-                        imports = {
-                            group = {
-                                enable = false,
-                            },
-                        },
-                        completion = {
-                            postfix = {
-                                enable = false,
-                            },
-                        },
-                        diagnostics = {
-                            enable = true;
-                        },
-                    },
-                },
-            }
+---            lspconfig.rust_analyzer.setup {
+---                -- Server-specific settings. See `:help lspconfig-setup`
+---                settings = {
+---                    ["rust-analyzer"] = {
+---                        cargo = {
+---                            allFeatures = true,
+---                        },
+---                        imports = {
+---                            group = {
+---                                enable = false,
+---                            },
+---                        },
+---                        completion = {
+---                            postfix = {
+---                                enable = false,
+---                            },
+---                        },
+---                        diagnostics = {
+---                            enable = true;
+---                        },
+---                    },
+---                },
+---            }
 
             -- Bash LSP
             local configs = require 'lspconfig.configs'
@@ -400,10 +401,12 @@ require("lazy").setup({
         -- these dependencies will only be loaded when cmp loads
         -- dependencies are always lazy-loaded unless specified otherwise
         dependencies = {
-            'neovim/nvim-lspconfig',
+            "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "hrsh7th/vim-vsnip",
+            "hrsh7th/vim-vsnip-integ",
         },
         config = function()
             local cmp = require'cmp'
@@ -442,17 +445,10 @@ require("lazy").setup({
         end
     },
 
-    -- rust-tools
     {
-        "simrat39/rust-tools.nvim",
-        config = function()
-            require("rust-tools").setup({
-                  server = {
-                    on_attach = function(_, bufnr)
-                    end,
-                  },
-            })
-        end
+        'mrcjkb/rustaceanvim',
+        version = '^4', -- Recommended
+        ft = { 'rust' },
     },
 
     -- Treesitter
