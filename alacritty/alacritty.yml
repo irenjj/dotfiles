@@ -1,66 +1,31 @@
-## Colors (One Dark)
-#colors:
-#  primary:
-#    background: '#1A1D23'
-#    foreground: '#cacccf'
-#
-#  cursor:
-#    cursor: '#a277ff'
-#
-#  normal:
-#    black: '#1e2127'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#abb2bf'
-#
-#  bright:
-#    black: '#5c6370'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#ffffff'
-#
-#  search:
-#    matches:
-#      foreground: '#000000'
-#      background: '#ffffff'
-#    focused_match:
-#      foreground: '#ffffff'
-#      background: '#9F7AF5'
-
-# github Alacritty Colors
-
+# Colors (One Dark)
 colors:
   primary:
-    background : '#f8f8f8'
-    foreground : '#24292f'
+    background: '#1A1D23'
+    foreground: '#cacccf'
+
+  cursor:
+    cursor: '#a277ff'
 
   normal:
-    black   : '#24292e'
-    red     : '#d73a49'
-    green   : '#28a745'
-    yellow  : '#dbab09'
-    blue    : '#0366d6'
-    magenta : '#5a32a3'
-    cyan    : '#0598bc'
-    white   : '#6a737d'
+    black: '#1e2127'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#abb2bf'
 
   bright:
-    black   : '#959da5'
-    red     : '#cb2431'
-    green   : '#22863a'
-    yellow  : '#b08800'
-    blue    : '#005cc5'
-    magenta : '#5a32a3'
-    cyan    : '#3192aa'
-    white   : '#d1d5da'
+    black: '#5c6370'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#ffffff'
 
   search:
     matches:
@@ -69,6 +34,41 @@ colors:
     focused_match:
       foreground: '#ffffff'
       background: '#9F7AF5'
+
+## github Alacritty Colors
+#
+#colors:
+#  primary:
+#    background : '#f8f8f8'
+#    foreground : '#24292f'
+#
+#  normal:
+#    black   : '#24292e'
+#    red     : '#d73a49'
+#    green   : '#28a745'
+#    yellow  : '#dbab09'
+#    blue    : '#0366d6'
+#    magenta : '#5a32a3'
+#    cyan    : '#0598bc'
+#    white   : '#6a737d'
+#
+#  bright:
+#    black   : '#959da5'
+#    red     : '#cb2431'
+#    green   : '#22863a'
+#    yellow  : '#b08800'
+#    blue    : '#005cc5'
+#    magenta : '#5a32a3'
+#    cyan    : '#3192aa'
+#    white   : '#d1d5da'
+#
+#  search:
+#    matches:
+#      foreground: '#000000'
+#      background: '#ffffff'
+#    focused_match:
+#      foreground: '#ffffff'
+#      background: '#9F7AF5'
 
 font:
   normal:
@@ -94,7 +94,7 @@ font:
     y: 0
 
 window:
-  #startup_mode: SimpleFullscreen
+  startup_mode: SimpleFullscreen
   #decorations: none
   decorations: buttonless
 
@@ -106,12 +106,12 @@ selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'
   save_to_clipboard: true
 
-#shell:
-#  program: /bin/bash
-#  args:
-#    - --login
-#    - -c
-#    - "tmux new-session -A -D -s main"
+shell:
+  program: /bin/bash
+  args:
+    - --login
+    - -c
+    - "tmux new-session -A -D -s main"
 
 live_config_reload: true
 

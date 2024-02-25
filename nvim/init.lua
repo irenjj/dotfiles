@@ -107,6 +107,10 @@ vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
 vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
 vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
 vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
+vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
+vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
+vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 
 vim.keymap.set('n', '<C-o>', '<C-o>zz')
 vim.keymap.set('n', '<C-i>', '<C-i>zz')
@@ -117,6 +121,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
+
+vim.keymap.set("n", "<leader>e", ":lua require'rust-tools'.expand_macro.expand_macro()<CR>", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -436,6 +442,19 @@ require("lazy").setup({
         end
     },
 
+    -- rust-tools
+    {
+        "simrat39/rust-tools.nvim",
+        config = function()
+            require("rust-tools").setup({
+                  server = {
+                    on_attach = function(_, bufnr)
+                    end,
+                  },
+            })
+        end
+    },
+
     -- Treesitter
     {
         "nvim-treesitter/nvim-treesitter",
@@ -448,15 +467,6 @@ require("lazy").setup({
             })
         end,
     },
-
---    {
---        -- Remember last cursor position
---        -- https://github.com/neovim/neovim/issues/16339
---        'ethanholz/nvim-lastplace',
---        config = function()
---            require('nvim-lastplace').setup()
---        end
---    },
 
     {
         'echasnovski/mini.nvim',
