@@ -124,7 +124,6 @@ vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
 
 vim.keymap.set("n", "<leader>e", ":RustLsp expandMacro<CR>", opt)
 
-
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
