@@ -122,7 +122,11 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
 
-vim.keymap.set("n", "<leader>e", ":RustLsp expandMacro<CR>", opt)
+vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
+vim.keymap.set("n", "<leader>lo", ":RustLsp openCargo<CR>", opt)
+vim.keymap.set("n", "<leader>lt", ":RustLsp syntaxTree<CR>", opt)
+vim.keymap.set("n", "<leader>lr", ":RustLsp flyCheck run<CR>", opt)
+vim.keymap.set("n", "<leader>lc", ":RustLsp flyCheck cancel<CR>", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -288,29 +292,25 @@ require("lazy").setup({
             local lspconfig = require('lspconfig')
 
             -- Rust
----            lspconfig.rust_analyzer.setup {
----                -- Server-specific settings. See `:help lspconfig-setup`
----                settings = {
----                    ["rust-analyzer"] = {
----                        cargo = {
----                            allFeatures = true,
----                        },
----                        imports = {
----                            group = {
----                                enable = false,
----                            },
----                        },
----                        completion = {
----                            postfix = {
----                                enable = false,
----                            },
----                        },
----                        diagnostics = {
----                            enable = true;
----                        },
----                    },
----                },
----            }
+--            lspconfig.rust_analyzer.setup {
+--                -- Server-specific settings. See `:help lspconfig-setup`
+--                settings = {
+--                    ["rust-analyzer"] = {
+--                        cargo = {
+--                            allFeatures = true,
+--                        },
+--                        diagnostics = {
+--                            enable = true;
+--                        },
+--                        checkOnSave = true,
+--                        check = {
+--                            enable = true,
+--                            command = "check",
+--                            features = "all",
+--                         },
+--                    },
+--                },
+--            }
 
             -- Bash LSP
             local configs = require 'lspconfig.configs'
@@ -467,7 +467,7 @@ require("lazy").setup({
         'echasnovski/mini.nvim',
         config = function()
             -- require('mini.bracketed').setup()
-            -- require('mini.comment').setup()
+            require('mini.comment').setup()
             require('mini.jump2d').setup()
             -- require('mini.move').setup()
             require('mini.pairs').setup()
@@ -492,3 +492,32 @@ require("lazy").setup({
 
 -- Reopen last Telescope window, super useful for live grep
 vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+
+vim.g.rustaceanvim = {
+    -- LSP configuration
+    server = {
+        on_attach = function(client, bufnr)
+          -- you can also put keymaps in here
+        end,
+        default_settings = {
+            -- rust-analyzer language server configuration
+            ['rust-analyzer'] = {
+                cargo = {
+                    allFeatures = true,
+                },
+                completion = {
+                    postfix = {
+                        enable = false,
+                    },
+                },
+                diagnostics = {
+                    enable = true;
+                },
+                checkOnSave = {
+                    enable = true,
+                    command = "check",
+                }
+            },
+        },
+    },
+}
