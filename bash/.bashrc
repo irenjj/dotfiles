@@ -24,6 +24,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias n=nvim
+alias v=nvim
+alias vim=nvim
 alias lg=lazygit
 
 

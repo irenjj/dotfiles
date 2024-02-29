@@ -11,9 +11,10 @@ services:
       dockerfile: Dockerfile
     # restart: always
     volumes:
-      - ~/work/code/foundationdb:/home/renjj/work/code/foundationdb:Z
+      - ~/code/foundationdb:/home/renjj/code/foundationdb:Z
       - ./entrypoint.sh:/home/renjj/entrypoint.sh
       - ./fdb.cluster:/etc/foundationdb/fdb.cluster
+      - ./.bashrc:/home/renjj/.bashrc
     ports:
       - 4000:4000/tcp
       - "45678:22"

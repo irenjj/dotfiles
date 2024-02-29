@@ -122,11 +122,11 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
 
+vim.keymap.set("n", "<leader>p", ":echo expand('%:p')<CR>", opt)
+
 vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
 vim.keymap.set("n", "<leader>lo", ":RustLsp openCargo<CR>", opt)
 vim.keymap.set("n", "<leader>lt", ":RustLsp syntaxTree<CR>", opt)
-vim.keymap.set("n", "<leader>lr", ":RustLsp flyCheck run<CR>", opt)
-vim.keymap.set("n", "<leader>lc", ":RustLsp flyCheck cancel<CR>", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -202,7 +202,13 @@ require("lazy").setup({
     },
 
     -- Lualine
-    { "nvim-lualine/lualine.nvim", dependencies = "nvim-tree/nvim-web-devicons", config = function()
+    {
+        'arkav/lualine-lsp-progress',
+    },
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = "nvim-tree/nvim-web-devicons",
+        config = function()
             require("lualine").setup({
                 options = {
                       theme = "auto",
@@ -210,11 +216,11 @@ require("lazy").setup({
                 },
                 extensions = { "nvim-tree" },
                 sections = {
-                    lualine_c = {},
+                    lualine_c = { 'lsp_progress' },
                     lualine_x = {
                         {
-                            "filename",
-                            path = 1,
+--                            "filename",
+--                            path = 1,
                         },
                     },
                 },
@@ -467,7 +473,7 @@ require("lazy").setup({
         'echasnovski/mini.nvim',
         config = function()
             -- require('mini.bracketed').setup()
-            require('mini.comment').setup()
+--            require('mini.comment').setup()
             require('mini.jump2d').setup()
             -- require('mini.move').setup()
             require('mini.pairs').setup()
