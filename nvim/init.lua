@@ -14,7 +14,7 @@ vim.o.fileencoding = "utf-8"
 vim.wo.number = true
 
 -- Highlight current line
--- vim.wo.cursorline = true
+vim.wo.cursorline = true
 
 -- Tab
 vim.o.tabstop = 4
@@ -151,8 +151,26 @@ require("lazy").setup({
             require("astrotheme").setup({
                 palettes = {
                     astrodark = {
+                        syntax = {
+                            --text = "#a7a9c2",
+                            comment = "#7b7f8c",
+                        },
                         ui = {
-                            --base = "#282c34",
+                            selection = "#404959",
+                            menu_selection = "#404959",
+
+                            base = "#282c34",
+                            tabline = "#282c34",
+                            statusline = "#282c34",
+                            tool = "#282c34",
+                            current_line = "#282c34",
+
+                            split = "#323842",
+                            inactive_base = "#323842",
+
+                            float = "#262930",
+
+                            none_text = "#51556e",
                         }
                     }
                 }
@@ -341,8 +359,8 @@ require("lazy").setup({
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 --            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-            vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+            vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev)
+            vim.keymap.set('n', 'g]', vim.diagnostic.goto_next)
             vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
             -- Use LspAttach autocommand to only map the following keys
@@ -368,15 +386,7 @@ require("lazy").setup({
 --                    end, opts)
                     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
 
-                    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                    vim.keymap.set('n', '<leader>f', function()
-                        vim.lsp.buf.format { async = true }
-                    end, opts)
-
-                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-                    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
+                    vim.keymap.set({ 'n', 'v' }, '<leader>.', vim.lsp.buf.code_action, opts)
                     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                     vim.keymap.set('n', '<leader>f', function()
                         vim.lsp.buf.format { async = true }
