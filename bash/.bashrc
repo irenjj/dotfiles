@@ -18,16 +18,21 @@ export PATH=/usr/local/lib:$PATH
 
 # --------------------------------------------------
 # alias
-alias rdb=rust-lldb
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias n=nvim
-alias v=nvim
 alias vim=nvim
 alias lg=lazygit
 
+# rust
+alias rdb=rust-lldb
+alias cb='cargo build'
+alias cy='cargo clippy'
+alias cn='cargo clean'
+alias ct='cargo test'
+alias ctn='cargo test --no-run'
+alias cr='cargo run'
 
 if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
