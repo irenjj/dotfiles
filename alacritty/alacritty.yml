@@ -84,7 +84,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 17
+  size: 16.5
 
   offset:
     x: 0
@@ -179,7 +179,7 @@ key_bindings:
   - { key: r,       mods: Command,        chars: "\x02r"    }
 
   # ----- max pane -----
-  - { key: m,       mods: Command,        chars: "\x1cm"    }
+  - { key: m,       mods: Command,        chars: "\x02m"    }
 
   - { key: t,  mods: Command, action: CreateNewWindow }
 

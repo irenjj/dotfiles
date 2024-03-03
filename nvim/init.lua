@@ -277,21 +277,27 @@ require("lazy").setup({
               pickers = {
                 git_files = {
                   theme = 'ivy',
+                  preview = true,
+                },
+                live_grep = {
+                  theme = 'ivy',
+                  preview = true,
+                },
+
+                find_files = {
+                  theme = 'ivy',
+                  preview = true,
                 },
                 buffers = {
                   theme = 'ivy',
                   sort_mru = true,
                 },
-                live_grep = {
-                  theme = 'ivy',
-                  preview = true
-                }
               },
             })
-            -- Find file
-            vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope find_files<CR>", opt)
-            -- Global search
-            vim.api.nvim_set_keymap("n", "<C-g>", ":Telescope live_grep<CR>", opt)
+
+            vim.keymap.set('n', '<C-p>', require('telescope.builtin').git_files)
+            vim.keymap.set('n', '<C-g>', require('telescope.builtin').live_grep) -- requires ripgrep
+            vim.keymap.set('n', '<C-h>', require('telescope.builtin').find_files)
 
             require("telescope").load_extension("projects")
         end
@@ -308,9 +314,6 @@ require("lazy").setup({
     -- LSP
     {
         'neovim/nvim-lspconfig',
-            opts = {
-                inlay_hints = { enable = true },
-            },
         config = function()
             -- Setup language servers.
             local lspconfig = require('lspconfig')
@@ -335,6 +338,12 @@ require("lazy").setup({
 --                    },
 --                },
 --            }
+
+            -- Cpp
+            lspconfig.clangd.setup({
+                on_attach = on_attach,
+                capabilities = capabilities
+            })
 
             -- Bash LSP
             local configs = require 'lspconfig.configs'
