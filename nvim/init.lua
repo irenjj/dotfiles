@@ -151,26 +151,8 @@ require("lazy").setup({
             require("astrotheme").setup({
                 palettes = {
                     astrodark = {
-                        syntax = {
-                            --text = "#a7a9c2",
-                            comment = "#7b7f8c",
-                        },
                         ui = {
-                            selection = "#404959",
-                            menu_selection = "#404959",
-
-                            base = "#282c34",
-                            tabline = "#282c34",
-                            statusline = "#282c34",
-                            tool = "#282c34",
-                            current_line = "#282c34",
-
-                            split = "#323842",
-                            inactive_base = "#323842",
-
-                            float = "#262930",
-
-                            none_text = "#51556e",
+                            current_line = "#1a1d23",
                         }
                     }
                 }

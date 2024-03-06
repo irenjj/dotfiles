@@ -1,7 +1,7 @@
 # Colors (One Dark)
 colors:
   primary:
-    background: '#282c34'
+    background: '#1a1d23'
     foreground: '#c7c7c7'
 
   cursor:
@@ -84,7 +84,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 16.5
+  size: 16
 
   offset:
     x: 0
