@@ -1,0 +1,8 @@
+layout {
+    pane name="" size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
+    pane
+}
+session_name "0"
+attach_to_session true
