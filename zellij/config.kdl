@@ -48,29 +48,10 @@ keybinds clear-defaults=true {
     scroll {
         bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-        bind "j" "Down" { ScrollDown; }
-        bind "k" "Up" { ScrollUp; }
-        bind "d" { HalfPageScrollDown; }
-        bind "u" { HalfPageScrollUp; }
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
         bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
-
-        // ----- search -----
-        bind "w" { SearchToggleOption "Wrap"; }
-        bind "o" { SearchToggleOption "WholeWord"; }
-        bind "c" { SearchToggleOption "CaseSensitivity"; }
-        bind "/" { SwitchToMode "EnterSearch"; SearchInput 0; }
-        bind "n" { Search "down"; }
-        bind "p" { Search "up"; }
     }
-    entersearch {
-        bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
-        bind "Enter" { SwitchToMode "Search"; }
-    }
-    renametab {
-        bind "Ctrl c" { SwitchToMode "Normal"; }
-        bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
-    }
-
 
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
