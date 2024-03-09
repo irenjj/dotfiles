@@ -3,6 +3,14 @@ layout {
         plugin location="zellij:compact-bar"
     }
     pane
+    floating_panes {
+        pane {
+            x "10%"
+            y "5%"
+            width "80%"
+            height "95%"
+        }
+    }
 }
 session_name "0"
 attach_to_session true

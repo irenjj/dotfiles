@@ -34,12 +34,3 @@ ln -s ${CONF_DIR}/nvim ${HOME}/.config/nvim
 unlink ${HOME}/.config/zellij
 ln -s ${CONF_DIR}/zellij ${HOME}/.config/zellij
 
-# zsh
-#rm -rf ${HOME}/.oh-my-zsh
-#git clone https://github.com/ohmyzsh/ohmyzsh.git ${HOME}/.oh-my-zsh
-#git clone https://github.com/zsh-users/zsh-autosuggestions ${HOME}/.oh-my-zsh/plugins/zsh-autosuggestions
-#git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
-#unlink ${HOME}/.zshrc
-#unlink ${HOME}/.zshenv
-#ln -s ${CONF_DIR}/zsh/.zshrc ${HOME}/.zshrc
-#ln -s ${CONF_DIR}/zsh/.zshenv ${HOME}/.zshenv
