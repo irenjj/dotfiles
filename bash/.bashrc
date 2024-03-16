@@ -27,13 +27,7 @@ alias lg=lazygit
 
 # rust
 alias rdb=rust-lldb
-alias cb='cargo build'
-alias cy='cargo clippy'
-alias cn='cargo clean'
-alias ct='cargo test'
 alias ctn='cargo test --no-run'
-alias cr='cargo run'
-alias cs='cargo search'
 
 if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
