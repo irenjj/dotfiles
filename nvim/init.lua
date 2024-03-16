@@ -98,6 +98,11 @@ vim.o.pumheight = 10
 -- Always display the tabline
 vim.o.showtabline = 2
 
+-- Code folding.
+vim.api.nvim_win_set_option(0, 'foldmethod', 'indent')
+vim.api.nvim_win_set_option(0, 'foldlevel', 99)
+vim.api.nvim_win_set_option(0, 'fillchars', 'fold: ')
+
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
@@ -186,7 +191,7 @@ require("lazy").setup({
         config = function()
             require("bufferline").setup({
                 options = {
---                    diagnostics = "nvim_lsp",
+                    --diagnostics = "nvim_lsp",
                 },
             })
 
@@ -219,8 +224,8 @@ require("lazy").setup({
                     lualine_c = { 'lsp_progress' },
                     lualine_x = {
                         {
---                            "filename",
---                            path = 1,
+                            -- "filename",
+                            -- path = 1,
                         },
                     },
                 },
@@ -433,9 +438,13 @@ require("lazy").setup({
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                }, {
+                    {
+                        name = 'nvim_lsp'
+                    },
+                },
+                {
                     { name = 'path' },
+                    { name = "codeium" }
                 }),
                 experimental = {
                     -- ghost_text = true,
@@ -474,7 +483,7 @@ require("lazy").setup({
         'echasnovski/mini.nvim',
         config = function()
             -- require('mini.bracketed').setup()
---            require('mini.comment').setup()
+            -- require('mini.comment').setup()
             require('mini.jump2d').setup()
             -- require('mini.move').setup()
             require('mini.pairs').setup()
@@ -507,6 +516,10 @@ require("lazy").setup({
           -- Your setup opts here
         },
     },
+
+    {
+        "Exafunction/codeium.vim",
+     },
 })
 
 -- Reopen last Telescope window, super useful for live grep

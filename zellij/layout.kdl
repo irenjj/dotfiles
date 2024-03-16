@@ -2,7 +2,11 @@ layout {
     pane name="" size=1 borderless=true {
         plugin location="zellij:compact-bar"
     }
-    pane
+
+    pane split_direction="vertical" {
+        pane size="55%"
+        pane
+    }
     floating_panes {
         pane {
             x "10%"

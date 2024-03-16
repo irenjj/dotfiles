@@ -84,7 +84,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 16
+  size: 17
 
   offset:
     x: 0
@@ -198,6 +198,7 @@ key_bindings:
   # ----- unbind -----
   - { key: H,        mods: Command,       action: None }
   - { key: Q,        mods: Command,       action: None }
+  - { key: T,        mods: Command,       action: None }
 
   # ----- change font size ----
   - { key: Key0,     mods: Command,       action: ResetFontSize    }
@@ -208,7 +209,7 @@ key_bindings:
   - { key: D,        mods: Command,       chars: "\x02%"    } # new vertical pane with default shell
   - { key: D,        mods: Command|Shift, chars: "\x02\""    } # new vertical pane with commands menu
   - { key: N,        mods: Command,       chars: "\x02c"    } # new tab with default shell
-  - { key: T,        mods: Command,       action: CreateNewWindow } # new alacritty
+#  - { key: T,        mods: Command,       action: CreateNewWindow } # new alacritty
 
   # ----- close pane/tab/window -----
   - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
