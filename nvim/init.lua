@@ -96,7 +96,7 @@ vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.pumheight = 10
 
 -- Always display the tabline
-vim.o.showtabline = 2
+vim.o.showtabline = 0
 
 -- Code folding.
 vim.api.nvim_win_set_option(0, 'foldmethod', 'indent')
@@ -116,6 +116,7 @@ vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
+
 
 vim.keymap.set('n', '<C-o>', '<C-o>zz')
 vim.keymap.set('n', '<C-i>', '<C-i>zz')
@@ -180,31 +181,28 @@ require("lazy").setup({
                     },
                 },
             })
-        end,
-    },
-
-    -- Bufferline
-    {
-        "akinsho/bufferline.nvim",
-        version = "*",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("bufferline").setup({
-                options = {
-                    --diagnostics = "nvim_lsp",
-                },
-            })
-
-            -- Open/close tree
+            -- Open/close nvim-tree.
             vim.api.nvim_set_keymap("n", "<C-f>f", ":NvimTreeToggle<CR>", opt)
-            -- Switch between tabs
-            vim.api.nvim_set_keymap("n", "<C-f>i", ":BufferLineCyclePrev<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<C-f>o", ":BufferLineCycleNext<CR>", opt)
-            -- Close current tab
-            vim.api.nvim_set_keymap("n", "<C-f>w", ":bdelete!<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<C-f>e", ":BufferLineCloseOthers<CR>", opt)
         end,
     },
+
+--    -- Bufferline
+--    {
+--        "akinsho/bufferline.nvim",
+--        version = "*",
+--        dependencies = { "nvim-tree/nvim-web-devicons" },
+--        config = function()
+--            require("bufferline").setup({
+--                options = {
+--                    --diagnostics = "nvim_lsp",
+--                },
+--            })
+--
+--            -- Close current tab
+--            vim.api.nvim_set_keymap("n", "<C-f>w", ":bdelete!<CR>", opt)
+--            vim.api.nvim_set_keymap("n", "<C-f>e", ":BufferLineCloseOthers<CR>", opt)
+--        end,
+--    },
 
     -- Lualine
     {
@@ -224,7 +222,7 @@ require("lazy").setup({
                     lualine_c = { 'lsp_progress' },
                     lualine_x = {
                         {
-                            -- "filename",
+                            "filename",
                             -- path = 1,
                         },
                     },
@@ -277,14 +275,16 @@ require("lazy").setup({
                 },
                 buffers = {
                   theme = 'ivy',
+                  preview = true,
                   sort_mru = true,
                 },
               },
             })
 
-            vim.keymap.set('n', '<C-p>', require('telescope.builtin').git_files)
-            vim.keymap.set('n', '<C-g>', require('telescope.builtin').live_grep) -- requires ripgrep
-            vim.keymap.set('n', '<C-h>', require('telescope.builtin').find_files)
+            vim.keymap.set('n', '<C-f>p', require('telescope.builtin').git_files)
+            vim.keymap.set('n', '<C-f>g', require('telescope.builtin').live_grep) -- requires ripgrep
+            -- vim.keymap.set('n', '<C-f>h', require('telescope.builtin').find_files)
+            vim.keymap.set('n', '<C-f>b', require('telescope.builtin').buffers)
 
             require("telescope").load_extension("projects")
         end
