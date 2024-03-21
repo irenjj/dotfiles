@@ -117,6 +117,8 @@ vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 
+vim.keymap.set("n", "<C-f>w", ": %bd!<CR>", opt)
+vim.keymap.set("n", "<C-f>e", ": %bd|e#|bd#<CR>", opt)
 
 vim.keymap.set('n', '<C-o>', '<C-o>zz')
 vim.keymap.set('n', '<C-i>', '<C-i>zz')
@@ -158,12 +160,33 @@ require("lazy").setup({
                 palettes = {
                     astrodark = {
                         ui = {
-                            current_line = "#1a1d23",
+                            current_line = "#1A1D23",
                         }
-                    }
+                    },
+                    astrolight = {
+                        ui = {
+                            inactive_base = "#F7F8F8",
+                            current_line = "#F7F8F8",
+                            tabline = "#F0F0F0",
+                            statusline = "#F0F0F0",
+                            float = "#F0F0F0",
+                        },
+                        syntax = {
+                            red = "#871094", -- param
+                            blue = "#043ABD", -- fn
+                            green = "#2b8a06",
+                            yellow = "#E69400",
+                            purple = "#785201", -- key
+                            cyan = "#C15200", -- struct
+                            orange = "#4F4F4F", -- param
+
+                            comment = "#9BA0A3",
+                        }
+                    },
                 }
             })
-            vim.cmd.colorscheme("astrodark")
+            -- vim.cmd.colorscheme("astrodark")
+            vim.cmd.colorscheme("astrolight")
         end,
     },
 
@@ -179,6 +202,9 @@ require("lazy").setup({
                         resize_window = true,
                         quit_on_open = true,
                     },
+                },
+                view = {
+                    side = "right",
                 },
             })
             -- Open/close nvim-tree.
@@ -513,7 +539,11 @@ require("lazy").setup({
             { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
-          -- Your setup opts here
+            outline_window = {
+                win_position = 'left',
+                split_command = 'topleft vsplit',
+                width = 20, 
+            },
         },
     },
 

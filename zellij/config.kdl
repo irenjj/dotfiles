@@ -148,25 +148,38 @@ pane_frames false
 // Once these themes are defined, one of them should to be selected in the "theme" section of this file
 //
 themes {
-    one-half-dark {
-        fg 220 223 228
-        bg 40 44 52
-        black 27 29 35
-        red 227 63 76
-        green 152 195 121
-        yellow 229 192 123
-        blue 97 175 239
-        magenta 198 120 221
-        cyan 86 182 194
-        white 233 225 254
-        orange 216 133 76
+//    one-half-dark {
+//        fg 220 223 228
+//        bg 40 44 52
+//        black 27 29 35
+//        red 227 63 76
+//        green 152 195 121
+//        yellow 229 192 123
+//        blue 97 175 239
+//        magenta 198 120 221
+//        cyan 86 182 194
+//        white 233 225 254
+//        orange 216 133 76
+//    }
+    one-light {
+        fg 36 41 47
+        bg 247 248 248
+        black 247 248 248
+        red 199 6 9
+        green 40 140 0
+        yellow 217 140 2
+        blue 4 58 189
+        magenta 90 50 163
+        cyan 29 169 204
+        white 106 115 125
+        orange 193 82 0
     }
 }
 
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "one-half-dark"
+theme "one-light"
 
 // The name of the default layout to load on startup
 // Default: "default"
