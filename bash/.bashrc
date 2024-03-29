@@ -15,6 +15,8 @@ fi
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 source $HOME/.cargo/env
 export PATH=/usr/local/lib:$PATH
+export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
+export DYLD_LIBRARY_PATH=/usr/local/lib
 
 # --------------------------------------------------
 # alias
@@ -127,3 +129,4 @@ _fzf_comprun() {
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"

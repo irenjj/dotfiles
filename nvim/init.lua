@@ -1,4 +1,11 @@
 ------------------------------ Options ------------------------------
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- enable 24-bit colour
+vim.opt.termguicolors = true
+
 -- Rebind leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -42,7 +49,7 @@ vim.o.incsearch = true
 vim.wo.signcolumn = "yes"
 
 -- Command height
-vim.o.cmdheight = 2
+vim.o.cmdheight = 0
 
 -- Auto reload when edited
 vim.o.autoread = true
@@ -84,7 +91,7 @@ vim.opt.termguicolors = true
 
 -- Display of invisible characters, showing only spaces as dots here
 vim.o.list = true
-vim.opt.listchars = {trail = '~', tab = '▸ ', space = '·'}
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 
 -- Enhanced autocomplete
 vim.o.wildmenu = true
@@ -99,9 +106,9 @@ vim.o.pumheight = 10
 vim.o.showtabline = 0
 
 -- Code folding.
-vim.api.nvim_win_set_option(0, 'foldmethod', 'indent')
-vim.api.nvim_win_set_option(0, 'foldlevel', 99)
-vim.api.nvim_win_set_option(0, 'fillchars', 'fold: ')
+vim.api.nvim_win_set_option(0, "foldmethod", "indent")
+vim.api.nvim_win_set_option(0, "foldlevel", 99)
+vim.api.nvim_win_set_option(0, "fillchars", "fold: ")
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -120,12 +127,12 @@ vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>w", ": %bd!<CR>", opt)
 vim.keymap.set("n", "<C-f>e", ": %bd|e#|bd#<CR>", opt)
 
-vim.keymap.set('n', '<C-o>', '<C-o>zz')
-vim.keymap.set('n', '<C-i>', '<C-i>zz')
+vim.keymap.set("n", "<C-o>", "<C-o>zz")
+vim.keymap.set("n", "<C-i>", "<C-i>zz")
 
 -- More same behavior of 'k' and 'j' in wrapped lines
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr=true})
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr=true})
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
@@ -161,12 +168,12 @@ require("lazy").setup({
                     astrodark = {
                         ui = {
                             current_line = "#1A1D23",
-                        }
+                        },
                     },
                     astrolight = {
                         ui = {
-                            inactive_base = "#F7F8F8",
                             current_line = "#F7F8F8",
+                            inactive_base = "#F0F0F0",
                             tabline = "#F0F0F0",
                             statusline = "#F0F0F0",
                             float = "#F0F0F0",
@@ -175,27 +182,31 @@ require("lazy").setup({
                             red = "#871094", -- param
                             blue = "#043ABD", -- fn
                             green = "#2b8a06",
-                            yellow = "#E69400",
+                            yellow = "#871094",
                             purple = "#785201", -- key
                             cyan = "#C15200", -- struct
-                            orange = "#4F4F4F", -- param
+                            orange = "#4F4F4F", -- variable
 
                             comment = "#9BA0A3",
-                        }
+                        },
                     },
-                }
+                },
             })
             -- vim.cmd.colorscheme("astrodark")
             vim.cmd.colorscheme("astrolight")
         end,
     },
 
-    -- Nvim-tree
+--    -- Nvim-tree
     {
-        "kyazdani42/nvim-tree.lua",
-        event = "VimEnter",
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+          "nvim-tree/nvim-web-devicons",
+        },
         config = function()
-            require("nvim-tree").setup({
+            require("nvim-tree").setup ({
                 sort_by = "case_sensitive",
                 actions = {
                     open_file = {
@@ -212,127 +223,70 @@ require("lazy").setup({
         end,
     },
 
---    -- Bufferline
---    {
---        "akinsho/bufferline.nvim",
---        version = "*",
---        dependencies = { "nvim-tree/nvim-web-devicons" },
---        config = function()
---            require("bufferline").setup({
---                options = {
---                    --diagnostics = "nvim_lsp",
---                },
---            })
---
---            -- Close current tab
---            vim.api.nvim_set_keymap("n", "<C-f>w", ":bdelete!<CR>", opt)
---            vim.api.nvim_set_keymap("n", "<C-f>e", ":BufferLineCloseOthers<CR>", opt)
---        end,
---    },
-
-    -- Lualine
-    {
-        'arkav/lualine-lsp-progress',
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = "nvim-tree/nvim-web-devicons",
-        config = function()
-            require("lualine").setup({
-                options = {
-                      theme = "auto",
-                    component_separators = { left = "|", right = "|" },
-                },
-                extensions = { "nvim-tree" },
-                sections = {
-                    lualine_c = { 'lsp_progress' },
-                    lualine_x = {
-                        {
-                            "filename",
-                            -- path = 1,
-                        },
-                    },
-                },
-            })
-        end,
-    },
-
-    -- Project
-    {
-        "ahmedkhalf/project.nvim",
-        config = function()
-            vim.g.nvim_tree_respect_buf_cwd = 1
-            require("project_nvim").setup({
-                detection_methods = { "pattern" },
-                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".sln" },
-            })
-        end,
-    },
-
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            local actions = require('telescope.actions')
-            require 'telescope'.setup({
-              defaults = {
-                preview = false,
-                mappings = {
-                  i = {
-                    ['<esc>'] = actions.close, -- close on single <esc> press (instead of two)
-                  },
+            local actions = require("telescope.actions")
+            require("telescope").setup({
+                defaults = {
+                    preview = false,
+                    mappings = {
+                        i = {
+                            ["<esc>"] = actions.close, -- close on single <esc> press (instead of two)
+                        },
+                    },
                 },
-              },
-              pickers = {
-                git_files = {
-                  theme = 'ivy',
-                  preview = true,
+                pickers = {
+                    git_files = {
+                        theme = "ivy",
+                        preview = true,
+                    },
+                    live_grep = {
+                        theme = "ivy",
+                        preview = true,
+                    },
+                    buffers = {
+                        theme = "ivy",
+                        preview = true,
+                        sort_mru = true,
+                    },
                 },
-                live_grep = {
-                  theme = 'ivy',
-                  preview = true,
-                },
-
-                find_files = {
-                  theme = 'ivy',
-                  preview = true,
-                },
-                buffers = {
-                  theme = 'ivy',
-                  preview = true,
-                  sort_mru = true,
-                },
-              },
             })
 
-            vim.keymap.set('n', '<C-f>p', require('telescope.builtin').git_files)
-            vim.keymap.set('n', '<C-f>g', require('telescope.builtin').live_grep) -- requires ripgrep
-            -- vim.keymap.set('n', '<C-f>h', require('telescope.builtin').find_files)
-            vim.keymap.set('n', '<C-f>b', require('telescope.builtin').buffers)
-
-            require("telescope").load_extension("projects")
-        end
+            vim.keymap.set("n", "<C-f>p", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-f>g", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-f>b", require("telescope.builtin").buffers)
+        end,
     },
 
-    -- Gitsigns
+    -- Git
     {
         "lewis6991/gitsigns.nvim",
         config = function()
             require("gitsigns").setup()
         end,
     },
+    {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require('blame').setup()
+            vim.api.nvim_set_keymap("n", "<leader>b", ":ToggleBlame window<CR>", opt)
+            vim.api.nvim_set_keymap("n", "<leader>c", ":DisableBlame<CR>", opt)
+        end
+    },
 
     -- LSP
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         config = function()
             -- Setup language servers.
-            local lspconfig = require('lspconfig')
+            local lspconfig = require("lspconfig")
 
-            -- Rust
---            lspconfig.rust_analyzer.setup {
+--            -- Rust
+--            lspconfig.rust_analyzer.setup({
 --                -- Server-specific settings. See `:help lspconfig-setup`
 --                settings = {
 --                    ["rust-analyzer"] = {
@@ -340,78 +294,78 @@ require("lazy").setup({
 --                            allFeatures = true,
 --                        },
 --                        diagnostics = {
---                            enable = true;
+--                            enable = true,
 --                        },
 --                        checkOnSave = true,
 --                        check = {
 --                            enable = true,
 --                            command = "check",
 --                            features = "all",
---                         },
+--                        },
 --                    },
 --                },
---            }
+--            })
 
             -- Cpp
             lspconfig.clangd.setup({
                 on_attach = on_attach,
-                capabilities = capabilities
+                capabilities = capabilities,
             })
 
             -- Bash LSP
-            local configs = require 'lspconfig.configs'
-            if not configs.bash_lsp and vim.fn.executable('bash-language-server') == 1 then
+            local configs = require("lspconfig.configs")
+            if not configs.bash_lsp and vim.fn.executable("bash-language-server") == 1 then
                 configs.bash_lsp = {
                     default_config = {
-                        cmd = { 'bash-language-server', 'start' },
-                        filetypes = { 'sh' },
-                        root_dir = require('lspconfig').util.find_git_ancestor,
+                        cmd = { "bash-language-server", "start" },
+                        filetypes = { "sh" },
+                        root_dir = require("lspconfig").util.find_git_ancestor,
                         init_options = {
                             settings = {
-                                args = {}
-                            }
-                        }
-                    }
+                                args = {},
+                            },
+                        },
+                    },
                 }
             end
             if configs.bash_lsp then
-                lspconfig.bash_lsp.setup {}
+                lspconfig.bash_lsp.setup({})
             end
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
---            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-            vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev)
-            vim.keymap.set('n', 'g]', vim.diagnostic.goto_next)
-            vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+            --            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+            vim.keymap.set("n", "g[", vim.diagnostic.goto_prev)
+            vim.keymap.set("n", "g]", vim.diagnostic.goto_next)
+            vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
             -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer
-            vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+            vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("UserLspConfig", {}),
                 callback = function(ev)
                     -- Enable completion triggered by <c-x><c-o>
-                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+                    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
-                    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-                    vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
-                    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+                    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                    vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
+                    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
---                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
---                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
---                    vim.keymap.set('n', '<leader>wl', function()
---                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---                    end, opts)
-                    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
+                    --                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+                    --                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+                    --                    vim.keymap.set('n', '<leader>wl', function()
+                    --                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+                    --                    end, opts)
+                    vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
 
-                    vim.keymap.set({ 'n', 'v' }, '<leader>.', vim.lsp.buf.code_action, opts)
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-                    vim.keymap.set('n', '<leader>f', function()
-                        vim.lsp.buf.format { async = true }
+                    vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
+                    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                    vim.keymap.set("n", "<leader>f", function()
+                        vim.lsp.buf.format({ async = true })
                     end, opts)
 
                     local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -427,10 +381,8 @@ require("lazy").setup({
                     client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
-        end
+        end,
     },
-
-    -- LSP-based code-completion
     {
         "hrsh7th/nvim-cmp",
         -- load cmp on InsertEnter
@@ -446,7 +398,7 @@ require("lazy").setup({
             "hrsh7th/vim-vsnip-integ",
         },
         config = function()
-            local cmp = require'cmp'
+            local cmp = require("cmp")
             cmp.setup({
                 snippet = {
                     -- REQUIRED by nvim-cmp. get rid of it once we can
@@ -455,22 +407,21 @@ require("lazy").setup({
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-e>"] = cmp.mapping.abort(),
                     -- Accept currently selected item.
                     -- Set `select` to `false` to only confirm explicitly selected items.
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 }),
                 sources = cmp.config.sources({
                     {
-                        name = 'nvim_lsp'
+                        name = "nvim_lsp",
                     },
-                },
-                {
-                    { name = 'path' },
-                    { name = "codeium" }
+                }, {
+                    { name = "path" },
+                    { name = "codeium" },
                 }),
                 experimental = {
                     -- ghost_text = true,
@@ -478,12 +429,12 @@ require("lazy").setup({
             })
 
             -- Enable completing paths in :
-            cmp.setup.cmdline(':', {
+            cmp.setup.cmdline(":", {
                 sources = cmp.config.sources({
-                    { name = 'path' }
-                })
+                    { name = "path" },
+                }),
             })
-        end
+        end,
     },
 
     {
@@ -499,18 +450,39 @@ require("lazy").setup({
         config = function()
             require("nvim-treesitter.install").prefer_git = true
             require("nvim-treesitter.configs").setup({
-                ensure_installed = 'all',
+                ensure_installed = "all",
                 highlight = { enable = true },
             })
         end,
     },
 
+
+    {
+        "hedyhli/outline.nvim",
+        lazy = true,
+        cmd = { "Outline", "OutlineOpen" },
+        keys = { -- Example mapping to toggle outline
+            { "<C-f>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        },
+        opts = {
+            outline_window = {
+                win_position = 'left',
+                split_command = 'topleft vsplit',
+                width = 20,
+            },
+        },
+    },
+
+--    {
+--        "Exafunction/codeium.vim",
+--    },
+
     {
         'echasnovski/mini.nvim',
         config = function()
-            -- require('mini.bracketed').setup()
+            require('mini.bracketed').setup()
             -- require('mini.comment').setup()
-            require('mini.jump2d').setup()
+            -- require('mini.jump2d').setup()
             -- require('mini.move').setup()
             require('mini.pairs').setup()
             -- require('mini.surround').setup()
@@ -521,35 +493,6 @@ require("lazy").setup({
             require('mini.cursorword').setup()
         end
     },
-
-    {
-        "FabijanZulj/blame.nvim",
-        config = function()
-            require('blame').setup()
-            vim.api.nvim_set_keymap("n", "<leader>b", ":ToggleBlame window<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<leader>c", ":DisableBlame<CR>", opt)
-        end
-    },
-
-    {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = { -- Example mapping to toggle outline
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-        },
-        opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 20, 
-            },
-        },
-    },
-
-    {
-        "Exafunction/codeium.vim",
-     },
 })
 
 -- Reopen last Telescope window, super useful for live grep
@@ -562,7 +505,6 @@ vim.g.rustaceanvim = {
           -- you can also put keymaps in here
         end,
         default_settings = {
-            -- rust-analyzer language server configuration
             ['rust-analyzer'] = {
                 cargo = {
                     allFeatures = true,

@@ -14,3 +14,6 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bott
   export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles #ckbrew
   eval $(/opt/homebrew/bin/brew shellenv) #ckbrew
 
+. "$HOME/.cargo/env"
+
+ulimit -n 102400

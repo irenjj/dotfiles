@@ -42,22 +42,25 @@ colors:
     background : '#F7F8F8'
     foreground : '#24292f'
 
+  cursor:
+    cursor: '#000000'
+
   normal:
     black   : '#24292e'
     red     : '#c70609'
-    green   : '#288c00'
-    yellow  : '#d98c02'
+    green   : '#2b8a06'
+    yellow  : '#de721b'
     blue    : '#043ABD'
     magenta : '#5a32a3'
-    cyan    : '#1da9cc'
+    cyan    : '#043ABD'
     white   : '#6a737d'
 
   bright:
     black   : '#959da5'
-    red     : '#8a0421'
-    green   : '#036119'
-    yellow  : '#a17c00'
-    blue    : '#042285'
+    red     : '#f00206'
+    green   : '#2e870b'
+    yellow  : '#c99b00'
+    blue    : '#157ae6'
     magenta : '#5a32a3'
     cyan    : '#3192aa'
     white   : '#d1d5da'
@@ -84,7 +87,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 17
+  size: 16
 
   offset:
     x: 0
