@@ -1,9 +1,9 @@
 ------------------------------ Options ------------------------------
--- disable netrw at the very start of your init.lua
+-- Disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- enable 24-bit colour
+-- Enable 24-bit colour
 vim.opt.termguicolors = true
 
 -- Rebind leader key
@@ -55,7 +55,7 @@ vim.o.cmdheight = 0
 vim.o.autoread = true
 vim.bo.autoread = true
 
---Disable line wrapping
+-- Disable line wrapping
 vim.wo.wrap = true
 
 -- When the cursor is at the beginning or end of a line, <Left><Right> can jump to the next line
@@ -67,25 +67,22 @@ vim.o.hidden = true
 -- Mouse support
 vim.o.mouse = "a"
 
--- forbide creating backup files
+-- Forbide creating backup files
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 
--- smaller updatetime
+-- Smaller updatetime
 vim.o.updatetime = 300
 
 -- Wait for keyboard shortcut combo time
--- vim.o.timeoutlen = 500
+vim.o.timeoutlen = 10000
 
--- split window
+-- Split window
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- Autocomplete does not auto-select
--- vim.g.completeopt = "menu,menuone,noselect,noinsert"
-
--- format
+-- Format
 vim.o.termguicolors = true
 vim.opt.termguicolors = true
 
@@ -96,14 +93,11 @@ vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 -- Enhanced autocomplete
 vim.o.wildmenu = true
 
--- Dont' pass messages to |ins-completin menu|
+-- Don't pass messages to |ins-completin menu|
 vim.o.shortmess = vim.o.shortmess .. "c"
 
 -- Autocomplete displays up to 10 lines at most
 vim.o.pumheight = 10
-
--- Always display the tabline
-vim.o.showtabline = 0
 
 -- Code folding.
 vim.api.nvim_win_set_option(0, "foldmethod", "indent")
@@ -158,7 +152,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- Colorscheme
+    -- Layout
     {
         "AstroNvim/astrotheme",
         priority = 1000, -- as the first plugin
@@ -173,10 +167,10 @@ require("lazy").setup({
                     astrolight = {
                         ui = {
                             current_line = "#F7F8F8",
-                            inactive_base = "#F0F0F0",
-                            tabline = "#F0F0F0",
-                            statusline = "#F0F0F0",
-                            float = "#F0F0F0",
+                            inactive_base = "#F7F8F8",
+                            tabline = "#F7F8F8",
+                            statusline = "#F7F8F8",
+                            float = "#F7F8F8",
                         },
                         syntax = {
                             red = "#871094", -- param
@@ -196,8 +190,17 @@ require("lazy").setup({
             vim.cmd.colorscheme("astrolight")
         end,
     },
-
---    -- Nvim-tree
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter.install").prefer_git = true
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = "all",
+                highlight = { enable = true },
+            })
+        end,
+    },
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
@@ -221,6 +224,21 @@ require("lazy").setup({
             -- Open/close nvim-tree.
             vim.api.nvim_set_keymap("n", "<C-f>f", ":NvimTreeToggle<CR>", opt)
         end,
+    },
+    {
+        "hedyhli/outline.nvim",
+        lazy = true,
+        cmd = { "Outline", "OutlineOpen" },
+        keys = { -- Example mapping to toggle outline
+            { "<C-f>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        },
+        opts = {
+            outline_window = {
+                win_position = 'left',
+                split_command = 'topleft vsplit',
+                width = 20,
+            },
+        },
     },
 
     -- Telescope
@@ -284,27 +302,6 @@ require("lazy").setup({
         config = function()
             -- Setup language servers.
             local lspconfig = require("lspconfig")
-
---            -- Rust
---            lspconfig.rust_analyzer.setup({
---                -- Server-specific settings. See `:help lspconfig-setup`
---                settings = {
---                    ["rust-analyzer"] = {
---                        cargo = {
---                            allFeatures = true,
---                        },
---                        diagnostics = {
---                            enable = true,
---                        },
---                        checkOnSave = true,
---                        check = {
---                            enable = true,
---                            command = "check",
---                            features = "all",
---                        },
---                    },
---                },
---            })
 
             -- Cpp
             lspconfig.clangd.setup({
@@ -436,56 +433,22 @@ require("lazy").setup({
             })
         end,
     },
-
     {
         'mrcjkb/rustaceanvim',
         version = '^4', -- Recommended
         ft = { 'rust' },
     },
 
-    -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        config = function()
-            require("nvim-treesitter.install").prefer_git = true
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = "all",
-                highlight = { enable = true },
-            })
-        end,
-    },
-
-
-    {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = { -- Example mapping to toggle outline
-            { "<C-f>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-        },
-        opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 20,
-            },
-        },
-    },
-
 --    {
 --        "Exafunction/codeium.vim",
 --    },
 
+    -- Tools
     {
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bracketed').setup()
-            -- require('mini.comment').setup()
-            -- require('mini.jump2d').setup()
-            -- require('mini.move').setup()
             require('mini.pairs').setup()
-            -- require('mini.surround').setup()
             require('mini.indentscope').setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'

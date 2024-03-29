@@ -10,6 +10,7 @@ if [ "$(uname)"=="Darwin" ]; then
     export BASH_SILENCE_DEPRECATION_WARNING=1
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
     export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
+    export FDB_CLUSTER_FILE="/usr/local/etc/foundationdb/fdb.cluster"
 fi
 
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
