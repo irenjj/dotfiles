@@ -329,6 +329,20 @@ require("lazy").setup({
                 lspconfig.bash_lsp.setup({})
             end
 
+            -- Go
+            lspconfig.gopls.setup({
+                on_attach = on_attach,
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                        gofumpt = true,
+                    },
+                },
+            })
+
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
             --            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
@@ -480,11 +494,24 @@ vim.g.rustaceanvim = {
                 diagnostics = {
                     enable = true;
                 },
-                checkOnSave = {
+                checkOnSave = true,
+                check = {
                     enable = true,
-                    command = "check",
+                    command = "clippy",
+                    features = "all",
                 }
             },
         },
     },
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+        local bufnr = vim.fn.bufnr('%')
+        vim.keymap.set("n", "<CR>", function()
+            vim.api.nvim_command([[execute "normal! \<cr>"]])
+            vim.api.nvim_command(bufnr .. 'bd')
+        end, { buffer = bufnr })
+    end,
+    pattern = "qf",
+})
