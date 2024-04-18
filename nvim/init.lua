@@ -118,8 +118,8 @@ vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 
-vim.keymap.set("n", "<C-f>w", ": %bd!<CR>", opt)
-vim.keymap.set("n", "<C-f>e", ": %bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -166,11 +166,12 @@ require("lazy").setup({
                     },
                     astrolight = {
                         ui = {
-                            current_line = "#F7F8F8",
-                            inactive_base = "#F7F8F8",
-                            tabline = "#F7F8F8",
-                            statusline = "#F7F8F8",
-                            float = "#F7F8F8",
+                            base = "#FFFFFF",
+                            current_line = "#FFFFFF",
+                            inactive_base = "#FFFFFF",
+                            tabline = "#FFFFFF",
+                            statusline = "#FFFFFF",
+                            float = "#FFFFFF",
                         },
                         syntax = {
                             red = "#871094", -- param
@@ -454,7 +455,7 @@ require("lazy").setup({
     },
 
 --    {
---        "Exafunction/codeium.vim",
+--        'Exafunction/codeium.vim',
 --    },
 
     -- Tools
@@ -497,7 +498,7 @@ vim.g.rustaceanvim = {
                 checkOnSave = true,
                 check = {
                     enable = true,
-                    command = "clippy",
+                    command = "check",
                     features = "all",
                 }
             },

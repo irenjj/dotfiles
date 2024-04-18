@@ -39,7 +39,7 @@
 
 colors:
   primary:
-    background : '#F7F8F8'
+    background : '#FFFFFF'
     foreground : '#24292f'
 
   cursor:
@@ -87,7 +87,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 16
+  size: 17
 
   offset:
     x: 0
@@ -114,7 +114,7 @@ shell:
   args:
     - --login
     - -c
-    - "zellij --layout ~/.config/zellij/layout.kdl"
+    - "tmux new-session -A -D -s main"
 
 live_config_reload: true
 
@@ -127,81 +127,9 @@ live_config_reload: true
 # Alacritty + Tmux key integratio
 #   `\x02` is `C-b` as tmux prefix
 #   `\x1b` is `Esc`
-#key_bindings:
-#  - { key: H,        mods: Command,       action: None }
-#  - { key: Q,        mods: Command,       action: None }
-#
-#  # ----- change font size ----
-#  - { key: Key0,     mods: Command,       action: ResetFontSize    }
-#  - { key: Equals,   mods: Command,       action: IncreaseFontSize }
-#  - { key: Minus,    mods: Command,       action: DecreaseFontSize }
-#
-#  # ----- new pane/tab/window -----
-#  - { key: D,        mods: Command,       chars: "\x02="    } # new vertical pane with default shell
-#  - { key: D,        mods: Command|Shift, chars: "\x02-"    } # new vertical pane with commands menu
-#  - { key: N,        mods: Command,       chars: "\x02n"    } # new tab with default shell
-#
-#  # ----- close pane/tab/window -----
-#  - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
-#  - { key: W,        mods: Command|Shift, chars: "\x02X"    } # close the tab
-#  - { key: Q,        mods: Command,       chars: "\x02d"    } # close the window
-#
-#  # ----- copy mode -----
-#  - { key: Y,        mods: Command       , chars: "\x02c"   } # enter vi copy mode, and search from up to down
-#
-#  # ----- navigate panes -----
-#  - { key: H,        mods: Command,       chars: "\x02h"    } # go to the pane left
-#  - { key: J,        mods: Command,       chars: "\x02j"    } # go to the pane above
-#  - { key: K,        mods: Command,       chars: "\x02k"    } # go to the pane below
-#  - { key: L,        mods: Command,       chars: "\x02l"    } # go to the pane right
-#
-#  # ----- resize panes -----
-#  - { key: H,        mods: Command|Shift, chars: "\x02H"         } # resize the current pane left
-#  - { key: J,        mods: Command|Shift, chars: "\x02J"         } # resize the current pane above
-#  - { key: K,        mods: Command|Shift, chars: "\x02K"         } # resize the current pane below
-#  - { key: L,        mods: Command|Shift, chars: "\x02L"         } # resize the current pane right
-#  - { key: Left,     mods: Command|Shift, chars: "\x02\x1b[D"    }
-#  - { key: Down,     mods: Command|Shift, chars: "\x02\x1b[B"    }
-#  - { key: Up,       mods: Command|Shift, chars: "\x02\x1b[A"    }
-#  - { key: Right,    mods: Command|Shift, chars: "\x02\x1b[C"    }
-#
-#  # ----- navigate tabs -----
-#  - { key: i,        mods: Command,       chars: "\x02i"    } # go to previous tab
-#  - { key: o,        mods: Command,       chars: "\x02o"    } # go to next tab
-#  - { key: Key1,     mods: Command,       chars: "\x021"    } # go to tab 1..9
-#  - { key: Key2,     mods: Command,       chars: "\x022"    }
-#  - { key: Key3,     mods: Command,       chars: "\x023"    }
-#  - { key: Key4,     mods: Command,       chars: "\x024"    }
-#  - { key: Key5,     mods: Command,       chars: "\x025"    }
-#  - { key: Key6,     mods: Command,       chars: "\x026"    }
-#  - { key: Key7,     mods: Command,       chars: "\x027"    }
-#  - { key: Key8,     mods: Command,       chars: "\x028"    }
-#  - { key: Key9,     mods: Command,       chars: "\x029"    }
-#
-#  # ----- rotate panes -----
-#  - { key: r,       mods: Command,        chars: "\x02r"    }
-#
-#  # ----- max pane -----
-#  - { key: m,       mods: Command,        chars: "\x02m"    }
-#
-#  - { key: t,  mods: Command, action: CreateNewWindow }
-
-
-# Key bindings
-# A list with all available `key` names can be found here
-# https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
-#
-# Run "xxd -psd" to find hex codes of keys.
-#
-# Alacritty + Zellij key integratio
-#   `\x02` is `C-b` as tmux prefix
-#   `\x19` is `C-y` as tmux prefix
-#   `\x1b` is `Esc`
 key_bindings:
-  # ----- unbind -----
   - { key: H,        mods: Command,       action: None }
   - { key: Q,        mods: Command,       action: None }
-  - { key: T,        mods: Command,       action: None }
 
   # ----- change font size ----
   - { key: Key0,     mods: Command,       action: ResetFontSize    }
@@ -209,14 +137,16 @@ key_bindings:
   - { key: Minus,    mods: Command,       action: DecreaseFontSize }
 
   # ----- new pane/tab/window -----
-  - { key: D,        mods: Command,       chars: "\x02%"    } # new vertical pane with default shell
-  - { key: D,        mods: Command|Shift, chars: "\x02\""    } # new vertical pane with commands menu
-  - { key: N,        mods: Command,       chars: "\x02c"    } # new tab with default shell
-#  - { key: T,        mods: Command,       action: CreateNewWindow } # new alacritty
+  - { key: D,        mods: Command,       chars: "\x02="    } # new vertical pane with default shell
+  - { key: D,        mods: Command|Shift, chars: "\x02-"    } # new vertical pane with commands menu
+  - { key: N,        mods: Command,       chars: "\x02n"    } # new tab with default shell
 
   # ----- close pane/tab/window -----
-  - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
+  - { key: W,        mods: Command,       chars: "\x02X"    } # close the pane
   - { key: Q,        mods: Command,       chars: "\x02d"    } # close the window
+
+  # ----- copy mode -----
+  - { key: Y,        mods: Command       , chars: "\x02c"   } # enter vi copy mode, and search from up to down
 
   # ----- navigate panes -----
   - { key: H,        mods: Command,       chars: "\x02h"    } # go to the pane left
@@ -225,17 +155,18 @@ key_bindings:
   - { key: L,        mods: Command,       chars: "\x02l"    } # go to the pane right
 
   # ----- resize panes -----
-  - { key: H,        mods: Command|Shift,   chars: "\x02H"    } # resize the current pane left
-  - { key: J,        mods: Command|Shift,   chars: "\x02J"    } # resize the current pane above
-  - { key: K,        mods: Command|Shift,   chars: "\x02K"    } # resize the current pane below
-  - { key: L,        mods: Command|Shift,   chars: "\x02L"    } # resize the current pane right
-  - { key: M,        mods: Command,         chars: "\x02z"    }
-  - { key: +,        mods: Command|Shift,   chars: "\x02+"    }
-  - { key: _,        mods: Command|Shift,  chars: "\x02_"    }
+  - { key: H,        mods: Command|Shift, chars: "\x02H"         } # resize the current pane left
+  - { key: J,        mods: Command|Shift, chars: "\x02J"         } # resize the current pane above
+  - { key: K,        mods: Command|Shift, chars: "\x02K"         } # resize the current pane below
+  - { key: L,        mods: Command|Shift, chars: "\x02L"         } # resize the current pane right
+  - { key: Left,     mods: Command|Shift, chars: "\x02\x1b[D"    }
+  - { key: Down,     mods: Command|Shift, chars: "\x02\x1b[B"    }
+  - { key: Up,       mods: Command|Shift, chars: "\x02\x1b[A"    }
+  - { key: Right,    mods: Command|Shift, chars: "\x02\x1b[C"    }
 
   # ----- navigate tabs -----
-  - { key: i,        mods: Command,       chars: "\x02p"    } # go to previous tab
-  - { key: o,        mods: Command,       chars: "\x02n"    } # go to next tab
+  - { key: i,        mods: Command,       chars: "\x02i"    } # go to previous tab
+  - { key: o,        mods: Command,       chars: "\x02o"    } # go to next tab
   - { key: Key1,     mods: Command,       chars: "\x021"    } # go to tab 1..9
   - { key: Key2,     mods: Command,       chars: "\x022"    }
   - { key: Key3,     mods: Command,       chars: "\x023"    }
@@ -246,9 +177,77 @@ key_bindings:
   - { key: Key8,     mods: Command,       chars: "\x028"    }
   - { key: Key9,     mods: Command,       chars: "\x029"    }
 
-  # ----- toggle floating panes -----
-  - { key: F,       mods: Command,        chars: "\x02f"    }
+  # ----- rotate panes -----
+  - { key: r,       mods: Command,        chars: "\x02r"    }
 
-  # ------ vim mode ------
-  - { key: Y,       mods: Command,        chars: "\x19y"    }
+  # ----- max pane -----
+  - { key: m,       mods: Command,        chars: "\x02m"    }
 
+  # - { key: t,  mods: Command, action: CreateNewWindow }
+
+
+## Key bindings
+## A list with all available `key` names can be found here
+## https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
+##
+## Run "xxd -psd" to find hex codes of keys.
+##
+## Alacritty + Zellij key integratio
+##   `\x02` is `C-b` as tmux prefix
+##   `\x19` is `C-y` as tmux prefix
+##   `\x1b` is `Esc`
+#key_bindings:
+#  # ----- unbind -----
+#  - { key: H,        mods: Command,       action: None }
+#  - { key: Q,        mods: Command,       action: None }
+#  - { key: T,        mods: Command,       action: None }
+#
+#  # ----- change font size ----
+#  - { key: Key0,     mods: Command,       action: ResetFontSize    }
+#  - { key: Equals,   mods: Command,       action: IncreaseFontSize }
+#  - { key: Minus,    mods: Command,       action: DecreaseFontSize }
+#
+#  # ----- new pane/tab/window -----
+#  - { key: D,        mods: Command,       chars: "\x02%"    } # new vertical pane with default shell
+#  - { key: D,        mods: Command|Shift, chars: "\x02\""    } # new vertical pane with commands menu
+#  - { key: N,        mods: Command,       chars: "\x02c"    } # new tab with default shell
+##  - { key: T,        mods: Command,       action: CreateNewWindow } # new alacritty
+#
+#  # ----- close pane/tab/window -----
+#  - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
+#  - { key: Q,        mods: Command,       chars: "\x02d"    } # close the window
+#
+#  # ----- navigate panes -----
+#  - { key: H,        mods: Command,       chars: "\x02h"    } # go to the pane left
+#  - { key: J,        mods: Command,       chars: "\x02j"    } # go to the pane above
+#  - { key: K,        mods: Command,       chars: "\x02k"    } # go to the pane below
+#  - { key: L,        mods: Command,       chars: "\x02l"    } # go to the pane right
+#
+#  # ----- resize panes -----
+#  - { key: H,        mods: Command|Shift,   chars: "\x02H"    } # resize the current pane left
+#  - { key: J,        mods: Command|Shift,   chars: "\x02J"    } # resize the current pane above
+#  - { key: K,        mods: Command|Shift,   chars: "\x02K"    } # resize the current pane below
+#  - { key: L,        mods: Command|Shift,   chars: "\x02L"    } # resize the current pane right
+#  - { key: M,        mods: Command,         chars: "\x02z"    }
+#  - { key: +,        mods: Command|Shift,   chars: "\x02+"    }
+#  - { key: _,        mods: Command|Shift,  chars: "\x02_"    }
+#
+#  # ----- navigate tabs -----
+#  - { key: i,        mods: Command,       chars: "\x02p"    } # go to previous tab
+#  - { key: o,        mods: Command,       chars: "\x02n"    } # go to next tab
+#  - { key: Key1,     mods: Command,       chars: "\x021"    } # go to tab 1..9
+#  - { key: Key2,     mods: Command,       chars: "\x022"    }
+#  - { key: Key3,     mods: Command,       chars: "\x023"    }
+#  - { key: Key4,     mods: Command,       chars: "\x024"    }
+#  - { key: Key5,     mods: Command,       chars: "\x025"    }
+#  - { key: Key6,     mods: Command,       chars: "\x026"    }
+#  - { key: Key7,     mods: Command,       chars: "\x027"    }
+#  - { key: Key8,     mods: Command,       chars: "\x028"    }
+#  - { key: Key9,     mods: Command,       chars: "\x029"    }
+#
+#  # ----- toggle floating panes -----
+#  - { key: F,       mods: Command,        chars: "\x02f"    }
+#
+#  # ------ vim mode ------
+#  - { key: Y,       mods: Command,        chars: "\x19y"    }
+#

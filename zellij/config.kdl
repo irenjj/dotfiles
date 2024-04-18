@@ -163,8 +163,8 @@ themes {
     }
     one-light {
         fg 36 41 47
-        bg 247 248 248
-        black 247 248 248
+        bg 255 255 255
+        black 255 255 255
         red 199 6 9
         green 40 140 0
         yellow 217 140 2
