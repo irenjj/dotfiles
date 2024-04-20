@@ -113,13 +113,15 @@ vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
 vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
 vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
 vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+vim.keymap.set("n", "<C-f>d", ":vsplit<CR>", opt)
+vim.keymap.set("n", "<C-f>D", ":split<CR>", opt)
 vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 
-vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
-vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -130,13 +132,6 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
-
-vim.keymap.set("n", "<leader>p", ":echo expand('%:p')<CR>", opt)
-
-vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
-vim.keymap.set("n", "<leader>lo", ":RustLsp openCargo<CR>", opt)
-vim.keymap.set("n", "<leader>lt", ":RustLsp syntaxTree<CR>", opt)
-
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -203,35 +198,11 @@ require("lazy").setup({
         end,
     },
     {
-        "nvim-tree/nvim-tree.lua",
-        version = "*",
-        lazy = false,
-        dependencies = {
-          "nvim-tree/nvim-web-devicons",
-        },
-        config = function()
-            require("nvim-tree").setup ({
-                sort_by = "case_sensitive",
-                actions = {
-                    open_file = {
-                        resize_window = true,
-                        quit_on_open = true,
-                    },
-                },
-                view = {
-                    side = "right",
-                },
-            })
-            -- Open/close nvim-tree.
-            vim.api.nvim_set_keymap("n", "<C-f>f", ":NvimTreeToggle<CR>", opt)
-        end,
-    },
-    {
         "hedyhli/outline.nvim",
         lazy = true,
         cmd = { "Outline", "OutlineOpen" },
         keys = { -- Example mapping to toggle outline
-            { "<C-f>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+            { "<Leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
             outline_window = {
@@ -275,9 +246,9 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-f>p", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-f>g", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "<C-f>b", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "<Leader>p", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<Leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<Leader>b", require("telescope.builtin").buffers)
         end,
     },
 
@@ -285,16 +256,17 @@ require("lazy").setup({
     {
         "lewis6991/gitsigns.nvim",
         config = function()
-            require("gitsigns").setup()
+            require("gitsigns").setup({
+                current_line_blame = true,
+                current_line_blame_opts = {
+                    virt_text = true,
+                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                    delay = 1000,
+                    ignore_whitespace = false,
+                    virt_text_priority = 100,
+                },
+            })
         end,
-    },
-    {
-        "FabijanZulj/blame.nvim",
-        config = function()
-            require('blame').setup()
-            vim.api.nvim_set_keymap("n", "<leader>b", ":ToggleBlame window<CR>", opt)
-            vim.api.nvim_set_keymap("n", "<leader>c", ":DisableBlame<CR>", opt)
-        end
     },
 
     -- LSP
@@ -451,12 +423,9 @@ require("lazy").setup({
     {
         'mrcjkb/rustaceanvim',
         version = '^4', -- Recommended
+        lazy = false,
         ft = { 'rust' },
     },
-
---    {
---        'Exafunction/codeium.vim',
---    },
 
     -- Tools
     {
@@ -469,8 +438,33 @@ require("lazy").setup({
                 symbol ='│'
             })
             require('mini.cursorword').setup()
+            require('mini.jump2d').setup({
+                vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
+            })
+            require('mini.files').setup({
+                vim.keymap.set("n", "<C-f>f", ":lua MiniFiles.open()<CR>", opt)
+            })
         end
     },
+    {
+        -- Remember last cursor position
+        -- https://github.com/neovim/neovim/issues/16339
+        'ethanholz/nvim-lastplace',
+        config = function()
+            require('nvim-lastplace').setup()
+        end
+    },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+        local bufnr = vim.fn.bufnr('%')
+        vim.keymap.set("n", "<CR>", function()
+            vim.api.nvim_command([[execute "normal! \<cr>"]])
+            vim.api.nvim_command(bufnr .. 'bd')
+        end, { buffer = bufnr })
+    end,
+    pattern = "qf",
 })
 
 -- Reopen last Telescope window, super useful for live grep
@@ -480,7 +474,9 @@ vim.g.rustaceanvim = {
     -- LSP configuration
     server = {
         on_attach = function(client, bufnr)
-          -- you can also put keymaps in here
+            -- you can also put keymaps in here
+            vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
+            vim.keymap.set("n", "<leader>lx", ":RustLsp explainError<CR>", opt)
         end,
         default_settings = {
             ['rust-analyzer'] = {
@@ -505,14 +501,3 @@ vim.g.rustaceanvim = {
         },
     },
 }
-
-vim.api.nvim_create_autocmd("FileType", {
-    callback = function()
-        local bufnr = vim.fn.bufnr('%')
-        vim.keymap.set("n", "<CR>", function()
-            vim.api.nvim_command([[execute "normal! \<cr>"]])
-            vim.api.nvim_command(bufnr .. 'bd')
-        end, { buffer = bufnr })
-    end,
-    pattern = "qf",
-})
