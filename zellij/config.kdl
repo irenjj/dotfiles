@@ -28,7 +28,6 @@ keybinds clear-defaults=true {
         bind "+" { Resize "Increase"; SwitchToMode "Normal"; }
         bind "_" { Resize "Decrease"; SwitchToMode "Normal"; }
 
-
         // ----- navigate tab -----
         bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
         bind "n" { GoToNextTab; SwitchToMode "Normal"; }
@@ -50,6 +49,8 @@ keybinds clear-defaults=true {
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
         bind "j" { ScrollDown; }
         bind "k" { ScrollUp; }
+        bind "Ctrl d" { HalfPageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
         bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
     }
 

@@ -477,6 +477,7 @@ vim.g.rustaceanvim = {
             -- you can also put keymaps in here
             vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
             vim.keymap.set("n", "<leader>lx", ":RustLsp explainError<CR>", opt)
+            vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
         end,
         default_settings = {
             ['rust-analyzer'] = {

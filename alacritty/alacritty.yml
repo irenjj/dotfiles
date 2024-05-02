@@ -87,7 +87,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 17
+  size: 16
 
   offset:
     x: 0
