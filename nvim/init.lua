@@ -132,6 +132,8 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
 vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
+
+vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -338,12 +340,6 @@ require("lazy").setup({
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-                    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-                    --                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-                    --                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                    --                    vim.keymap.set('n', '<leader>wl', function()
-                    --                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                    --                    end, opts)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
 
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
@@ -351,18 +347,6 @@ require("lazy").setup({
                     vim.keymap.set("n", "<leader>f", function()
                         vim.lsp.buf.format({ async = true })
                     end, opts)
-
-                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-                    -- When https://neovim.io/doc/user/lsp.html#lsp-inlay_hint stabilizes
-                    -- *and* there's some way to make it only apply to the current line.
-                    -- if client.server_capabilities.inlayHintProvider then
-                    --     vim.lsp.inlay_hint(ev.buf, true)
-                    -- end
-
-                    -- None of this semantics tokens business.
-                    -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
-                    client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
         end,
