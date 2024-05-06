@@ -109,10 +109,10 @@ local opt = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<C-f>", "", opt)
 
-vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
-vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
-vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
-vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
+vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "<C-f>d", ":vsplit<CR>", opt)
 vim.keymap.set("n", "<C-f>D", ":split<CR>", opt)
 vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
@@ -165,7 +165,7 @@ require("lazy").setup({
                         ui = {
                             base = "#FFFFFF",
                             current_line = "#FFFFFF",
-                            inactive_base = "#FFFFFF",
+                            inactive_base = "#F9F9F9",
                             tabline = "#FFFFFF",
                             statusline = "#FFFFFF",
                             float = "#FFFFFF",
@@ -347,6 +347,11 @@ require("lazy").setup({
                     vim.keymap.set("n", "<leader>f", function()
                         vim.lsp.buf.format({ async = true })
                     end, opts)
+
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                    -- None of this semantics tokens business.
+                    -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
+                    client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
         end,
@@ -411,6 +416,59 @@ require("lazy").setup({
         ft = { 'rust' },
     },
 
+    -- DAP
+    {
+        'mfussenegger/nvim-dap',
+        dependencies = {
+            {
+                'rcarriga/nvim-dap-ui',
+                dependencies = { 'nvim-neotest/nvim-nio' },
+            },
+            'theHamsta/nvim-dap-virtual-text',
+        },
+
+        config = function()
+            local dap = require('dap')
+            local dapui = require('dapui')
+
+            vim.keymap.set('n', '<C-f>b', dap.toggle_breakpoint)
+            vim.keymap.set('n', '<C-f>c', dap.continue)
+            vim.keymap.set('n', '<C-f>r', dap.repl.open)
+            vim.keymap.set('n', '<C-f>u', dap.up)
+            vim.keymap.set('n', '<C-f>d', dap.down)
+            vim.keymap.set('n', '<C-f>s', dap.terminate)
+            vim.keymap.set('n', '<C-n>', dap.step_over)
+            vim.keymap.set('n', '<C-s>', dap.step_into)
+
+            dap.adapters.lldb = {
+                type = 'executable',
+                command = '/opt/homebrew/bin/lldb-vscode',
+                name = 'lldb'
+            }
+
+            dapui.setup{}
+            dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
+            dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+            dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
+
+--            dap.configurations.cpp = {
+--                {
+--                    name = 'Launch',
+--                    type = 'lldb',
+--                    request = 'launch',
+--                    program = function()
+--                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--                    end,
+--                    cwd = '${workspaceFolder}',
+--                    stopOnEntry = false,
+--                    args = {},
+--                },
+--            }
+--            dap.configurations.c = dap.configurations.cpp
+--            dap.configurations.rust = dap.configurations.cpp
+        end,
+    },
+
     -- Tools
     {
         'echasnovski/mini.nvim',
@@ -462,6 +520,8 @@ vim.g.rustaceanvim = {
             vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
             vim.keymap.set("n", "<leader>lx", ":RustLsp explainError<CR>", opt)
             vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
+            vim.keymap.set("n", "<leader>lr", ":RustLsp runnables<CR>", opt)
+            vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
         end,
         default_settings = {
             ['rust-analyzer'] = {
