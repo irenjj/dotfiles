@@ -109,12 +109,10 @@ local opt = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<C-f>", "", opt)
 
-vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
-vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
-vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
-vim.keymap.set("n", "<C-f>d", ":vsplit<CR>", opt)
-vim.keymap.set("n", "<C-f>D", ":split<CR>", opt)
+vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
+vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
+vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
+vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
 vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
@@ -165,7 +163,7 @@ require("lazy").setup({
                         ui = {
                             base = "#FFFFFF",
                             current_line = "#FFFFFF",
-                            inactive_base = "#F9F9F9",
+                            inactive_base = "#FFFFFF",
                             tabline = "#FFFFFF",
                             statusline = "#FFFFFF",
                             float = "#FFFFFF",
@@ -234,23 +232,20 @@ require("lazy").setup({
                 pickers = {
                     git_files = {
                         theme = "ivy",
-                        preview = true,
                     },
                     live_grep = {
                         theme = "ivy",
-                        preview = true,
                     },
                     buffers = {
                         theme = "ivy",
-                        preview = true,
                         sort_mru = true,
                     },
                 },
             })
 
-            vim.keymap.set("n", "<Leader>p", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<Leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "<Leader>b", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-h>", require("telescope.builtin").buffers)
         end,
     },
 
@@ -450,22 +445,6 @@ require("lazy").setup({
             dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
             dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
             dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-
---            dap.configurations.cpp = {
---                {
---                    name = 'Launch',
---                    type = 'lldb',
---                    request = 'launch',
---                    program = function()
---                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
---                    end,
---                    cwd = '${workspaceFolder}',
---                    stopOnEntry = false,
---                    args = {},
---                },
---            }
---            dap.configurations.c = dap.configurations.cpp
---            dap.configurations.rust = dap.configurations.cpp
         end,
     },
 
@@ -495,6 +474,17 @@ require("lazy").setup({
         config = function()
             require('nvim-lastplace').setup()
         end
+    },
+    {
+      "iamcco/markdown-preview.nvim",
+      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      build = "cd app && yarn install",
+      init = function()
+        vim.g.mkdp_filetypes = { "markdown" }
+        vim.keymap.set("n", "<Leader>mt", ":MarkdownPreview<CR>", opt)
+        vim.keymap.set("n", "<Leader>mp", ":MarkdownPreviewStop<CR>", opt)
+      end,
+      ft = { "markdown" },
     },
 })
 
