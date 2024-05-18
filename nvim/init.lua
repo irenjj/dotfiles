@@ -128,9 +128,6 @@ vim.keymap.set("n", "<C-i>", "<C-i>zz")
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
-vim.keymap.set("n", "<leader>s", ":LspRestart<CR>", opt)
-vim.keymap.set("n", "<leader>w", ":wall<CR>", opt)
-
 vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -235,6 +232,7 @@ require("lazy").setup({
                     },
                     live_grep = {
                         theme = "ivy",
+                        preview = true,
                     },
                     buffers = {
                         theme = "ivy",
@@ -258,7 +256,7 @@ require("lazy").setup({
                 current_line_blame_opts = {
                     virt_text = true,
                     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-                    delay = 1000,
+                    delay = 600,
                     ignore_whitespace = false,
                     virt_text_priority = 100,
                 },

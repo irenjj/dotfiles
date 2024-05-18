@@ -30,7 +30,10 @@ ln -s ${CONF_DIR}/alacritty ${HOME}/.config/alacritty
 unlink ${HOME}/.config/nvim
 ln -s ${CONF_DIR}/nvim ${HOME}/.config/nvim
 
+# vim
+unlink ${HOME}/.vimrc
+ln -s ${CONF_DIR}/vim/.vimrc ${HOME}/.vimrc
+
 # zellij
 unlink ${HOME}/.config/zellij
 ln -s ${CONF_DIR}/zellij ${HOME}/.config/zellij
-

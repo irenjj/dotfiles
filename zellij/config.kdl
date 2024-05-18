@@ -47,11 +47,11 @@ keybinds clear-defaults=true {
     scroll {
         bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-        bind "j" { ScrollDown; }
-        bind "k" { ScrollUp; }
-        bind "Ctrl d" { HalfPageScrollDown; }
-        bind "Ctrl u" { HalfPageScrollUp; }
-        bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
+        // bind "j" { ScrollDown; }
+        // bind "k" { ScrollUp; }
+        // bind "Ctrl d" { HalfPageScrollDown; }
+        // bind "Ctrl u" { HalfPageScrollUp; }
+        // bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
     }
 
     shared_except "normal" "locked" {

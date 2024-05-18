@@ -98,7 +98,7 @@ font:
 
 window:
   #startup_mode: SimpleFullscreen
-  #decorations: none
+  startup_mode: Maximized
   decorations: buttonless
 
 scrolling:
@@ -250,5 +250,5 @@ key_bindings:
   - { key: F,       mods: Command,        chars: "\x02f"    }
 
   # ------ vim mode ------
-  - { key: Y,       mods: Command,        chars: "\x19y"    }
+  - { key: B,       mods: Command,        chars: "\x19ye"    }
 
