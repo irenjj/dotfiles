@@ -47,11 +47,6 @@ keybinds clear-defaults=true {
     scroll {
         bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-        // bind "j" { ScrollDown; }
-        // bind "k" { ScrollUp; }
-        // bind "Ctrl d" { HalfPageScrollDown; }
-        // bind "Ctrl u" { HalfPageScrollUp; }
-        // bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
     }
 
     shared_except "normal" "locked" {
@@ -149,19 +144,6 @@ pane_frames false
 // Once these themes are defined, one of them should to be selected in the "theme" section of this file
 //
 themes {
-    one-half-dark {
-        fg 220 223 228
-        bg 40 44 52
-        black 27 29 35
-        red 227 63 76
-        green 152 195 121
-        yellow 229 192 123
-        blue 97 175 239
-        magenta 198 120 221
-        cyan 86 182 194
-        white 233 225 254
-        orange 216 133 76
-    }
     one-light {
         fg 36 41 47
         bg 255 255 255
