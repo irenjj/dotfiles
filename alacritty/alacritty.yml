@@ -1,42 +1,3 @@
-## Colors (One Dark)
-#colors:
-#  primary:
-#    background: '#1a1d23'
-#    foreground: '#c7c7c7'
-#
-#  cursor:
-#    cursor: '#a277ff'
-#
-#  normal:
-#    black: '#1e2127'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#abb2bf'
-#
-#  bright:
-#    black: '#5c6370'
-#    red: '#e06c75'
-#    green: '#98c379'
-#    yellow: '#d19a66'
-#    blue: '#61afef'
-#    magenta: '#c678dd'
-#    cyan: '#56b6c2'
-#    white: '#ffffff'
-#
-#  search:
-#    matches:
-#      foreground: '#000000'
-#      background: '#ffffff'
-#    focused_match:
-#      foreground: '#ffffff'
-#      background: '#9F7AF5'
-
-# github Alacritty Colors
-
 colors:
   primary:
     background : '#FFFFFF'
@@ -87,7 +48,7 @@ font:
     family: 'JetBrainsMono Nerd Font'
     style: Italic
 
-  size: 16
+  size: 14.5
 
   offset:
     x: 0
@@ -97,8 +58,7 @@ font:
     y: 0
 
 window:
-  #startup_mode: SimpleFullscreen
-  startup_mode: Maximized
+  startup_mode: SimpleFullscreen # or Maximized
   decorations: buttonless
 
 scrolling:
@@ -114,20 +74,20 @@ shell:
   args:
     - --login
     - -c
-    - "zellij --layout ~/.config/zellij/layout.kdl"
-    # - "tmux new-session -A -D -s main"
+    - "zellij --layout ~/.config/zellij/layout.kdl" # or "tmux new-session -A -D -s main"
 
 live_config_reload: true
 
-## Key bindings
-## A list with all available `key` names can be found here
-## https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
-##
-## Run "xxd -psd" to find hex codes of keys.
-##
-## Alacritty + Tmux key integratio
-##   `\x02` is `C-b` as tmux prefix
-##   `\x1b` is `Esc`
+# -- For Tmux
+# Key bindings
+# A list with all available `key` names can be found here
+# https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
+#
+# Run "xxd -psd" to find hex codes of keys.
+#
+# Alacritty + Tmux key integratio
+#   `\x02` is `C-b` as tmux prefix
+#   `\x1b` is `Esc`
 #key_bindings:
 #  - { key: H,        mods: Command,       action: None }
 #  - { key: Q,        mods: Command,       action: None }
@@ -196,7 +156,6 @@ live_config_reload: true
 # Alacritty + Zellij key integratio
 #   `\x02` is `C-b` as tmux prefix
 #   `\x19` is `C-y` as tmux prefix
-#   `\x1b` is `Esc`
 key_bindings:
   # ----- unbind -----
   - { key: H,        mods: Command,       action: None }
@@ -212,7 +171,6 @@ key_bindings:
   - { key: D,        mods: Command,       chars: "\x02%"    } # new vertical pane with default shell
   - { key: D,        mods: Command|Shift, chars: "\x02\""    } # new vertical pane with commands menu
   - { key: N,        mods: Command,       chars: "\x02c"    } # new tab with default shell
-#  - { key: T,        mods: Command,       action: CreateNewWindow } # new alacritty
 
   # ----- close pane/tab/window -----
   - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
@@ -234,8 +192,8 @@ key_bindings:
   - { key: _,        mods: Command|Shift,  chars: "\x02_"    }
 
   # ----- navigate tabs -----
-  - { key: i,        mods: Command,       chars: "\x02p"    } # go to previous tab
-  - { key: o,        mods: Command,       chars: "\x02n"    } # go to next tab
+  - { key: I,        mods: Command,       chars: "\x02p"    } # go to previous tab
+  - { key: O,        mods: Command,       chars: "\x02n"    } # go to next tab
   - { key: Key1,     mods: Command,       chars: "\x021"    } # go to tab 1..9
   - { key: Key2,     mods: Command,       chars: "\x022"    }
   - { key: Key3,     mods: Command,       chars: "\x023"    }
@@ -250,5 +208,7 @@ key_bindings:
   - { key: F,       mods: Command,        chars: "\x02f"    }
 
   # ------ vim mode ------
-  - { key: B,       mods: Command,        chars: "\x19ye"    }
+  - { key: U,       mods: Command,        chars: "\x19ye"    }
 
+  # ------ bind esc ------
+  - { key: Semicolon, mods: Command, chars: "\x1b" }
