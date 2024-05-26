@@ -111,10 +111,10 @@ vim.keymap.set("n", "<C-f>", "", opt)
 
 vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
 vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
-vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
-vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
-vim.keymap.set("n", "<C-f>=", ":vertical resize +5<CR>", opt)
-vim.keymap.set("n", "<C-f>-", ":vertical resize -5<CR>", opt)
+vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
+vim.keymap.set("n", "<C-f>=", ":vertical resize +15<CR>", opt)
+vim.keymap.set("n", "<C-f>-", ":vertical resize -15<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
 
@@ -213,7 +213,7 @@ require("lazy").setup({
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
-        branch = "0.1.x",
+        tag = '0.1.6',
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local actions = require("telescope.actions")
@@ -222,7 +222,7 @@ require("lazy").setup({
                     preview = false,
                     mappings = {
                         i = {
-                            ["<esc>"] = actions.close, -- close on single <esc> press (instead of two)
+                            ["<Esc>"] = actions.close, -- close on single <esc> press (instead of two)
                         },
                     },
                 },
@@ -242,8 +242,8 @@ require("lazy").setup({
             })
 
             vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "<C-h>", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "<C-k>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-j>", require("telescope.builtin").buffers)
         end,
     },
 
@@ -254,11 +254,7 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = true,
                 current_line_blame_opts = {
-                    virt_text = true,
-                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
                     delay = 600,
-                    ignore_whitespace = false,
-                    virt_text_priority = 100,
                 },
             })
         end,
@@ -277,45 +273,6 @@ require("lazy").setup({
                 capabilities = capabilities,
             })
 
-            -- Bash LSP
-            local configs = require("lspconfig.configs")
-            if not configs.bash_lsp and vim.fn.executable("bash-language-server") == 1 then
-                configs.bash_lsp = {
-                    default_config = {
-                        cmd = { "bash-language-server", "start" },
-                        filetypes = { "sh" },
-                        root_dir = require("lspconfig").util.find_git_ancestor,
-                        init_options = {
-                            settings = {
-                                args = {},
-                            },
-                        },
-                    },
-                }
-            end
-            if configs.bash_lsp then
-                lspconfig.bash_lsp.setup({})
-            end
-
-            -- Go
-            lspconfig.gopls.setup({
-                on_attach = on_attach,
-                settings = {
-                    gopls = {
-                        analyses = {
-                            unusedparams = true,
-                        },
-                        staticcheck = true,
-                        gofumpt = true,
-                    },
-                },
-            })
-
-            -- Global mappings.
-            -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-            --            vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-            vim.keymap.set("n", "g[", vim.diagnostic.goto_prev)
-            vim.keymap.set("n", "g]", vim.diagnostic.goto_next)
             vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
             -- Use LspAttach autocommand to only map the following keys
@@ -337,9 +294,6 @@ require("lazy").setup({
 
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                    vim.keymap.set("n", "<leader>f", function()
-                        vim.lsp.buf.format({ async = true })
-                    end, opts)
 
                     local client = vim.lsp.get_client_by_id(ev.data.client_id)
                     -- None of this semantics tokens business.
@@ -360,18 +314,10 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
-            "hrsh7th/vim-vsnip",
-            "hrsh7th/vim-vsnip-integ",
         },
         config = function()
             local cmp = require("cmp")
             cmp.setup({
-                snippet = {
-                    -- REQUIRED by nvim-cmp. get rid of it once we can
-                    expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body)
-                    end,
-                },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -387,11 +333,7 @@ require("lazy").setup({
                     },
                 }, {
                     { name = "path" },
-                    { name = "codeium" },
                 }),
-                experimental = {
-                    -- ghost_text = true,
-                },
             })
 
             -- Enable completing paths in :
@@ -407,43 +349,6 @@ require("lazy").setup({
         version = '^4', -- Recommended
         lazy = false,
         ft = { 'rust' },
-    },
-
-    -- DAP
-    {
-        'mfussenegger/nvim-dap',
-        dependencies = {
-            {
-                'rcarriga/nvim-dap-ui',
-                dependencies = { 'nvim-neotest/nvim-nio' },
-            },
-            'theHamsta/nvim-dap-virtual-text',
-        },
-
-        config = function()
-            local dap = require('dap')
-            local dapui = require('dapui')
-
-            vim.keymap.set('n', '<C-f>b', dap.toggle_breakpoint)
-            vim.keymap.set('n', '<C-f>c', dap.continue)
-            vim.keymap.set('n', '<C-f>r', dap.repl.open)
-            vim.keymap.set('n', '<C-f>u', dap.up)
-            vim.keymap.set('n', '<C-f>d', dap.down)
-            vim.keymap.set('n', '<C-f>s', dap.terminate)
-            vim.keymap.set('n', '<C-n>', dap.step_over)
-            vim.keymap.set('n', '<C-s>', dap.step_into)
-
-            dap.adapters.lldb = {
-                type = 'executable',
-                command = '/opt/homebrew/bin/lldb-vscode',
-                name = 'lldb'
-            }
-
-            dapui.setup{}
-            dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open() end
-            dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-            dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
-        end,
     },
 
     -- Tools
@@ -474,15 +379,14 @@ require("lazy").setup({
         end
     },
     {
-      "iamcco/markdown-preview.nvim",
-      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-      build = "cd app && yarn install",
-      init = function()
-        vim.g.mkdp_filetypes = { "markdown" }
-        vim.keymap.set("n", "<Leader>mt", ":MarkdownPreview<CR>", opt)
-        vim.keymap.set("n", "<Leader>mp", ":MarkdownPreviewStop<CR>", opt)
-      end,
-      ft = { "markdown" },
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+            vim.keymap.set("n", "<Leader>m", ":MarkdownPreview<CR>", opt)
+        end,
+        ft = { "markdown" },
     },
 })
 

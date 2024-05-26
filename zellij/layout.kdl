@@ -8,9 +8,9 @@ layout {
 
     floating_panes {
         pane {
-            x "2%"
+            x "1%"
             y "2%"
-            width "96%"
+            width "97%"
             height "94%"
         }
     }
