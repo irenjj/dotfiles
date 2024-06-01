@@ -117,9 +117,8 @@ vim.keymap.set("n", "<C-f>=", ":vertical resize +15<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -15<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
 vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
-
-vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
-vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -213,7 +212,7 @@ require("lazy").setup({
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
-        tag = '0.1.6',
+        branch = '0.1.x',
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local actions = require("telescope.actions")
@@ -244,6 +243,8 @@ require("lazy").setup({
             vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<C-k>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "<C-j>", require("telescope.builtin").buffers)
+            -- Reopen last Telescope window, super useful for live grep
+            vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 
@@ -254,7 +255,7 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = true,
                 current_line_blame_opts = {
-                    delay = 600,
+                    delay = 400,
                 },
             })
         end,
@@ -349,6 +350,38 @@ require("lazy").setup({
         version = '^4', -- Recommended
         lazy = false,
         ft = { 'rust' },
+        config = function()
+            vim.g.rustaceanvim = {
+                -- LSP configuration
+                server = {
+                    on_attach = function(client, bufnr)
+                        vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
+                        vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
+                    end,
+                    default_settings = {
+                        ['rust-analyzer'] = {
+                            cargo = {
+                                allFeatures = true,
+                            },
+                            completion = {
+                                postfix = {
+                                    enable = false,
+                                },
+                            },
+                            diagnostics = {
+                                enable = true;
+                            },
+                            checkOnSave = true,
+                            check = {
+                                enable = true,
+                                command = "check",
+                                features = "all",
+                            }
+                        },
+                    },
+                },
+            }
+        end
     },
 
     -- Tools
@@ -383,6 +416,10 @@ require("lazy").setup({
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && yarn install",
         init = function()
+            -- set to 1, the nvim will auto close current preview window when changing
+            -- from Markdown buffer to another buffer
+            -- default: 1
+            vim.g.mkdp_auto_close = 0
             vim.g.mkdp_filetypes = { "markdown" }
             vim.keymap.set("n", "<Leader>m", ":MarkdownPreview<CR>", opt)
         end,
@@ -400,41 +437,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
     pattern = "qf",
 })
-
--- Reopen last Telescope window, super useful for live grep
-vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
-
-vim.g.rustaceanvim = {
-    -- LSP configuration
-    server = {
-        on_attach = function(client, bufnr)
-            -- you can also put keymaps in here
-            vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
-            vim.keymap.set("n", "<leader>lx", ":RustLsp explainError<CR>", opt)
-            vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
-            vim.keymap.set("n", "<leader>lr", ":RustLsp runnables<CR>", opt)
-            vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
-        end,
-        default_settings = {
-            ['rust-analyzer'] = {
-                cargo = {
-                    allFeatures = true,
-                },
-                completion = {
-                    postfix = {
-                        enable = false,
-                    },
-                },
-                diagnostics = {
-                    enable = true;
-                },
-                checkOnSave = true,
-                check = {
-                    enable = true,
-                    command = "check",
-                    features = "all",
-                }
-            },
-        },
-    },
-}

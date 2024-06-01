@@ -99,9 +99,9 @@ key_bindings:
   - { key: Minus,    mods: Command,       action: DecreaseFontSize }
 
   # ----- new pane/tab/window -----
-  - { key: D,        mods: Command,       chars: "\x02%"    } # new vertical pane with default shell
-  - { key: D,        mods: Command|Shift, chars: "\x02\""    } # new vertical pane with commands menu
-  - { key: N,        mods: Command,       chars: "\x02c"    } # new tab with default shell
+  - { key: D,        mods: Command,       chars: "\x02%"     } # new vertical pane with default shell
+  - { key: S,        mods: Command,       chars: "\x02\""    } # new vertical pane with commands menu
+  - { key: N,        mods: Command,       chars: "\x02c"     } # new tab with default shell
 
   # ----- close pane/tab/window -----
   - { key: W,        mods: Command,       chars: "\x02x"    } # close the pane
@@ -140,6 +140,3 @@ key_bindings:
 
   # ------ vim mode ------
   - { key: U,       mods: Command,        chars: "\x19ye"    }
-
-  # ------ bind esc ------
-  - { key: Semicolon, mods: Command, chars: "\x1b" } # esc

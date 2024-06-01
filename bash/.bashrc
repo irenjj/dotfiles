@@ -19,6 +19,9 @@ export PATH=/usr/local/lib:$PATH
 export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
 export DYLD_LIBRARY_PATH=/usr/local/lib
 
+# greptimedb settings
+export GT_MYSQL_ADDR=localhost:4002
+
 # --------------------------------------------------
 # alias
 alias ..='cd ..'
@@ -29,6 +32,8 @@ alias vim=nvim
 alias lg=lazygit
 
 # rust
+alias cb='cargo build'
+alias cf='cargo fmt'
 alias rdb=rust-lldb
 alias ctn='cargo test --no-run'
 
@@ -36,6 +41,8 @@ if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
     alias la='exa --group-directories-first --classify --all' # 'ls -A'
     alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
+    alias ao='/Applications/Alacritty.app/Contents/MacOS/alacritty msg config window.opacity=0.0'
+    alias auo='/Applications/Alacritty.app/Contents/MacOS/alacritty msg config window.opacity=1.0'
 fi
 
 # --------------------------------------------------
@@ -70,7 +77,6 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
-
 
 # --------------------------------------------------
 # PS1 format

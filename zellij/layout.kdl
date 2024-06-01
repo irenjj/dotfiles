@@ -1,6 +1,5 @@
 layout {
-    //pane name="" size=2 borderless=true {
-    pane name="" size=1 {
+    pane name="" size=1 borderless=true {
         plugin location="zellij:compact-bar"
     }
 
@@ -18,4 +17,3 @@ layout {
 session_name "0"
 attach_to_session true
 copy-on-select true
-mouse-mode true

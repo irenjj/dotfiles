@@ -13,6 +13,6 @@
   "nvim-treesitter": { "branch": "master", "commit": "00a8cfd562dc805eb4d732fbca35e23640dbf7c8" },
   "outline.nvim": { "branch": "main", "commit": "dbd836893fb99cfc33119d7c4abbdb700210f54b" },
   "plenary.nvim": { "branch": "master", "commit": "08e301982b9a057110ede7a735dd1b5285eb341f" },
-  "rustaceanvim": { "branch": "master", "commit": "66466d4fe0b8988ba9e2932d3c41782c2efb683b" },
-  "telescope.nvim": { "branch": "master", "commit": "6312868392331c9c0f22725041f1ec2bef57c751" }
+  "rustaceanvim": { "branch": "master", "commit": "2fa45427c01ded4d3ecca72e357f8a60fd8e46d4" },
+  "telescope.nvim": { "branch": "0.1.x", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" }
 }
