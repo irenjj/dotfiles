@@ -129,6 +129,7 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
+
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -351,6 +352,9 @@ require("lazy").setup({
         ft = { 'rust' },
         config = function()
             vim.g.rustaceanvim = {
+                tools = {
+                    test_executor = 'termopen',
+                },
                 -- LSP configuration
                 server = {
                     on_attach = function(client, bufnr)
