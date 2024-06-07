@@ -1,0 +1,277 @@
+live_config_reload = true
+
+[colors.bright]
+black = "#959da5"
+blue = "#157ae6"
+cyan = "#3192aa"
+green = "#2e870b"
+magenta = "#5a32a3"
+red = "#f00206"
+white = "#d1d5da"
+yellow = "#c99b00"
+
+[colors.cursor]
+cursor = "#000000"
+
+[colors.normal]
+black = "#24292e"
+blue = "#043ABD"
+cyan = "#043ABD"
+green = "#2b8a06"
+magenta = "#5a32a3"
+red = "#c70609"
+white = "#6a737d"
+yellow = "#de721b"
+
+[colors.primary]
+background = "#FFFFFF"
+foreground = "#24292f"
+
+[colors.search.focused_match]
+background = "#9F7AF5"
+foreground = "#ffffff"
+
+[colors.search.matches]
+background = "#ffffff"
+foreground = "#000000"
+
+[font]
+size = 14.5
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 6
+
+[scrolling]
+history = 100000
+multiplier = 4
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+
+[shell]
+args = ["--login", "-c", "zellij --layout ~/.config/zellij/layout.kdl"]
+program = "/bin/bash"
+
+[window]
+decorations = "buttonless"
+startup_mode = "Maximized" # or "SimpleFullscreen"
+
+[mouse]
+hide_when_typing = true
+
+# ---------- Key bindings ----------
+# A list with all available `key` names can be found here
+# https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
+#
+# Run "xxd -psd" to find hex codes of keys.
+#
+# Alacritty + Zellij key integratio
+#   `\x02` is `C-b` as tmux prefix
+#   `\x19` is `C-y` as tmux prefix
+# ----- unbind -----
+[[keyboard.bindings]]
+action = "None"
+key = "H"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "None"
+key = "Q"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "None"
+key = "T"
+mods = "Command"
+
+# ----- change font size ----
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Key0"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Command"
+
+# ----- new pane/tab/window -----
+[[keyboard.bindings]]
+chars = "\u0002%"
+key = "D"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002\""
+key = "S"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002c"
+key = "N"
+mods = "Command"
+
+# ----- close pane/tab/window -----
+[[keyboard.bindings]]
+chars = "\u0002x"
+key = "W"
+mods = "Command"
+
+# [[keyboard.bindings]]
+# chars = "\u0002d"
+# key = "Q"
+# mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002h"
+key = "H"
+mods = "Command"
+
+# ----- navigate panes -----
+[[keyboard.bindings]]
+chars = "\u0002j"
+key = "J"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002k"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002l"
+key = "L"
+mods = "Command"
+
+# ----- resize panes -----
+[[keyboard.bindings]]
+chars = "\u0002H"
+key = "H"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002J"
+key = "J"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002K"
+key = "K"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002L"
+key = "L"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002z"
+key = "M"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002+"
+key = "+"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002_"
+key = "_"
+mods = "Command|Shift"
+
+# ----- navigate tabs -----
+[[keyboard.bindings]]
+chars = "\u0002p"
+key = "I"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002n"
+key = "O"
+mods = "Command"
+
+# [[keyboard.bindings]]
+# chars = "\u00021"
+# key = "Key1"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00022"
+# key = "Key2"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00023"
+# key = "Key3"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00024"
+# key = "Key4"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00025"
+# key = "Key5"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00026"
+# key = "Key6"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00027"
+# key = "Key7"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00028"
+# key = "Key8"
+# mods = "Command"
+# 
+# [[keyboard.bindings]]
+# chars = "\u00029"
+# key = "Key9"
+# mods = "Command"
+
+# ----- toggle floating panes -----
+[[keyboard.bindings]]
+chars = "\u0002f"
+key = "F"
+mods = "Command"
+
+# ------ vim mode ------
+[[keyboard.bindings]]
+chars = "\u0019y"
+key = "U"
+mods = "Command"
+
+

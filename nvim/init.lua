@@ -113,6 +113,7 @@ vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
 vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
+vim.keymap.set("n", "K", "<C-w>w", opt)
 vim.keymap.set("n", "<C-f>=", ":vertical resize +15<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -15<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
@@ -162,7 +163,7 @@ require("lazy").setup({
                             inactive_base = "#FFFFFF",
                             tabline = "#FFFFFF",
                             statusline = "#FFFFFF",
-                            float = "#FFFFFF",
+                            float = "#FAFAFA",
                         },
                         syntax = {
                             red = "#871094", -- param
@@ -178,7 +179,6 @@ require("lazy").setup({
                     },
                 },
             })
-            -- vim.cmd.colorscheme("astrodark")
             vim.cmd.colorscheme("astrolight")
         end,
     },
@@ -204,7 +204,7 @@ require("lazy").setup({
             outline_window = {
                 win_position = 'left',
                 split_command = 'topleft vsplit',
-                width = 20,
+                width = 15,
             },
         },
     },
@@ -274,7 +274,7 @@ require("lazy").setup({
                 capabilities = capabilities,
             })
 
-            vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+            -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
             -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer
@@ -287,12 +287,11 @@ require("lazy").setup({
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
-                    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                    vim.keymap.set("n", "gl", vim.lsp.buf.declaration, opts)
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
-
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
@@ -355,8 +354,10 @@ require("lazy").setup({
                 -- LSP configuration
                 server = {
                     on_attach = function(client, bufnr)
-                        vim.keymap.set("n", "<leader>le", ":RustLsp expandMacro<CR>", opt)
+                        vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
+                        vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
+                        vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -437,3 +438,5 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
     pattern = "qf",
 })
+
+-- vim.lsp.inlay_hint.enable()

@@ -32,8 +32,10 @@ alias vim=nvim
 alias lg=lazygit
 
 # rust
-alias cb='cargo build'
-alias cf='cargo fmt'
+alias cbd='cargo build'
+alias cft='cargo fmt'
+alias ccp='cargo clippy'
+alias ccn='cargo clean'
 alias rdb=rust-lldb
 alias ctn='cargo test --no-run'
 
@@ -41,8 +43,6 @@ if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
     alias la='exa --group-directories-first --classify --all' # 'ls -A'
     alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
-    alias ao='/Applications/Alacritty.app/Contents/MacOS/alacritty msg config window.opacity=0.0'
-    alias auo='/Applications/Alacritty.app/Contents/MacOS/alacritty msg config window.opacity=1.0'
 fi
 
 # --------------------------------------------------
