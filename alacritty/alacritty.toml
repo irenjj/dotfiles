@@ -76,7 +76,7 @@ program = "/bin/bash"
 
 [window]
 decorations = "buttonless"
-startup_mode = "Maximized" # or SimpleFullscreen
+# startup_mode = "SimpleFullscreen"
 
 [mouse]
 hide_when_typing = true

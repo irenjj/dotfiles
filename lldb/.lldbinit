@@ -1,6 +1,6 @@
 settings set auto-confirm 1
 
-settings set stop-line-count-before 20
+settings set stop-line-count-before 24
 settings set stop-line-count-after 20
 
 settings set stop-disassembly-count 40

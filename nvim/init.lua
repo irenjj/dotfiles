@@ -109,11 +109,11 @@ local opt = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<C-f>", "", opt)
 
-vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
-vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
-vim.keymap.set("n", "K", "<C-w>w", opt)
+vim.keymap.set("n", "f", "<C-w>w", opt)
 vim.keymap.set("n", "<C-f>=", ":vertical resize +15<CR>", opt)
 vim.keymap.set("n", "<C-f>-", ":vertical resize -15<CR>", opt)
 vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
@@ -159,23 +159,23 @@ require("lazy").setup({
                     },
                     astrolight = {
                         ui = {
-                            base = "#FFFFFF",
-                            current_line = "#FFFFFF",
-                            inactive_base = "#FFFFFF",
-                            tabline = "#FFFFFF",
-                            statusline = "#FFFFFF",
-                            float = "#FAFAFA",
+                            base = "#ffffff",
+                            current_line = "#ffffff",
+                            inactive_base = "#ffffff",
+                            tabline = "#ffffff",
+                            statusline = "#ffffff",
+                            float = "#ffffff",
                         },
                         syntax = {
                             red = "#871094", -- param
-                            blue = "#043ABD", -- fn
-                            green = "#2b8a06",
-                            yellow = "#871094",
+                            blue = "#043abd", -- fn
+                            green = "#179600",
                             purple = "#785201", -- key
-                            cyan = "#C15200", -- struct
-                            orange = "#4F4F4F", -- variable
+                            yellow = "#007369",
+                            cyan = "#c15200", -- struct
+                            orange = "#4f4f4f", -- variable
 
-                            comment = "#9BA0A3",
+                            comment = "#8d9091",
                         },
                     },
                 },
@@ -198,14 +198,23 @@ require("lazy").setup({
         "hedyhli/outline.nvim",
         lazy = true,
         cmd = { "Outline", "OutlineOpen" },
-        keys = { -- Example mapping to toggle outline
+        keys = {
             { "<Leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
             outline_window = {
                 win_position = 'left',
                 split_command = 'topleft vsplit',
-                width = 15,
+                width = 25,
+                focus_on_open = false,
+                relative_width = false,
+            },
+            outline_items = {
+                show_symbol_details = false,
+            },
+             keymaps = {
+                close = {},
+                toggle_preview = 'f',
             },
         },
     },
@@ -242,10 +251,10 @@ require("lazy").setup({
             })
 
             vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-k>", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "<C-j>", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", ";", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", "<C-n>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 
@@ -268,6 +277,11 @@ require("lazy").setup({
         config = function()
             -- Setup language servers.
             local lspconfig = require("lspconfig")
+
+            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+                vim.lsp.handlers.hover,
+                {border = 'rounded'}
+            )
 
             -- Cpp
             lspconfig.clangd.setup({
@@ -302,6 +316,18 @@ require("lazy").setup({
                     client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
+
+            require('lspconfig.ui.windows').default_options.border = 'single'
+            vim.diagnostic.config {
+                virtual_text = false,
+                float = {
+                    header = false,
+                    border = 'rounded',
+                    focusable = true,
+                },
+            }
+
+
         end,
     },
     {
@@ -320,8 +346,6 @@ require("lazy").setup({
             local cmp = require("cmp")
             cmp.setup({
                 mapping = cmp.mapping.preset.insert({
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
                     -- Accept currently selected item.
@@ -343,6 +367,13 @@ require("lazy").setup({
                     { name = "path" },
                 }),
             })
+
+            cmp.setup {
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
+            }
         end,
     },
     {
@@ -353,6 +384,9 @@ require("lazy").setup({
         config = function()
             vim.g.rustaceanvim = {
                 tools = {
+                    float_win_config = {
+                        border = 'rounded'
+                    },
                     test_executor = 'termopen',
                 },
                 -- LSP configuration
@@ -431,16 +465,3 @@ require("lazy").setup({
         ft = { "markdown" },
     },
 })
-
-vim.api.nvim_create_autocmd("FileType", {
-    callback = function()
-        local bufnr = vim.fn.bufnr('%')
-        vim.keymap.set("n", "<CR>", function()
-            vim.api.nvim_command([[execute "normal! \<cr>"]])
-            vim.api.nvim_command(bufnr .. 'bd')
-        end, { buffer = bufnr })
-    end,
-    pattern = "qf",
-})
-
--- vim.lsp.inlay_hint.enable()
