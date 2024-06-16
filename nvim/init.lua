@@ -55,7 +55,7 @@ vim.o.cmdheight = 0
 vim.o.autoread = true
 vim.bo.autoread = true
 
--- Disable line wrapping
+-- Line wrapping
 vim.wo.wrap = true
 
 -- When the cursor is at the beginning or end of a line, <Left><Right> can jump to the next line
@@ -199,13 +199,14 @@ require("lazy").setup({
         lazy = true,
         cmd = { "Outline", "OutlineOpen" },
         keys = {
-            { "<Leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
             outline_window = {
                 win_position = 'left',
                 split_command = 'topleft vsplit',
-                width = 25,
+                width = 50,
+                -- auto_close = true,
                 focus_on_open = false,
                 relative_width = false,
             },
@@ -306,9 +307,14 @@ require("lazy").setup({
                     vim.keymap.set("n", "gl", vim.lsp.buf.declaration, opts)
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+                    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                    vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev)
+                    vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
-                    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                    vim.keymap.set('n', '<leader>f', function()
+                        vim.lsp.buf.format { async = true }
+                    end, opts)
 
                     local client = vim.lsp.get_client_by_id(ev.data.client_id)
                     -- None of this semantics tokens business.
@@ -316,18 +322,6 @@ require("lazy").setup({
                     client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
-
-            require('lspconfig.ui.windows').default_options.border = 'single'
-            vim.diagnostic.config {
-                virtual_text = false,
-                float = {
-                    header = false,
-                    border = 'rounded',
-                    focusable = true,
-                },
-            }
-
-
         end,
     },
     {
@@ -394,8 +388,8 @@ require("lazy").setup({
                     on_attach = function(client, bufnr)
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
-                        vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
-                        vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
+                        -- vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
+                        vim.keymap.set("n", "<leader>le", ":RustLsp renderDiagnostic<CR>", opt)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -463,5 +457,13 @@ require("lazy").setup({
             vim.keymap.set("n", "<Leader>m", ":MarkdownPreview<CR>", opt)
         end,
         ft = { "markdown" },
+    },
+    {
+        'MeanderingProgrammer/markdown.nvim',
+        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        config = function()
+            require('render-markdown').setup({})
+        end,
     },
 })

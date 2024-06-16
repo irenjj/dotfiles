@@ -1,7 +1,7 @@
 settings set auto-confirm 1
 
-settings set stop-line-count-before 24
-settings set stop-line-count-after 20
+settings set stop-line-count-before 10
+settings set stop-line-count-after 10
 
 settings set stop-disassembly-count 40
 # command script import /Users/admin/Library/Python/2.7/lib/python/site-packages/voltron/entry.py
