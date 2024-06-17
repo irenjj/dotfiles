@@ -11,7 +11,7 @@ white = "#d1d5da"
 yellow = "#c99b00"
 
 [colors.cursor]
-cursor = "#000000"
+cursor = "#666666"
 
 [colors.normal]
 black = "#24292e"
@@ -76,7 +76,7 @@ program = "/bin/bash"
 
 [window]
 decorations = "buttonless"
-startup_mode = "SimpleFullscreen"
+# startup_mode = "SimpleFullscreen"
 
 [mouse]
 hide_when_typing = true

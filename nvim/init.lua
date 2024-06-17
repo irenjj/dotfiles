@@ -108,16 +108,16 @@ vim.api.nvim_win_set_option(0, "fillchars", "fold: ")
 local opt = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<C-f>", "", opt)
+vim.keymap.set("n", "<C-=>", "", opt)
+vim.keymap.set("n", "<C-->", "", opt)
 
 vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "f", "<C-w>w", opt)
-vim.keymap.set("n", "<C-f>=", ":vertical resize +15<CR>", opt)
-vim.keymap.set("n", "<C-f>-", ":vertical resize -15<CR>", opt)
-vim.keymap.set("n", "<C-f>+", ":resize +5<CR>", opt)
-vim.keymap.set("n", "<C-f>_", ":resize -5<CR>", opt)
+vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
+vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
 vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 
@@ -199,25 +199,45 @@ require("lazy").setup({
         lazy = true,
         cmd = { "Outline", "OutlineOpen" },
         keys = {
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+            { "<CR>", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
             outline_window = {
                 win_position = 'left',
                 split_command = 'topleft vsplit',
-                width = 50,
-                -- auto_close = true,
-                focus_on_open = false,
+                width = 40,
+                auto_close = true,
                 relative_width = false,
             },
             outline_items = {
                 show_symbol_details = false,
             },
              keymaps = {
-                close = {},
                 toggle_preview = 'f',
             },
         },
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        config = function()
+            require("toggleterm").setup({
+                open_mapping = [[<c-;>]],
+                size = 30,
+
+            })
+            -- term key map
+            function _G.set_terminal_keymaps()
+                local opts = {buffer = 0}
+                vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+                vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+                vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+                vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+                vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+            end
+            vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+            vim.keymap.set("n", "<C-e>", ":TermSelect<CR>", opt)
+        end,
     },
 
     -- Telescope
@@ -428,9 +448,9 @@ require("lazy").setup({
                 symbol ='│'
             })
             require('mini.cursorword').setup()
-            require('mini.jump2d').setup({
-                vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
-            })
+            -- require('mini.jump2d').setup({
+            --     vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
+            -- })
             require('mini.files').setup({
                 vim.keymap.set("n", "<C-f>f", ":lua MiniFiles.open()<CR>", opt)
             })

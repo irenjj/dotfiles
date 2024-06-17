@@ -8,24 +8,24 @@ layout {
     floating_panes {
         pane {
             x 0
-            y "2%"
+            y 2
             width 90
-            height "30%"
+            height 20
         }
 
         pane {
             x 0
-            y "34%"
+            y 22
             width 90
-            height "62%"
+            height 31
         }
 
         pane {
             focus true
             x 90
-            y "2%"
+            y 2
             width 126
-            height "94%"
+            height 51
         }
     }
 }
