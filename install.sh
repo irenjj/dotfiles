@@ -37,3 +37,7 @@ ln -s ${CONF_DIR}/vim/.vimrc ${HOME}/.vimrc
 # zellij
 unlink ${HOME}/.config/zellij
 ln -s ${CONF_DIR}/zellij ${HOME}/.config/zellij
+
+# kitty
+unlink ${HOME}/.config/kitty
+ln -s ${CONF_DIR}/kitty ${HOME}/.config/kitty

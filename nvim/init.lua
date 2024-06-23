@@ -130,6 +130,9 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
 
+-- Un-highlight last search result
+vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
+
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -195,27 +198,23 @@ require("lazy").setup({
         end,
     },
     {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<CR>", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        'stevearc/aerial.nvim',
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
         },
         opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 40,
-                auto_close = true,
-                relative_width = false,
+            layout = {
+                default_direction = "float",
             },
-            outline_items = {
-                show_symbol_details = false,
+            float = {
+                relative = "win",
             },
-             keymaps = {
-                toggle_preview = 'f',
+            keymaps = {
+                ["L"] = "actions.close",
             },
         },
+        vim.keymap.set("n", "L", ":AerialToggle<CR>")
     },
     {
         'akinsho/toggleterm.nvim',
@@ -223,8 +222,7 @@ require("lazy").setup({
         config = function()
             require("toggleterm").setup({
                 open_mapping = [[<c-;>]],
-                size = 30,
-
+                size = 25,
             })
             -- term key map
             function _G.set_terminal_keymaps()
@@ -303,6 +301,10 @@ require("lazy").setup({
                 vim.lsp.handlers.hover,
                 {border = 'rounded'}
             )
+            vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+                vim.lsp.handlers.signature_help,
+                { border = 'rounded' }
+            )
 
             -- Cpp
             lspconfig.clangd.setup({
@@ -355,13 +357,26 @@ require("lazy").setup({
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            "onsails/lspkind.nvim",
         },
         config = function()
             local cmp = require("cmp")
+            local lspkind = require('lspkind')
             cmp.setup({
+                formatting = {
+                    format = lspkind.cmp_format({
+                        with_text = true, -- do not show text alongside icons
+                        maxwidth = 30,
+                        before = function(entry, vim_item)
+                            local m = vim_item.menu and vim_item.menu or ""
+                            if #m > 30 then
+                                vim_item.menu = string.sub(m, 1, 20) .. "..."
+                            end
+                            return vim_item
+                        end,
+                    }),
+                },
                 mapping = cmp.mapping.preset.insert({
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.abort(),
                     -- Accept currently selected item.
                     -- Set `select` to `false` to only confirm explicitly selected items.
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
@@ -448,9 +463,9 @@ require("lazy").setup({
                 symbol ='│'
             })
             require('mini.cursorword').setup()
-            -- require('mini.jump2d').setup({
-            --     vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
-            -- })
+            require('mini.jump2d').setup({
+                vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
+            })
             require('mini.files').setup({
                 vim.keymap.set("n", "<C-f>f", ":lua MiniFiles.open()<CR>", opt)
             })
