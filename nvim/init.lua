@@ -106,7 +106,9 @@ vim.o.pumheight = 10
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99
-vim.o.foldcolumn = '1'
+-- vim.o.foldcolumn = '1'
+
+vim.o.termsync = false
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -115,15 +117,15 @@ vim.keymap.set("n", "<C-f>", "", opt)
 vim.keymap.set("n", "<C-=>", "", opt)
 vim.keymap.set("n", "<C-->", "", opt)
 
-vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
-vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
-vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
+vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
+vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
+vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
+vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "f", "<C-w>w", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
 vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
-vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
-vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -222,27 +224,6 @@ require("lazy").setup({
             },
         },
     },
-    {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<C-;>]],
-                direction = 'float',
-            })
-            -- term key map
-            function _G.set_terminal_keymaps()
-                local opts = {buffer = 0}
-                vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-                vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-                vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-                vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-                vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-            end
-            vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-            vim.keymap.set("n", "<C-e>", ":TermSelect<CR>", opt)
-        end,
-    },
 
     -- Telescope
     {
@@ -276,10 +257,10 @@ require("lazy").setup({
             })
 
             vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-h>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", ";", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", "<C-n>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", "<C-j>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 

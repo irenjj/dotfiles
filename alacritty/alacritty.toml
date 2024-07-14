@@ -40,15 +40,11 @@ size = 16
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
-style = "Regular"
+style = "Bold"
 
 [font.bold_italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic"
-
-[font.glyph_offset]
-x = 0
-y = 0
+style = "Italic Bold"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
@@ -56,11 +52,15 @@ style = "Italic"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-style = "Regular"
+# style = "Regular"
+
+[font.glyph_offset]
+x = 0
+y = 0
 
 [font.offset]
 x = 0
-y = 6
+y = 5
 
 [scrolling]
 history = 0
@@ -76,7 +76,7 @@ program = "/bin/bash"
 
 [window]
 decorations = "buttonless"
-# startup_mode = "SimpleFullscreen"
+startup_mode = "SimpleFullscreen"
 
 [mouse]
 hide_when_typing = true
@@ -143,11 +143,6 @@ mods = "Command"
 chars = "\u0002x"
 key = "W"
 mods = "Command"
-
-# [[keyboard.bindings]]
-# chars = "\u0002d"
-# key = "Q"
-# mods = "Command"
 
 [[keyboard.bindings]]
 chars = "\u0002h"
@@ -217,50 +212,50 @@ chars = "\u0002n"
 key = "O"
 mods = "Command"
 
-# [[keyboard.bindings]]
-# chars = "\u00021"
-# key = "Key1"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00022"
-# key = "Key2"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00023"
-# key = "Key3"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00024"
-# key = "Key4"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00025"
-# key = "Key5"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00026"
-# key = "Key6"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00027"
-# key = "Key7"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00028"
-# key = "Key8"
-# mods = "Command"
-# 
-# [[keyboard.bindings]]
-# chars = "\u00029"
-# key = "Key9"
-# mods = "Command"
+[[keyboard.bindings]]
+chars = "\u00021"
+key = "Key1"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00022"
+key = "Key2"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00023"
+key = "Key3"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00024"
+key = "Key4"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00025"
+key = "Key5"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00026"
+key = "Key6"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00027"
+key = "Key7"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00028"
+key = "Key8"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00029"
+key = "Key9"
+mods = "Command"
 
 # ----- toggle floating panes -----
 [[keyboard.bindings]]
@@ -270,8 +265,8 @@ mods = "Command"
 
 # ------ vim mode ------
 [[keyboard.bindings]]
-chars = "\u0019y"
-key = "U"
+chars = "\u0002e"
+key = ";"
 mods = "Command"
 
 

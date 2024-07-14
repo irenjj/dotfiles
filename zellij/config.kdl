@@ -43,14 +43,9 @@ keybinds clear-defaults=true {
 
         // ----- toggle floating pane -----
         bind "f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
-    }
-    scroll {
-        bind "Ctrl y" { SwitchToMode "Normal"; }
+
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-        bind "j" { ScrollDown; }
-        bind "k" { ScrollUp; }
-        bind "Ctrl d" { HalfPageScrollDown; }
-        bind "Ctrl u" { HalfPageScrollUp; }
+
         bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
     }
 
@@ -73,7 +68,7 @@ keybinds clear-defaults=true {
         bind "Alt h" { SwitchToMode "Move"; }
     }
     shared_except "scroll" "locked" {
-        bind "Ctrl y" { SwitchToMode "Scroll"; }
+        bind "Alt y" { SwitchToMode "Scroll"; }
     }
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
