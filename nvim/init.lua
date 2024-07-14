@@ -100,9 +100,13 @@ vim.o.shortmess = vim.o.shortmess .. "c"
 vim.o.pumheight = 10
 
 -- Code folding.
-vim.api.nvim_win_set_option(0, "foldmethod", "indent")
-vim.api.nvim_win_set_option(0, "foldlevel", 99)
-vim.api.nvim_win_set_option(0, "fillchars", "fold: ")
+-- vim.api.nvim_win_set_option(0, "foldmethod", "indent")
+-- vim.api.nvim_win_set_option(0, "foldlevel", 99)
+-- vim.api.nvim_win_set_option(0, "fillchars", "fold: ")
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldlevel = 99
+vim.o.foldcolumn = '1'
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -194,6 +198,7 @@ require("lazy").setup({
             require("nvim-treesitter.configs").setup({
                 ensure_installed = "all",
                 highlight = { enable = true },
+                    fold = { enable = true },
             })
         end,
     },
@@ -208,7 +213,7 @@ require("lazy").setup({
             outline_window = {
                 win_position = 'left',
                 split_command = 'topleft vsplit',
-                width = 50,
+                width = 45,
                 -- auto_close = true,
                 relative_width = false,
             },
@@ -287,6 +292,7 @@ require("lazy").setup({
                 current_line_blame_opts = {
                     delay = 400,
                 },
+                current_line_blame_formatter = '<author> - <summary>, <author_time:%R>',
             })
         end,
     },
@@ -306,6 +312,8 @@ require("lazy").setup({
                 vim.lsp.handlers.signature_help,
                 { border = 'rounded' }
             )
+
+            -- vim.lsp.inlay_hint.enable()
 
             -- Cpp
             lspconfig.clangd.setup({
@@ -424,8 +432,8 @@ require("lazy").setup({
                     on_attach = function(client, bufnr)
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
-                        -- vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
-                        vim.keymap.set("n", "<leader>le", ":RustLsp renderDiagnostic<CR>", opt)
+                        vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
+                        -- vim.keymap.set("n", "<leader>le", ":RustLsp renderDiagnostic<CR>", opt)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {

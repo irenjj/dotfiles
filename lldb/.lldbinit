@@ -1,7 +1,7 @@
 settings set auto-confirm 1
 settings set prompt 'lldb> '
-settings set stop-line-count-before 20
-settings set stop-line-count-after 20
+settings set stop-line-count-before 15
+settings set stop-line-count-after 5
 
 settings set stop-disassembly-count 40
 # command script import /Users/admin/Library/Python/2.7/lib/python/site-packages/voltron/entry.py
@@ -9,3 +9,7 @@ settings set frame-format "frame #${frame.index}: { \033[36m${module.file.basena
 
 settings set thread-format      "\n \033[35;4mthread #${thread.index}: tid = ${thread.id} \033[0m { \033[36m${module.file.basename}\033[39m{`${function.name-with-args}${function.pc-offset}}}{ at ${line.file.basename}:${line.number}}{, name = '\033[34m${thread.name}}\033[39m{, queue = '${thread.queue}}{, stop reason = ${thread.stop-reason}}{\nReturn value: ${thread.return-value}}\n"
 settings set thread-stop-format "\n \033[35;4mthread #${thread.index}: tid = ${thread.id} \033[0m { \033[36m${module.file.basename}\033[39m{`${function.name-with-args}${function.pc-offset}}}{ at ${line.file.basename}:${line.number}}{, name = '\033[34m${thread.name}}\033[39m{, queue = '${thread.queue}}{, stop reason = ${thread.stop-reason}}{\nReturn value: ${thread.return-value}}\n"
+
+# alias
+command alias slb settings set stop-line-count-before
+command alias sla settings set stop-line-count-after
