@@ -3,12 +3,12 @@ live_config_reload = true
 [colors.bright]
 black = "#959da5"
 blue = "#157ae6"
-cyan = "#3192aa"
-green = "#2e870b"
+cyan = "#00c1cf"
+green = "#39c900"
 magenta = "#5a32a3"
 red = "#f00206"
 white = "#d1d5da"
-yellow = "#c99b00"
+yellow = "#d9d500"
 
 [colors.cursor]
 cursor = "#666666"
@@ -16,12 +16,12 @@ cursor = "#666666"
 [colors.normal]
 black = "#24292e"
 blue = "#043ABD"
-cyan = "#043ABD"
+cyan = "#3192aa"
 green = "#2b8a06"
-magenta = "#5a32a3"
+magenta = "#8f008c"
 red = "#c70609"
 white = "#6a737d"
-yellow = "#de721b"
+yellow = "#db7900"
 
 [colors.primary]
 background = "#FFFFFF"
@@ -40,19 +40,19 @@ size = 16
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
-style = "Bold"
+style = "SemiBold"
 
 [font.bold_italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic Bold"
+style = "Italic SemiBold"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic"
+style = "Italic Light"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-# style = "Regular"
+style = "Light"
 
 [font.glyph_offset]
 x = 0
@@ -191,16 +191,6 @@ chars = "\u0002z"
 key = "M"
 mods = "Command"
 
-[[keyboard.bindings]]
-chars = "\u0002+"
-key = "+"
-mods = "Command|Shift"
-
-[[keyboard.bindings]]
-chars = "\u0002_"
-key = "_"
-mods = "Command|Shift"
-
 # ----- navigate tabs -----
 [[keyboard.bindings]]
 chars = "\u0002p"
@@ -263,10 +253,10 @@ chars = "\u0002f"
 key = "F"
 mods = "Command"
 
-# ------ vim mode ------
-[[keyboard.bindings]]
-chars = "\u0002e"
-key = ";"
-mods = "Command"
+## ------ vim mode ------
+#[[keyboard.bindings]]
+#chars = "\u0002e"
+#key = "y"
+#mods = "Command"
 
 

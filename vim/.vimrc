@@ -1,7 +1,7 @@
 set clipboard+=unnamed
 set hlsearch
-set number
-set relativenumber
+" set number
+" set relativenumber
 syntax enable
 autocmd BufReadPost * normal G
 highlight Error ctermfg=white ctermbg=red guifg=white guibg=red

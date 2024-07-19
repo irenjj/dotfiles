@@ -43,9 +43,14 @@ keybinds clear-defaults=true {
 
         // ----- toggle floating pane -----
         bind "f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
-
+    }
+    scroll {
+        bind "Ctrl y" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
-
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "Ctrl d" { HalfPageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
         bind "q" { ScrollToBottom; SwitchToMode "Normal"; }
     }
 
@@ -68,7 +73,7 @@ keybinds clear-defaults=true {
         bind "Alt h" { SwitchToMode "Move"; }
     }
     shared_except "scroll" "locked" {
-        bind "Alt y" { SwitchToMode "Scroll"; }
+        bind "Ctrl y" { SwitchToMode "Scroll"; }
     }
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
@@ -112,6 +117,13 @@ default_shell "bash"
 //   - false
 //
 pane_frames false
+
+ui {
+    pane_frames {
+        rounded_corners true
+        hide_session_name true
+    }
+}
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:

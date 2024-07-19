@@ -91,7 +91,7 @@ else
 fi
 
 # working directory
-PS1=$PS1':\[\033[01;36m\]\w\[\033[00m\]'
+PS1=$PS1':\[\033[01;34m\]\w\[\033[00m\]'
 
 # git
 PS1=$PS1'`__git_ps1 " (%s)"`'

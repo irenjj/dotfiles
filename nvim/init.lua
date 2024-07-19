@@ -108,7 +108,7 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99
 -- vim.o.foldcolumn = '1'
 
-vim.o.termsync = false
+-- vim.o.termsync = false
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -117,10 +117,10 @@ vim.keymap.set("n", "<C-f>", "", opt)
 vim.keymap.set("n", "<C-=>", "", opt)
 vim.keymap.set("n", "<C-->", "", opt)
 
-vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
-vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
-vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
-vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
+vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "f", "<C-w>w", opt)
@@ -216,12 +216,22 @@ require("lazy").setup({
                 win_position = 'left',
                 split_command = 'topleft vsplit',
                 width = 45,
-                -- auto_close = true,
                 relative_width = false,
+                focus_on_open = false,
             },
             outline_items = {
                 show_symbol_details = false,
             },
+            keymaps = {
+                close = {},
+            }
+        },
+    },
+    -- Lsp status
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            vim.keymap.set("n", "<leader>cl", ":Fidget clear<CR>", opt)
         },
     },
 
@@ -256,11 +266,11 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-h>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<leader>p", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", ";", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", "<C-j>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", "<leader>j", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 
@@ -414,7 +424,10 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
                         vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
-                        -- vim.keymap.set("n", "<leader>le", ":RustLsp renderDiagnostic<CR>", opt)
+                        vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
+                        vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
+                        vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
+                        vim.keymap.set("n", "<leader>lf", ":RustLsp flyCheck<CR>", opt)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -429,10 +442,10 @@ require("lazy").setup({
                             diagnostics = {
                                 enable = true;
                             },
-                            checkOnSave = true,
+                            checkOnSave = false,
                             check = {
                                 enable = true,
-                                command = "check",
+                                command = "clippy",
                                 features = "all",
                             }
                         },
