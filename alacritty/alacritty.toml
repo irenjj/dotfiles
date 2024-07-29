@@ -36,7 +36,7 @@ background = "#ffffff"
 foreground = "#000000"
 
 [font]
-size = 16
+size = 18
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
@@ -60,7 +60,7 @@ y = 0
 
 [font.offset]
 x = 0
-y = 5
+y = 6
 
 [scrolling]
 history = 0

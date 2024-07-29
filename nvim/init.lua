@@ -82,10 +82,6 @@ vim.o.timeoutlen = 10000
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- Format
-vim.o.termguicolors = true
-vim.opt.termguicolors = true
-
 -- Display of invisible characters, showing only spaces as dots here
 vim.o.list = true
 vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
@@ -108,7 +104,14 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99
 -- vim.o.foldcolumn = '1'
 
--- vim.o.termsync = false
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-Cursor,r-cr-o:hor20"
+vim.cmd [[
+  augroup CursorColor
+    autocmd!
+    autocmd InsertEnter * highlight Cursor gui=NONE guifg=white guibg=green
+    autocmd InsertLeave * highlight Cursor gui=NONE guifg=NONE guibg=NONE
+  augroup END
+]]
 
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
@@ -161,11 +164,6 @@ require("lazy").setup({
         config = function()
             require("astrotheme").setup({
                 palettes = {
-                    astrodark = {
-                        ui = {
-                            current_line = "#1A1D23",
-                        },
-                    },
                     astrolight = {
                         ui = {
                             base = "#ffffff",
@@ -188,8 +186,47 @@ require("lazy").setup({
                         },
                     },
                 },
+                highlights = {
+                    astrolight = {
+                        modify_hl_groups = function(hl, c)
+                            hl.Keyword.bold = true
+                            hl.Keyword.fg = "#785201"
+
+                            hl.Structure.bold = true
+                            hl.Structure.fg = "#785201"
+
+                            hl.Conditional.bold = true
+                            hl.Conditional.fg = "#785201"
+
+                            hl.Debug.bold = true
+                            hl.Debug.fg = "#785201"
+
+                            hl.Exception.bold = true
+                            hl.Exception.fg = "#785201"
+
+                            hl.Include.bold = true
+                            hl.Include.fg = "#785201"
+
+                            hl.Repeat.bold = true
+                            hl.Repeat.fg = "#785201"
+
+                            hl.Typedef.bold = true
+                            hl.Typedef.fg = "#785201"
+
+                            hl.Boolean.bold = true
+                            hl.Boolean.fg = "#785201"
+
+                            hl.Label.bold = true
+                            hl.Label.fg = "#785201"
+
+                            hl.StorageClass.fg = "#c15200"
+                        end,
+
+                        ["@module.rust"] = { fg = "#000000" },
+                    },
+                },
             })
-            vim.cmd.colorscheme("astrolight")
+            vim.cmd.colorscheme("astrotheme")
         end,
     },
     {
@@ -205,27 +242,20 @@ require("lazy").setup({
         end,
     },
     {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        'stevearc/aerial.nvim',
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
         },
         opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 45,
-                relative_width = false,
-                focus_on_open = false,
+            layout = {
+                default_direction = "float",
             },
-            outline_items = {
-                show_symbol_details = false,
+            float = {
+                relative = "win",
             },
-            keymaps = {
-                close = {},
-            }
         },
+        vim.keymap.set("n", "<leader>to", ":AerialToggle<CR>")
     },
     -- Lsp status
     {
@@ -233,6 +263,23 @@ require("lazy").setup({
         opts = {
             vim.keymap.set("n", "<leader>cl", ":Fidget clear<CR>", opt)
         },
+    },
+    {
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        config = function()
+            require("toggleterm").setup({
+                direction = 'float',
+            })
+
+            local Terminal  = require('toggleterm.terminal').Terminal
+            local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+            function _lazygit_toggle()
+              lazygit:toggle()
+            end
+            vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+
+        end,
     },
 
     -- Telescope
@@ -281,9 +328,10 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = true,
                 current_line_blame_opts = {
-                    delay = 400,
+                    delay = 300,
                 },
                 current_line_blame_formatter = '<author> - <summary>, <author_time:%R>',
+                vim.keymap.set("n", "<leader>tb", ":Gitsigns toggle_current_line_blame<CR>", opt)
             })
         end,
     },
@@ -304,15 +352,17 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            -- vim.lsp.inlay_hint.enable()
+            vim.lsp.inlay_hint.enable()
+            local function toggle_inlay_hints()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end
+            vim.keymap.set("n", "<leader>ti", toggle_inlay_hints)
 
             -- Cpp
             lspconfig.clangd.setup({
                 on_attach = on_attach,
                 capabilities = capabilities,
             })
-
-            -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
             -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer
@@ -330,11 +380,11 @@ require("lazy").setup({
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                    vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev)
-                    vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next)
+                    -- vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev)
+                    -- vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
-                    vim.keymap.set('n', '<leader>f', function()
+                    vim.keymap.set('n', '<leader>lf', function()
                         vim.lsp.buf.format { async = true }
                     end, opts)
 
@@ -388,6 +438,9 @@ require("lazy").setup({
                 }, {
                     { name = "path" },
                 }),
+                experimental = {
+                    ghost_text = true,
+                },
             })
 
             -- Enable completing paths in :
@@ -427,7 +480,8 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
-                        vim.keymap.set("n", "<leader>lf", ":RustLsp flyCheck<CR>", opt)
+                        vim.keymap.set("n", "<leader>f", ":RustLsp flyCheck<CR>", opt)
+                        vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -445,7 +499,7 @@ require("lazy").setup({
                             checkOnSave = false,
                             check = {
                                 enable = true,
-                                command = "clippy",
+                                command = "check",
                                 features = "all",
                             }
                         },
@@ -492,7 +546,7 @@ require("lazy").setup({
             -- default: 1
             vim.g.mkdp_auto_close = 0
             vim.g.mkdp_filetypes = { "markdown" }
-            vim.keymap.set("n", "<Leader>m", ":MarkdownPreview<CR>", opt)
+            vim.keymap.set("n", "<Leader>tm", ":MarkdownPreview<CR>", opt)
         end,
         ft = { "markdown" },
     },
