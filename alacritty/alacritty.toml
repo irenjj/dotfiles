@@ -36,7 +36,7 @@ background = "#ffffff"
 foreground = "#000000"
 
 [font]
-size = 18
+size = 17
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
@@ -48,11 +48,11 @@ style = "Italic SemiBold"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic Light"
+style = "Italic Thin"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-style = "Light"
+style = "Regular"
 
 [font.glyph_offset]
 x = 0
@@ -60,19 +60,11 @@ y = 0
 
 [font.offset]
 x = 0
-y = 6
-
-[scrolling]
-history = 0
-multiplier = 4
+y = 10
 
 [selection]
 save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
-
-[shell]
-args = ["--login", "-c", "zellij --layout ~/.config/zellij/layout.kdl"]
-program = "/bin/bash"
 
 [window]
 decorations = "buttonless"

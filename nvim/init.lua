@@ -142,6 +142,9 @@ vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
 -- Un-highlight last search result
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
 
+-- Wrap or unwrap line
+vim.keymap.set('n', '<leader>tw', ':set wrap!<CR>')
+
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -180,7 +183,7 @@ require("lazy").setup({
                             purple = "#785201", -- key
                             yellow = "#007369",
                             cyan = "#c15200", -- struct
-                            orange = "#4f4f4f", -- variable
+                            orange = "#555555", -- variable
 
                             comment = "#8d9091",
                         },
@@ -222,7 +225,7 @@ require("lazy").setup({
                             hl.StorageClass.fg = "#c15200"
                         end,
 
-                        ["@module.rust"] = { fg = "#000000" },
+                        ["@module.rust"] = { fg = "#555555" },
                     },
                 },
             })
@@ -242,20 +245,27 @@ require("lazy").setup({
         end,
     },
     {
-        'stevearc/aerial.nvim',
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons"
+        "hedyhli/outline.nvim",
+        lazy = true,
+        cmd = { "Outline", "OutlineOpen" },
+        keys = {
+            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
         },
         opts = {
-            layout = {
-                default_direction = "float",
+            outline_window = {
+                win_position = 'left',
+                split_command = 'topleft vsplit',
+                width = 40,
+                -- auto_close = true,
+                relative_width = false,
             },
-            float = {
-                relative = "win",
+            outline_items = {
+                show_symbol_details = false,
+            },
+            keymaps = {
+              close = {},
             },
         },
-        vim.keymap.set("n", "<leader>to", ":AerialToggle<CR>")
     },
     -- Lsp status
     {
@@ -281,7 +291,6 @@ require("lazy").setup({
 
         end,
     },
-
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
@@ -431,15 +440,13 @@ require("lazy").setup({
                     -- Set `select` to `false` to only confirm explicitly selected items.
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 }),
-                sources = cmp.config.sources({
-                    {
-                        name = "nvim_lsp",
-                    },
-                }, {
+                sources = cmp.config.sources{
+                    { name = "nvim_lsp" },
                     { name = "path" },
-                }),
+                    { name = "copilot" },
+                },
                 experimental = {
-                    ghost_text = true,
+                    -- ghost_text = true,
                 },
             })
 
@@ -557,5 +564,20 @@ require("lazy").setup({
         config = function()
             require('render-markdown').setup({})
         end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        event = "InsertEnter",
+        config = function () require("copilot_cmp").setup() end,
+        dependencies = {
+            "zbirenbaum/copilot.lua",
+            cmd = "Copilot",
+            config = function()
+                require("copilot").setup({
+                    suggestion = { enabled = false },
+                    panel = { enabled = false },
+                })
+            end,
+        },
     },
 })

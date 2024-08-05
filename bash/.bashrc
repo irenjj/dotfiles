@@ -31,14 +31,6 @@ alias .....='cd ../../../..'
 alias vim=nvim
 alias lg=lazygit
 
-# rust
-alias cbd='cargo build'
-alias cft='cargo fmt'
-alias ccp='cargo clippy'
-alias ccn='cargo clean'
-alias rdb=rust-lldb
-alias ctn='cargo test --no-run'
-
 if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
     alias la='exa --group-directories-first --classify --all' # 'ls -A'

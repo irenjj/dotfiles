@@ -1,8 +1,8 @@
 settings set auto-confirm 1
 settings set prompt '> '
-settings set stop-line-count-before 10
-settings set stop-line-count-after 8
-settings set stop-disassembly-count 20
+settings set stop-line-count-before 20
+settings set stop-line-count-after 20
+settings set stop-disassembly-count 16
 
 settings set frame-format "frame #${frame.index}: { \033[36m${module.file.basename}\033[39m  {\033[32m${line.file.basename}:${line.number}\033[39m} {` \033[33m${function.name-with-args} \033[39m${function.pc-offset}}}\n"
 settings set thread-format      "\n \033[35;4mthread #${thread.index}: tid = ${thread.id} \033[0m { \033[36m${module.file.basename}\033[39m{`${function.name-with-args}${function.pc-offset}}}{ at ${line.file.basename}:${line.number}}{, name = '\033[34m${thread.name}}\033[39m{, queue = '${thread.queue}}{, stop reason = ${thread.stop-reason}}{\nReturn value: ${thread.return-value}}\n"
