@@ -1,27 +1,27 @@
 live_config_reload = true
 
+[colors.normal]
+black = "#000000"
+red = "#cc0000"
+green = "#227a00"
+yellow = "#e89f00"
+blue = "#043ABD"
+magenta = "#8f008c"
+cyan = "#05989a"
+white = "#d3d7cf"
+
 [colors.bright]
-black = "#959da5"
+black = "#545753"
+red = "#ef2828"
+green = "#3dcc06"
+yellow = "#d6d600"
 blue = "#157ae6"
-cyan = "#00c1cf"
-green = "#39c900"
 magenta = "#5a32a3"
-red = "#f00206"
-white = "#d1d5da"
-yellow = "#d9d500"
+cyan = "#34e2e2"
+white = "#ededec"
 
 [colors.cursor]
 cursor = "#666666"
-
-[colors.normal]
-black = "#24292e"
-blue = "#043ABD"
-cyan = "#3192aa"
-green = "#2b8a06"
-magenta = "#8f008c"
-red = "#c70609"
-white = "#6a737d"
-yellow = "#db7900"
 
 [colors.primary]
 background = "#FFFFFF"
@@ -43,12 +43,12 @@ family = "JetBrainsMono Nerd Font"
 style = "SemiBold"
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
-style = "Italic SemiBold"
+family = "CaskaydiaCove Nerd Font"
+style = "SemiBold Italic"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic Thin"
+style = "Light Italic"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
@@ -60,7 +60,7 @@ y = 0
 
 [font.offset]
 x = 0
-y = 10
+y = 8
 
 [selection]
 save_to_clipboard = true
@@ -68,7 +68,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
 [window]
 decorations = "buttonless"
-startup_mode = "SimpleFullscreen"
+#startup_mode = "SimpleFullscreen"
 
 [mouse]
 hide_when_typing = true
@@ -117,22 +117,22 @@ mods = "Command"
 # ----- new pane/tab/window -----
 [[keyboard.bindings]]
 chars = "\u0002%"
-key = "D"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002\""
 key = "S"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002c"
+chars = "\u0002-"
+key = "S"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002n"
 key = "N"
 mods = "Command"
 
 # ----- close pane/tab/window -----
 [[keyboard.bindings]]
-chars = "\u0002x"
+chars = "\u0002X"
 key = "W"
 mods = "Command"
 
@@ -157,6 +157,16 @@ chars = "\u0002l"
 key = "L"
 mods = "Command"
 
+[[keyboard.bindings]]
+action = "ToggleSimpleFullscreen"
+key = "F"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002r"
+key = "r"
+mods = "Command"
+
 # ----- resize panes -----
 [[keyboard.bindings]]
 chars = "\u0002H"
@@ -179,18 +189,18 @@ key = "L"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
-chars = "\u0002z"
+chars = "\u0002m"
 key = "M"
 mods = "Command"
 
 # ----- navigate tabs -----
 [[keyboard.bindings]]
-chars = "\u0002p"
+chars = "\u0002i"
 key = "I"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002n"
+chars = "\u0002o"
 key = "O"
 mods = "Command"
 
@@ -239,16 +249,8 @@ chars = "\u00029"
 key = "Key9"
 mods = "Command"
 
-# ----- toggle floating panes -----
+# ------ vim mode ------
 [[keyboard.bindings]]
-chars = "\u0002f"
-key = "F"
+chars = "\u0002c"
+key = "y"
 mods = "Command"
-
-## ------ vim mode ------
-#[[keyboard.bindings]]
-#chars = "\u0002e"
-#key = "y"
-#mods = "Command"
-
-

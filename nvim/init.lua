@@ -84,7 +84,7 @@ vim.o.splitright = true
 
 -- Display of invisible characters, showing only spaces as dots here
 vim.o.list = true
-vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = "⋅" }
 
 -- Enhanced autocomplete
 vim.o.wildmenu = true
@@ -185,7 +185,7 @@ require("lazy").setup({
                             cyan = "#c15200", -- struct
                             orange = "#555555", -- variable
 
-                            comment = "#8d9091",
+                            comment = "#797e80",
                         },
                     },
                 },
@@ -229,7 +229,7 @@ require("lazy").setup({
                     },
                 },
             })
-            vim.cmd.colorscheme("astrotheme")
+            vim.cmd.colorscheme("astrolight")
         end,
     },
     {
