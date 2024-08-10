@@ -84,7 +84,7 @@ vim.o.splitright = true
 
 -- Display of invisible characters, showing only spaces as dots here
 vim.o.list = true
-vim.opt.listchars = { trail = "~", tab = "▸ ", space = "⋅" }
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 
 -- Enhanced autocomplete
 vim.o.wildmenu = true
@@ -124,8 +124,8 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
-vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
-vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<leader>cw", ":bd!<CR>", opt)
+vim.keymap.set("n", "<leader>ce", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "f", "<C-w>w", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
 vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
@@ -274,23 +274,6 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>cl", ":Fidget clear<CR>", opt)
         },
     },
-    {
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        config = function()
-            require("toggleterm").setup({
-                direction = 'float',
-            })
-
-            local Terminal  = require('toggleterm.terminal').Terminal
-            local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
-            function _lazygit_toggle()
-              lazygit:toggle()
-            end
-            vim.api.nvim_set_keymap("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
-
-        end,
-    },
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
@@ -335,14 +318,17 @@ require("lazy").setup({
         "lewis6991/gitsigns.nvim",
         config = function()
             require("gitsigns").setup({
-                current_line_blame = true,
-                current_line_blame_opts = {
-                    delay = 300,
-                },
-                current_line_blame_formatter = '<author> - <summary>, <author_time:%R>',
-                vim.keymap.set("n", "<leader>tb", ":Gitsigns toggle_current_line_blame<CR>", opt)
+                current_line_blame = false,
             })
         end,
+    },
+    {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require("blame").setup({
+                vim.keymap.set("n", "<leader>tb", ":BlameToggle<CR>", opt)
+            })
+        end
     },
 
     -- LSP
@@ -370,7 +356,12 @@ require("lazy").setup({
             -- Cpp
             lspconfig.clangd.setup({
                 on_attach = on_attach,
+                filetypes = { "h", "c", "cpp", "tpp", "cc", "objc", "objcpp"},
                 capabilities = capabilities,
+            })
+            vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+                pattern = {"*.tpp"},
+                command = "set filetype=cpp"
             })
 
             -- Use LspAttach autocommand to only map the following keys
@@ -487,7 +478,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
-                        vim.keymap.set("n", "<leader>f", ":RustLsp flyCheck<CR>", opt)
+                        vim.keymap.set("n", "<leader>lc", ":RustLsp flyCheck<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                     end,
                     default_settings = {
@@ -531,8 +522,9 @@ require("lazy").setup({
                 vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
             })
             require('mini.files').setup({
-                vim.keymap.set("n", "<C-f>f", ":lua MiniFiles.open()<CR>", opt)
+                vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR>", opt)
             })
+            require('mini.icons').setup()
         end
     },
     {
@@ -558,12 +550,9 @@ require("lazy").setup({
         ft = { "markdown" },
     },
     {
-        'MeanderingProgrammer/markdown.nvim',
-        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
-        config = function()
-            require('render-markdown').setup({})
-        end,
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {},
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
     },
     {
         "zbirenbaum/copilot-cmp",
