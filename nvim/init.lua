@@ -113,6 +113,27 @@ vim.cmd [[
   augroup END
 ]]
 
+-- variable highlighting
+function lsp_highlight_document(client, bufnr)
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+
+        vim.api.nvim_create_autocmd('CursorHold', {
+            group = 'lsp_document_highlight',
+            buffer = bufnr,
+            callback = function()
+                vim.defer_fn(vim.lsp.buf.document_highlight, 0)
+            end,
+        })
+
+        vim.api.nvim_create_autocmd('CursorMoved', {
+            group = 'lsp_document_highlight',
+            buffer = bufnr,
+            callback = vim.lsp.buf.clear_references,
+        })
+    end
+end
+
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
@@ -126,7 +147,6 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "<leader>cw", ":bd!<CR>", opt)
 vim.keymap.set("n", "<leader>ce", ":%bd|e#|bd#<CR>", opt)
-vim.keymap.set("n", "f", "<C-w>w", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
 vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
 
@@ -307,9 +327,9 @@ require("lazy").setup({
 
             vim.keymap.set("n", "<leader>p", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", ";", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", "<leader>j", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 
@@ -319,6 +339,34 @@ require("lazy").setup({
         config = function()
             require("gitsigns").setup({
                 current_line_blame = false,
+
+                on_attach = function(bufnr)
+                  local function map(mode, lhs, rhs, opts)
+                      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+                      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+                  end
+
+                  -- Navigation
+                  map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
+                  map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+
+                  -- Actions
+                  map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>')
+                  map('v', '<leader>hs', ':Gitsigns stage_hunk<CR>')
+
+                  map('n', '<leader>hr', ':Gitsigns reset_hunk<CR>')
+                  map('v', '<leader>hr', ':Gitsigns reset_hunk<CR>')
+
+                  map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
+                  map('n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
+                  map('n', '<leader>hR', '<cmd>Gitsigns reset_buffer<CR>')
+
+                  map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
+                  map('n', '<leader>hD', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+
+                  map('n', '<leader>he', '<cmd>Gitsigns toggle_deleted<CR>')
+                  map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
+                end
             })
         end,
     },
@@ -347,7 +395,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -358,6 +406,8 @@ require("lazy").setup({
                 on_attach = on_attach,
                 filetypes = { "h", "c", "cpp", "tpp", "cc", "objc", "objcpp"},
                 capabilities = capabilities,
+                -- highlight variable
+                on_attach = lsp_highlight_document,
             })
             vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
                 pattern = {"*.tpp"},
@@ -480,6 +530,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         vim.keymap.set("n", "<leader>lc", ":RustLsp flyCheck<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
+                        lsp_highlight_document(client, bufnr)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -517,10 +568,7 @@ require("lazy").setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
             })
-            require('mini.cursorword').setup()
-            require('mini.jump2d').setup({
-                vim.cmd[[highlight MiniJump2dSpot guifg=#000000 guibg=#f8f8f8 gui=italic,bold]]
-            })
+            require('mini.jump2d').setup()
             require('mini.files').setup({
                 vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR>", opt)
             })
