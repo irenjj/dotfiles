@@ -1,6 +1,7 @@
 # --------------------------------------------------
 # enviroment path
 if [ "$(uname)"=="Darwin" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="/opt/homebrew/bin:$PATH"
     export PATH=$(brew --prefix llvm)/bin:$PATH
     export PATH=/opt/homebrew/Cellar/binutils/2.41/bin:$PATH
@@ -19,9 +20,6 @@ export PATH=/usr/local/lib:$PATH
 export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
 export DYLD_LIBRARY_PATH=/usr/local/lib
 
-# greptimedb settings
-export GT_MYSQL_ADDR=localhost:4002
-
 # --------------------------------------------------
 # alias
 alias ..='cd ..'
@@ -30,6 +28,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias vim=nvim
 alias lg=lazygit
+alias cbd='cargo build'
 
 if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'

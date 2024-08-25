@@ -113,27 +113,6 @@ vim.cmd [[
   augroup END
 ]]
 
--- variable highlighting
-function lsp_highlight_document(client, bufnr)
-    if client.server_capabilities.documentHighlightProvider then
-        vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
-
-        vim.api.nvim_create_autocmd('CursorHold', {
-            group = 'lsp_document_highlight',
-            buffer = bufnr,
-            callback = function()
-                vim.defer_fn(vim.lsp.buf.document_highlight, 0)
-            end,
-        })
-
-        vim.api.nvim_create_autocmd('CursorMoved', {
-            group = 'lsp_document_highlight',
-            buffer = bufnr,
-            callback = vim.lsp.buf.clear_references,
-        })
-    end
-end
-
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
@@ -207,6 +186,24 @@ require("lazy").setup({
 
                             comment = "#797e80",
                         },
+                        term = {
+                            black = "#000000",
+                            bright_black = "#545753",
+                            red = "#cc0000",
+                            bright_red = "#ef2828",
+                            green = "#227a00",
+                            bright_green = "#3dcc06",
+                            yellow = "#e89f00",
+                            bright_yellow = "#d6d600",
+                            blue = "#043abd",
+                            bright_blue = "#157ae6",
+                            purple = "#8f008c",
+                            bright_purple = "#5a32a3",
+                            cyan = "#05989a",
+                            bright_cyan = "#34e2e2",
+                            white = "#d3d7cf",
+                            bright_white = "#ededec",
+                        },
                     },
                 },
                 highlights = {
@@ -276,17 +273,33 @@ require("lazy").setup({
                 win_position = 'left',
                 split_command = 'topleft vsplit',
                 width = 40,
-                -- auto_close = true,
                 relative_width = false,
             },
             outline_items = {
                 show_symbol_details = false,
             },
-            keymaps = {
-              close = {},
-            },
+            keymaps = { close = {} },
+            symbol_folding = { autofold_depth = 2 }
         },
     },
+    -- {
+    --     'stevearc/aerial.nvim',
+    --     dependencies = {
+    --         "nvim-treesitter/nvim-treesitter",
+    --         "nvim-tree/nvim-web-devicons"
+    --     },
+    --     opts = {
+    --         layout = {
+    --             default_direction = "float",
+    --             min_width = { 0.6 },
+    --             max_width = { 0.8 },
+    --         },
+    --         float = {
+    --             relative = "win",
+    --         },
+    --     },
+    --     vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
+    -- },
     -- Lsp status
     {
         "j-hui/fidget.nvim",
@@ -338,7 +351,8 @@ require("lazy").setup({
         "lewis6991/gitsigns.nvim",
         config = function()
             require("gitsigns").setup({
-                current_line_blame = false,
+                current_line_blame = true,
+                current_line_blame_opts = { delay = 200, },
 
                 on_attach = function(bufnr)
                   local function map(mode, lhs, rhs, opts)
@@ -406,8 +420,6 @@ require("lazy").setup({
                 on_attach = on_attach,
                 filetypes = { "h", "c", "cpp", "tpp", "cc", "objc", "objcpp"},
                 capabilities = capabilities,
-                -- highlight variable
-                on_attach = lsp_highlight_document,
             })
             vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
                 pattern = {"*.tpp"},
@@ -528,9 +540,8 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lr", ":RustLsp renderDiagnostic<CR>", opt)
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
-                        vim.keymap.set("n", "<leader>lc", ":RustLsp flyCheck<CR>", opt)
+                        vim.keymap.set("n", "<leader>lk", ":RustLsp flyCheck<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
-                        lsp_highlight_document(client, bufnr)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -573,6 +584,12 @@ require("lazy").setup({
                 vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR>", opt)
             })
             require('mini.icons').setup()
+        end
+    },
+    {
+        'RRethy/vim-illuminate',
+        config = function()
+            require('illuminate').configure()
         end
     },
     {
