@@ -21,7 +21,7 @@ vim.o.fileencoding = "utf-8"
 vim.wo.number = true
 
 -- Highlight current line
-vim.wo.cursorline = true
+vim.wo.cursorline = false
 
 -- Tab
 vim.o.tabstop = 4
@@ -169,7 +169,7 @@ require("lazy").setup({
                     astrolight = {
                         ui = {
                             base = "#ffffff",
-                            current_line = "#ffffff",
+                            current_line = "#f9f9f9",
                             inactive_base = "#ffffff",
                             tabline = "#ffffff",
                             statusline = "#ffffff",
@@ -261,45 +261,44 @@ require("lazy").setup({
             })
         end,
     },
-    {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-        },
-        opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 40,
-                relative_width = false,
-            },
-            outline_items = {
-                show_symbol_details = false,
-            },
-            keymaps = { close = {} },
-            symbol_folding = { autofold_depth = 2 }
-        },
-    },
     -- {
-    --     'stevearc/aerial.nvim',
-    --     dependencies = {
-    --         "nvim-treesitter/nvim-treesitter",
-    --         "nvim-tree/nvim-web-devicons"
+    --     "hedyhli/outline.nvim",
+    --     lazy = true,
+    --     cmd = { "Outline", "OutlineOpen" },
+    --     keys = {
+    --         { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
     --     },
     --     opts = {
-    --         layout = {
-    --             default_direction = "float",
-    --             min_width = { 0.6 },
-    --             max_width = { 0.8 },
+    --         outline_window = {
+    --             win_position = 'left',
+    --             split_command = 'topleft vsplit',
+    --             width = 40,
+    --             relative_width = false,
     --         },
-    --         float = {
-    --             relative = "win",
+    --         outline_items = {
+    --             show_symbol_details = false,
     --         },
+    --         keymaps = { close = {} },
+    --         symbol_folding = { autofold_depth = 2 }
     --     },
-    --     vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
     -- },
+    {
+        'stevearc/aerial.nvim',
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        },
+        opts = {
+            layout = {
+                default_direction = "float",
+                min_width = { 0.8 },
+            },
+            float = {
+                relative = "win",
+            },
+        },
+        vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
+    },
     -- Lsp status
     {
         "j-hui/fidget.nvim",
@@ -413,7 +412,7 @@ require("lazy").setup({
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
-            vim.keymap.set("n", "<leader>ti", toggle_inlay_hints)
+            vim.keymap.set("n", "<leader>i", toggle_inlay_hints)
 
             -- Cpp
             lspconfig.clangd.setup({
