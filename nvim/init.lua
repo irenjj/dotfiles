@@ -21,7 +21,7 @@ vim.o.fileencoding = "utf-8"
 vim.wo.number = true
 
 -- Highlight current line
-vim.wo.cursorline = true
+vim.wo.cursorline = false
 
 -- Tab
 vim.o.tabstop = 4
@@ -118,8 +118,8 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     group = 'IrreplaceableWindows',
     pattern = '*',
     callback = function()
-        local filetypes = { 'Outline', 'git' }
-        local buftypes = { 'nofile', 'terminal' }
+        local filetypes = { 'Outline', 'git', 'qf' }
+        local buftypes = { 'nofile', 'terminal', 'quickfix' }
         if vim.tbl_contains(buftypes, vim.bo.buftype) and vim.tbl_contains(filetypes, vim.bo.filetype) then
             vim.cmd 'set winfixbuf'
         end
@@ -137,8 +137,9 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
-vim.keymap.set("n", "<leader>cw", ":bd!<CR>", opt)
-vim.keymap.set("n", "<leader>ce", ":%bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<C-r>", "<C-w>r", opt)
+vim.keymap.set("n", "<leader>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<leader>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
 vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
 
@@ -182,7 +183,7 @@ require("lazy").setup({
                     astrolight = {
                         ui = {
                             base = "#ffffff",
-                            current_line = "#ffffff",
+                            current_line = "#f0f0f0",
                             inactive_base = "#ffffff",
                             tabline = "#ffffff",
                             statusline = "#ffffff",
@@ -274,44 +275,44 @@ require("lazy").setup({
             })
         end,
     },
-    {
-        "hedyhli/outline.nvim",
-        lazy = true,
-        cmd = { "Outline", "OutlineOpen" },
-        keys = {
-            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-        },
-        opts = {
-            outline_window = {
-                win_position = 'left',
-                split_command = 'topleft vsplit',
-                width = 45,
-                relative_width = false,
-            },
-            outline_items = {
-                show_symbol_details = false,
-            },
-            keymaps = { close = {} },
-            symbol_folding = { autofold_depth = 2 }
-        },
-    },
     -- {
-    --     'stevearc/aerial.nvim',
-    --     dependencies = {
-    --         "nvim-treesitter/nvim-treesitter",
-    --         "nvim-tree/nvim-web-devicons"
+    --     "hedyhli/outline.nvim",
+    --     lazy = true,
+    --     cmd = { "Outline", "OutlineOpen" },
+    --     keys = {
+    --         { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
     --     },
     --     opts = {
-    --         layout = {
-    --             default_direction = "float",
-    --             min_width = { 0.8 },
+    --         outline_window = {
+    --             win_position = 'left',
+    --             split_command = 'topleft vsplit',
+    --             width = 45,
+    --             relative_width = false,
     --         },
-    --         float = {
-    --             relative = "win",
+    --         outline_items = {
+    --             show_symbol_details = false,
     --         },
+    --         keymaps = { close = {} },
+    --         symbol_folding = { autofold_depth = 2 }
     --     },
-    --     vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
     -- },
+    {
+        'stevearc/aerial.nvim',
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        },
+        opts = {
+            layout = {
+                default_direction = "float",
+                min_width = { 0.8 },
+            },
+            float = {
+                relative = "win",
+            },
+        },
+        vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
+    },
     -- Lsp status
     {
         "j-hui/fidget.nvim",
@@ -555,6 +556,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lk", ":RustLsp flyCheck<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build<CR>", opt)
+                        vim.keymap.set("n", "<leader>lr", ":RustAnalyzer restart<CR>", opt)
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -629,7 +631,6 @@ require("lazy").setup({
     },
     {
         'MeanderingProgrammer/render-markdown.nvim',
-        opts = {},
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
     },
     {
