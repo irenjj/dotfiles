@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     group = 'IrreplaceableWindows',
     pattern = '*',
     callback = function()
-        local filetypes = { 'Outline', 'git', 'qf' }
+        local filetypes = { 'git', 'qf', 'aerial' }
         local buftypes = { 'nofile', 'terminal', 'quickfix' }
         if vim.tbl_contains(buftypes, vim.bo.buftype) and vim.tbl_contains(filetypes, vim.bo.filetype) then
             vim.cmd 'set winfixbuf'
@@ -140,8 +140,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "<C-r>", "<C-w>r", opt)
 vim.keymap.set("n", "<leader>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<leader>e", ":%bd|e#|bd#<CR>", opt)
-vim.keymap.set("n", "<C-=>", ":vertical resize +1<CR>", opt)
-vim.keymap.set("n", "<C-->", ":resize +1<CR>", opt)
+vim.keymap.set("n", "<C-=>", ":vertical resize +5<CR>", opt)
+vim.keymap.set("n", "<C-->", ":resize +5<CR>", opt)
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -175,93 +175,20 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- Layout
     {
-        "AstroNvim/astrotheme",
-        priority = 1000, -- as the first plugin
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
         config = function()
-            require("astrotheme").setup({
-                palettes = {
-                    astrolight = {
-                        ui = {
-                            base = "#ffffff",
-                            current_line = "#f0f0f0",
-                            inactive_base = "#ffffff",
-                            tabline = "#ffffff",
-                            statusline = "#ffffff",
-                            float = "#ffffff",
-                        },
-                        syntax = {
-                            red = "#871094", -- param
-                            blue = "#043abd", -- fn
-                            green = "#179600",
-                            purple = "#785201", -- key
-                            yellow = "#007369",
-                            cyan = "#c15200", -- struct
-                            orange = "#555555", -- variable
-
-                            comment = "#797e80",
-                        },
-                        term = {
-                            black = "#000000",
-                            bright_black = "#545753",
-                            red = "#cc0000",
-                            bright_red = "#ef2828",
-                            green = "#227a00",
-                            bright_green = "#3dcc06",
-                            yellow = "#e89f00",
-                            bright_yellow = "#d6d600",
-                            blue = "#043abd",
-                            bright_blue = "#157ae6",
-                            purple = "#8f008c",
-                            bright_purple = "#5a32a3",
-                            cyan = "#05989a",
-                            bright_cyan = "#34e2e2",
-                            white = "#d3d7cf",
-                            bright_white = "#ededec",
-                        },
-                    },
-                },
-                highlights = {
-                    astrolight = {
-                        modify_hl_groups = function(hl, c)
-                            hl.Keyword.bold = true
-                            hl.Keyword.fg = "#785201"
-
-                            hl.Structure.bold = true
-                            hl.Structure.fg = "#785201"
-
-                            hl.Conditional.bold = true
-                            hl.Conditional.fg = "#785201"
-
-                            hl.Debug.bold = true
-                            hl.Debug.fg = "#785201"
-
-                            hl.Exception.bold = true
-                            hl.Exception.fg = "#785201"
-
-                            hl.Include.bold = true
-                            hl.Include.fg = "#785201"
-
-                            hl.Repeat.bold = true
-                            hl.Repeat.fg = "#785201"
-
-                            hl.Typedef.bold = true
-                            hl.Typedef.fg = "#785201"
-
-                            hl.Boolean.bold = true
-                            hl.Boolean.fg = "#785201"
-
-                            hl.Label.bold = true
-                            hl.Label.fg = "#785201"
-
-                            hl.StorageClass.fg = "#c15200"
-                        end,
-
-                        ["@module.rust"] = { fg = "#555555" },
-                    },
-                },
+            require("tokyonight").setup({
+                on_highlights = function(h, _)
+                    h["@variable.builtin"] = { fg = "#e0af68" }
+                    h["@variable.member"] = { fg = "#ff757f" }
+                    h["@variable.parameter"] = { fg = "#c8d3f5" }
+                end,
             })
-            vim.cmd.colorscheme("astrolight")
-        end,
+            vim.cmd.colorscheme("tokyonight-night")
+        end
     },
     {
         "nvim-treesitter/nvim-treesitter",
@@ -275,27 +202,6 @@ require("lazy").setup({
             })
         end,
     },
-    -- {
-    --     "hedyhli/outline.nvim",
-    --     lazy = true,
-    --     cmd = { "Outline", "OutlineOpen" },
-    --     keys = {
-    --         { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
-    --     },
-    --     opts = {
-    --         outline_window = {
-    --             win_position = 'left',
-    --             split_command = 'topleft vsplit',
-    --             width = 45,
-    --             relative_width = false,
-    --         },
-    --         outline_items = {
-    --             show_symbol_details = false,
-    --         },
-    --         keymaps = { close = {} },
-    --         symbol_folding = { autofold_depth = 2 }
-    --     },
-    -- },
     {
         'stevearc/aerial.nvim',
         dependencies = {
@@ -351,8 +257,8 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<leader>p", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-f>", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
@@ -364,49 +270,56 @@ require("lazy").setup({
         "lewis6991/gitsigns.nvim",
         config = function()
             require("gitsigns").setup({
-                current_line_blame = true,
-                current_line_blame_opts = { delay = 200, },
-                vim.keymap.set("n", "<leader>tc", ":Gitsigns toggle_current_line_blame<CR>", opt),
+                current_line_blame = false,
+                current_line_blame_opts = { delay = 100 },
 
                 on_attach = function(bufnr)
-                  local function map(mode, lhs, rhs, opts)
-                      opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
-                      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-                  end
+                    local gitsigns = require('gitsigns')
 
-                  -- Navigation
-                  map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
-                  map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+                    local function map(mode, l, r, opts)
+                        opts = opts or {}
+                        opts.buffer = bufnr
+                        vim.keymap.set(mode, l, r, opts)
+                    end
 
-                  -- Actions
-                  map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>')
-                  map('v', '<leader>hs', ':Gitsigns stage_hunk<CR>')
+                    -- Navigation
+                    map('n', ']c', function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({']c', bang = true})
+                        else
+                            gitsigns.nav_hunk('next')
+                        end
+                    end)
 
-                  map('n', '<leader>hr', ':Gitsigns reset_hunk<CR>')
-                  map('v', '<leader>hr', ':Gitsigns reset_hunk<CR>')
+                    map('n', '[c', function()
+                        if vim.wo.diff then
+                            vim.cmd.normal({'[c', bang = true})
+                        else
+                            gitsigns.nav_hunk('prev')
+                        end
+                    end)
 
-                  map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
-                  map('n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
-                  map('n', '<leader>hR', '<cmd>Gitsigns reset_buffer<CR>')
+                    -- Actions
+                    map('n', '<leader>hs', gitsigns.stage_hunk)
+                    map('n', '<leader>hr', gitsigns.reset_hunk)
+                    map('v', '<leader>hs', function() gitsigns.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+                    map('v', '<leader>hr', function() gitsigns.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+                    map('n', '<leader>hS', gitsigns.stage_buffer)
+                    map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+                    map('n', '<leader>hR', gitsigns.reset_buffer)
+                    map('n', '<leader>hp', gitsigns.preview_hunk)
+                    map('n', '<leader>hd', gitsigns.diffthis)
+                    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
 
-                  map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
-                  map('n', '<leader>hD', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+                    map('n', '<leader>td', gitsigns.toggle_deleted)
+                    map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
 
-                  map('n', '<leader>he', '<cmd>Gitsigns toggle_deleted<CR>')
-                  map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
+                    -- Text object
+                    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
                 end
             })
         end,
     },
-    {
-        "FabijanZulj/blame.nvim",
-        config = function()
-            require("blame").setup({
-                vim.keymap.set("n", "<leader>tb", ":BlameToggle<CR>", opt)
-            })
-        end
-    },
-
     -- LSP
     {
         "neovim/nvim-lspconfig",
@@ -423,11 +336,11 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
-            vim.keymap.set("n", "<leader>ti", toggle_inlay_hints)
+            vim.keymap.set("n", "<leader>i", toggle_inlay_hints)
 
             -- Cpp
             lspconfig.clangd.setup({
@@ -589,7 +502,7 @@ require("lazy").setup({
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bracketed').setup()
-            require('mini.pairs').setup()
+            -- require('mini.pairs').setup()
             require('mini.indentscope').setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
@@ -599,6 +512,8 @@ require("lazy").setup({
                 vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR>", opt)
             })
             require('mini.icons').setup()
+            require('mini.misc').setup()
+            MiniMisc.setup_auto_root()
         end
     },
     {
@@ -647,5 +562,34 @@ require("lazy").setup({
                 })
             end,
         },
+    },
+    {
+        "pteroctopus/faster.nvim",
+        config = function()
+            require('faster').setup()
+        end
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        config = function()
+            require("toggleterm").setup({
+                open_mapping = [[<C-;>]],
+                direction = 'float',
+                float_opts = {
+                    width = function()
+                        return math.floor(vim.o.columns * 0.98)
+                    end,
+                    height = function()
+                        return math.floor(vim.o.lines * 0.95)
+                    end,
+                },
+            })
+        end,
+    },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
     },
 })

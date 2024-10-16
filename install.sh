@@ -1,5 +1,7 @@
 #! /bin/bash
 
+brew install ripgrep fd bat exa fzf
+
 CONF_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 # bash
