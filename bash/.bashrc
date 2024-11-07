@@ -19,6 +19,7 @@ source $HOME/.cargo/env
 export PATH=/usr/local/lib:$PATH
 export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
 export DYLD_LIBRARY_PATH=/usr/local/lib
+#export TERM=xterm-256color
 
 # --------------------------------------------------
 # alias
@@ -68,6 +69,28 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
+
+# --------------------------------------------------
+# Desktop notification
+function nf() {
+    local start_time=$(date +%s)
+    "$@"
+    local exit_code=$?
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    if [ $duration -gt 5 ]; then
+        local cmd_name="$1"
+        if [ $exit_code -eq 0 ]; then
+            kitten notify $cmd_name "✅"
+        else
+            kitten notify $cmd_name "❌"
+        fi
+    fi
+
+    return $exit_code
+}
 
 # --------------------------------------------------
 # PS1 format

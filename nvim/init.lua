@@ -178,17 +178,53 @@ require("lazy").setup({
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
-        opts = {},
         config = function()
             require("tokyonight").setup({
-                on_highlights = function(h, _)
-                    h["@variable.builtin"] = { fg = "#e0af68" }
-                    h["@variable.member"] = { fg = "#ff757f" }
-                    h["@variable.parameter"] = { fg = "#c8d3f5" }
+                on_colors = function(colors)
+                    colors.bg = "#ffffff"
+                    colors.dark = "#ffffff"
+                    colors.bg_float = "#ffffff"
+                    colors.popup = "#ffffff"
+                    colors.bg_sidebar = "#ffffff"
+                    colors.bg_statusline = "#ffffff"
+
+                    colors.bg_highlight = "#bbbbbb"
+                    colors.fg_gutter = "#cccccc"
+                    colors.bg_visual = "#eeeeee"
+                    colors.bg_search = "#e0e0e0"
+
+                    colors.green1 = "#871094"
+                end,
+
+                on_highlights = function(hl, _)
+                    hl["@keyword"] = { fg = "#785201", bold = true }
+                    hl["@keyword.function"] = { fg = "#785201", bold = true }
+                    hl["Boolean"] = { fg = "#785201", bold = true }
+                    hl["Conditional"] = { fg = "#785201", bold = true }
+                    hl["Repeat"] = { fg = "#785201", bold = true }
+                    hl["Exception"] = { fg = "#785201", bold = true }
+
+                    hl["@variable.builtin"] = { fg = "#c15200" }
+                    hl["Type"] = { fg = "#c15200" }
+                    hl["Special"] = { fg = "#c15200" }
+                    hl["@variable.member"] = { fg = "#871094" }
+                    hl["@variable.parameter.builtin"] = { fg = "#871094" }
+                    hl["Function"] = { fg = "#043abd" }
+                    hl["@constructor"] = { fg = "#043abd" }
+                    hl["@variable.parameter"] = { fg = "#555555" }
+                    hl["@variable"] = { fg = "#555555" }
+                    hl["@punctuation.bracket"] = { fg = "#555555" }
+                    hl["@operator"] = { fg = "#555555" }
+
+                    hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
+                    hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
+                    hl["MiniFilesFile"] = { fg = "#555555" }
+                    hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
+                    hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
                 end,
             })
-            vim.cmd.colorscheme("tokyonight-night")
-        end
+            vim.cmd.colorscheme("tokyonight-day")
+        end,
     },
     {
         "nvim-treesitter/nvim-treesitter",
@@ -271,7 +307,8 @@ require("lazy").setup({
         config = function()
             require("gitsigns").setup({
                 current_line_blame = false,
-                current_line_blame_opts = { delay = 100 },
+                current_line_blame_opts = { delay = 200 },
+                current_line_blame_formatter = '<author> - <summary>, <author_time:%Y-%m-%d>',
 
                 on_attach = function(bufnr)
                     local gitsigns = require('gitsigns')
@@ -342,7 +379,7 @@ require("lazy").setup({
             end
             vim.keymap.set("n", "<leader>i", toggle_inlay_hints)
 
-            -- Cpp
+            -- cpp
             lspconfig.clangd.setup({
                 on_attach = on_attach,
                 filetypes = { "h", "c", "cpp", "tpp", "cc", "objc", "objcpp"},
@@ -351,6 +388,19 @@ require("lazy").setup({
             vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
                 pattern = {"*.tpp"},
                 command = "set filetype=cpp"
+            })
+
+            -- go
+            lspconfig.gopls.setup({
+                settings = {
+                  gopls = {
+                    analyses = {
+                      unusedparams = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = true,
+                  },
+                },
             })
 
             -- Use LspAttach autocommand to only map the following keys
@@ -376,11 +426,6 @@ require("lazy").setup({
                     vim.keymap.set('n', '<leader>lf', function()
                         vim.lsp.buf.format { async = true }
                     end, opts)
-
-                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-                    -- None of this semantics tokens business.
-                    -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
-                    client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
         end,
@@ -470,6 +515,10 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build<CR>", opt)
                         vim.keymap.set("n", "<leader>lr", ":RustAnalyzer restart<CR>", opt)
+
+                        -- None of this semantics tokens business.
+                        -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
+                        client.server_capabilities.semanticTokensProvider = nil
                     end,
                     default_settings = {
                         ['rust-analyzer'] = {
@@ -496,13 +545,26 @@ require("lazy").setup({
             }
         end
     },
+    {
+        "ray-x/go.nvim",
+        dependencies = {
+            "ray-x/guihua.lua",
+            "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function()
+            require("go").setup()
+        end,
+        event = {"CmdlineEnter"},
+        ft = {"go", 'gomod'},
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    },
 
     -- Tools
     {
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bracketed').setup()
-            -- require('mini.pairs').setup()
             require('mini.indentscope').setup({
                 draw = { animation = function() return 0 end },
                 symbol ='│'
@@ -593,3 +655,28 @@ require("lazy").setup({
         config = true
     },
 })
+
+-- dark
+vim.g.terminal_color_0 = "#000000"
+vim.g.terminal_color_8 = "#545753"
+-- light
+vim.g.terminal_color_7 = "#555555"
+vim.g.terminal_color_15 = "#555555"
+-- red
+vim.g.terminal_color_1 = "#cc0000"
+vim.g.terminal_color_9 = "#ef2828"
+-- green
+vim.g.terminal_color_2 = "#227a00"
+vim.g.terminal_color_10 = "#3dcc06"
+-- yellow
+vim.g.terminal_color_3 = "#e89f00"
+vim.g.terminal_color_11 = "#d6d600"
+-- blue
+vim.g.terminal_color_4 = "#043abd"
+vim.g.terminal_color_12 = "#157ae6"
+-- magenta
+vim.g.terminal_color_5 = "#8f008c"
+vim.g.terminal_color_13 = "#5a32a3"
+-- cyan
+vim.g.terminal_color_6 = "#05989a"
+vim.g.terminal_color_14 = "#34e2e2"
