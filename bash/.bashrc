@@ -9,17 +9,17 @@ if [ "$(uname)"=="Darwin" ]; then
     export CXX=$(brew --prefix llvm)/bin/clang++
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export BASH_SILENCE_DEPRECATION_WARNING=1
-    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-    export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
-    export FDB_CLUSTER_FILE="/usr/local/etc/foundationdb/fdb.cluster"
+    export CPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/"
 fi
 
-export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 source $HOME/.cargo/env
 export PATH=/usr/local/lib:$PATH
 export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
 export DYLD_LIBRARY_PATH=/usr/local/lib
-#export TERM=xterm-256color
+export TERM=xterm-256color
+export RUST_TEST_NOCAPTURE=1
+export RUST_BACKTRACE=1
+
 
 # --------------------------------------------------
 # alias
@@ -29,13 +29,13 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias vim=nvim
 alias lg=lazygit
-alias cbd='cargo build'
 
 if [ "$(uname)"=="Darwin" ]; then
     alias ls='exa --group-directories-first --classify'
     alias la='exa --group-directories-first --classify --all' # 'ls -A'
     alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
 fi
+
 
 # --------------------------------------------------
 # install git tools
@@ -70,27 +70,6 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM='auto'
 
-# --------------------------------------------------
-# Desktop notification
-function nf() {
-    local start_time=$(date +%s)
-    "$@"
-    local exit_code=$?
-
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
-    if [ $duration -gt 5 ]; then
-        local cmd_name="$1"
-        if [ $exit_code -eq 0 ]; then
-            kitten notify $cmd_name "✅"
-        else
-            kitten notify $cmd_name "❌"
-        fi
-    fi
-
-    return $exit_code
-}
 
 # --------------------------------------------------
 # PS1 format
@@ -112,3 +91,38 @@ PS1=$PS1'`__git_ps1 " (%s)"`'
 
 # last command status
 export PS1=$PS1'\n\[\033[01;05m\]\$ \[\033[00m\]' # UID symbol
+
+
+# --------------------------------------------------
+# Desktop notification
+function nf() {
+    "$@"
+    local exit_code=$?
+
+    local cmd_name="$1"
+    if [ $exit_code -eq 0 ]; then
+        kitten notify "✅"
+    else
+        kitten notify "❌"
+    fi
+
+    return $exit_code
+}
+
+
+# --------------------------------------------------
+# History line
+export HISTSIZE=50000
+export HISTFILESIZE=50000
+
+export HISTTIMEFORMAT='%F %T '
+
+export HISTCONTROL=ignoredups
+
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
+
+# --------------------------------------------------
+# Fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
