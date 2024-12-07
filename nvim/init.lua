@@ -298,7 +298,7 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-m>", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-f>", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
@@ -571,7 +571,9 @@ require("lazy").setup({
         "mfussenegger/nvim-dap",
         dependencies = {
             "rcarriga/nvim-dap-ui",
-            "theHamsta/nvim-dap-virtual-text",
+            dependencies = {
+                "nvim-neotest/nvim-nio",
+            },
             "nvim-telescope/telescope-dap.nvim",
         },
         config = function()
@@ -587,19 +589,21 @@ require("lazy").setup({
                 }
             }
 
-
             vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
-            vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpointCondition' })
+            vim.fn.sign_define('DapBreakpointCondition', { text = '◉', texthl = 'DapBreakpointCondition' })
             vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
             -- window
+            vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#cc0000' })
+            vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#cc0000' })
+            vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#227a00' })
             vim.api.nvim_set_hl(0, "DapUIScope", { fg = "#785201", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIType", { fg = "#c15200" })
-            vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, "DapUIType", { fg = "#555555" })
             vim.api.nvim_set_hl(0, "DapUIVariable", { fg = "#871094" })
+            vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#e89f00", bold = true })
             vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = "#227a00", bold = true })
             vim.api.nvim_set_hl(0, "DapUIDecoration", { fg = "#555555" })
             vim.api.nvim_set_hl(0, "DapUIThread", { fg = "#785201" })
-            vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#e89f00", bold = true })
+            vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#227a00", bold = true })
             vim.api.nvim_set_hl(0, "DapUIFrameName", { fg = "#555555" })
             vim.api.nvim_set_hl(0, "DapUICurrentFrameName", { fg = "#227a00", bold = true })
             vim.api.nvim_set_hl(0, "DapUISource", { fg = "#043abd" })
@@ -622,19 +626,6 @@ require("lazy").setup({
                 },
             })
 
-            require("nvim-dap-virtual-text").setup({
-                enabled = true,
-                enabled_commands = true,
-                highlight_changed_variables = true,
-                highlight_new_as_changed = true,
-                show_stop_reason = true,
-                commented = false,
-                virt_text_pos = 'eol',
-                all_frames = false,
-                virt_lines = false,
-                virt_text_win_col = nil,
-            })
-
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
@@ -650,14 +641,13 @@ require("lazy").setup({
 
             keymap('n', '<C-n>', function() require('dap').step_over() end, opt)
             keymap('n', '<C-s>', function() require('dap').step_into() end, opt)
-            keymap('n', '<C-f>o', function() require('dap').step_out() end, opt)
-            keymap('n', '<C-f>c', function() require('dap').continue() end, opt)
-            keymap('n', '<C-f>u', function() require('dap').up() end, opt)
-            keymap('n', '<C-f>d', function() require('dap').down() end, opt)
-            keymap('n', '<C-f>d', function() require('dap').down() end, opt)
-            keymap('n', '<C-f>s', function() require('dap').terminate() end, opt)
-            keymap('n', '<C-f>b', function() require('dap').toggle_breakpoint() end, opt)
-            keymap('n', '<C-f>B', function()
+            keymap('n', '<Leader>do', function() require('dap').step_out() end, opt)
+            keymap('n', '<Leader>dc', function() require('dap').continue() end, opt)
+            keymap('n', '<Leader>du', function() require('dap').up() end, opt)
+            keymap('n', '<Leader>dd', function() require('dap').down() end, opt)
+            keymap('n', '<Leader>ds', function() require('dap').terminate() end, opt)
+            keymap('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, opt)
+            keymap('n', '<Leader>dB', function()
                 require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
             end, opt)
 
@@ -681,7 +671,7 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-f>t", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opt)
+            vim.keymap.set("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opt)
         end,
     },
 
