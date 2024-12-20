@@ -191,6 +191,7 @@ require("lazy").setup({
                     colors.bg_search = "#e0e0e0"
 
                     colors.green1 = "#871094"
+                    colors.fg = "#555555"
                 end,
 
                 on_highlights = function(hl, _)
@@ -220,6 +221,9 @@ require("lazy").setup({
                     hl["MiniFilesFile"] = { fg = "#555555" }
                     hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
                     hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
+
+                    hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
+                    hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
                 end,
             })
             vim.cmd.colorscheme("tokyonight-day")
@@ -313,7 +317,7 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = false,
                 current_line_blame_opts = { delay = 200 },
-                current_line_blame_formatter = '<author> - <summary>, <author_time:%Y-%m-%d>',
+                current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
 
                 on_attach = function(bufnr)
                     local gitsigns = require('gitsigns')
@@ -360,6 +364,15 @@ require("lazy").setup({
                     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
                 end
             })
+        end,
+    },
+    {
+        "FabijanZulj/blame.nvim",
+        lazy = false,
+        config = function()
+            require('blame').setup {
+                vim.keymap.set("n", "<leader>tb", ":BlameToggle<CR>", opt)
+            }
         end,
     },
 
@@ -474,7 +487,6 @@ require("lazy").setup({
                 sources = cmp.config.sources{
                     { name = "nvim_lsp" },
                     { name = "path" },
-                    { name = "copilot" },
                 },
                 experimental = {
                     ghost_text = true,
@@ -514,7 +526,6 @@ require("lazy").setup({
                     on_attach = function(client, bufnr)
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
-                        vim.keymap.set("n", "<leader>le", ":RustLsp renderDiagnostic<CR>", opt)
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         vim.keymap.set("n", "<leader>lk", ":RustLsp flyCheck<CR>", opt)
@@ -724,21 +735,6 @@ require("lazy").setup({
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        event = "InsertEnter",
-        config = function () require("copilot_cmp").setup() end,
-        dependencies = {
-            "zbirenbaum/copilot.lua",
-            cmd = "Copilot",
-            config = function()
-                require("copilot").setup({
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
-                })
-            end,
-        },
     },
     {
         "pteroctopus/faster.nvim",

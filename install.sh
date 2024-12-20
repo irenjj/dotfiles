@@ -1,6 +1,8 @@
 #! /bin/bash
 
-brew install ripgrep fd bat exa fzf
+brew install ripgrep fd bat exa fzf llvm nvim
+
+cargo install exa
 
 CONF_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
