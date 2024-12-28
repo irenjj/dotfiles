@@ -1,0 +1,78 @@
+macos-titlebar-style = tabs
+macos-non-native-fullscreen = true
+
+cursor-style = block
+cursor-style-blink = false
+
+shell-integration-features = no-cursor
+
+#mouse-hide-while-typing = true
+unfocused-split-opacity = 1.0
+confirm-close-surface = false
+clipboard-paste-protection = false
+copy-on-select = true
+quit-after-last-window-closed = true
+window-padding-x = 0,0
+window-padding-y = 0,0
+
+## keybindings
+keybind = cmd+d=ignore
+keybind = cmd+D=ignore
+keybind = cmd+s=new_split:right
+keybind = cmd+S=new_split:down
+keybind = cmd+h=goto_split:left
+keybind = cmd+j=goto_split:bottom
+keybind = cmd+k=goto_split:top
+keybind = cmd+l=goto_split:right
+keybind = cmd+i=previous_tab
+keybind = cmd+o=next_tab
+keybind = cmd+u=scroll_page_up
+keybind = cmd+d=scroll_page_down
+keybind = cmd+g=scroll_to_top
+keybind = cmd+G=scroll_to_bottom
+keybind = cmd+m=toggle_split_zoom
+# todo: resize split
+
+
+## layout
+# font
+font-size = 16.5
+font-family = "JetBrains Mono NL"
+font-style = "SemiBold"
+font-style-bold = "ExtraBold"
+font-style-italic = "SemiBold Italic"
+font-style-bold-italic = "ExtraBold Italic"
+font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
+adjust-cell-width = -2
+
+# theme
+# black
+palette = 0=#000000
+palette = 8=#545753
+# red
+palette = 1=#cc0000
+palette = 9=#ef2828
+# green
+palette = 2=#227a00
+palette = 10=#3dcc06
+# yellow
+palette = 3=#e89f00
+palette = 11=#d6d600
+# blue
+palette = 4=#043abd
+palette = 12=#157ae6
+# magenta
+palette = 5=#8f008c
+palette = 13=#5a32a3
+# cyan
+palette = 6=#05989a
+palette = 14=#34e2e2
+# white
+palette = 7=#d3d7cf
+palette = 15=#ededec
+
+background = ffffff
+foreground = 000000
+cursor-color = 000000
+selection-background = 8d9091
+selection-foreground = ffffff

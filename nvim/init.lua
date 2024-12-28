@@ -304,7 +304,7 @@ require("lazy").setup({
 
             vim.keymap.set("n", "<C-f>", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "f", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "<C-;>", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
