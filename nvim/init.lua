@@ -100,6 +100,9 @@ vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99
 
+-- Disable double click.
+vim.opt.mouse = ''
+
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-Cursor,r-cr-o:hor20"
 vim.cmd [[
   augroup CursorColor
@@ -302,7 +305,7 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-f>", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "<C-;>", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
@@ -392,7 +395,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            -- vim.lsp.inlay_hint.enable()
+            vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -529,6 +532,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         vim.keymap.set("n", "<leader>lk", ":RustLsp flyCheck<CR>", opt)
+                        vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build<CR>", opt)
                         vim.keymap.set("n", "<leader>lr", ":RustAnalyzer restart<CR>", opt)
@@ -741,24 +745,6 @@ require("lazy").setup({
         config = function()
             require('faster').setup()
         end
-    },
-    {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<C-;>]],
-                direction = 'float',
-                float_opts = {
-                    width = function()
-                        return math.floor(vim.o.columns * 0.98)
-                    end,
-                    height = function()
-                        return math.floor(vim.o.lines * 0.95)
-                    end,
-                },
-            })
-        end,
     },
     {
         'windwp/nvim-autopairs',

@@ -18,20 +18,21 @@ window-padding-y = 0,0
 ## keybindings
 keybind = cmd+d=ignore
 keybind = cmd+D=ignore
+keybind = cmd+w=ignore
+keybind = cmd+n=ignore
+keybind = cmd+t=ignore
 keybind = cmd+s=new_split:right
 keybind = cmd+S=new_split:down
 keybind = cmd+h=goto_split:left
 keybind = cmd+j=goto_split:bottom
 keybind = cmd+k=goto_split:top
 keybind = cmd+l=goto_split:right
-keybind = cmd+i=previous_tab
-keybind = cmd+o=next_tab
-keybind = cmd+u=scroll_page_up
-keybind = cmd+d=scroll_page_down
-keybind = cmd+g=scroll_to_top
-keybind = cmd+G=scroll_to_bottom
 keybind = cmd+m=toggle_split_zoom
-# todo: resize split
+
+keybind = cmd+i=text:\x06i
+keybind = cmd+o=text:\x06o
+keybind = cmd+w=text:\x06w
+keybind = cmd+t=text:\x06t
 
 
 ## layout
