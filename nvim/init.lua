@@ -240,7 +240,7 @@ require("lazy").setup({
             require("nvim-treesitter.configs").setup({
                 ensure_installed = "all",
                 highlight = { enable = true },
-                    fold = { enable = true },
+                fold = { enable = true },
             })
         end,
     },
@@ -307,7 +307,7 @@ require("lazy").setup({
 
             vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
             vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
-            vim.keymap.set("n", "<C-;>", require("telescope.builtin").buffers)
+            vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
@@ -395,7 +395,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -490,6 +490,7 @@ require("lazy").setup({
                 sources = cmp.config.sources{
                     { name = "nvim_lsp" },
                     { name = "path" },
+                    { name = "copilot", group_index = 2 },
                 },
                 experimental = {
                     ghost_text = true,
@@ -677,7 +678,7 @@ require("lazy").setup({
             "nvim-neotest/nvim-nio",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
-            "nvim-treesitter/nvim-treesitter"
+            -- "nvim-treesitter/nvim-treesitter"
         },
         config = function()
             require("neotest").setup({
@@ -750,6 +751,32 @@ require("lazy").setup({
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        event = "InsertEnter",
+        config = function () require("copilot_cmp").setup() end,
+        dependencies = {
+            "zbirenbaum/copilot.lua",
+            cmd = "Copilot",
+            config = function()
+                require("copilot").setup({
+                    suggestion = { enabled = false },
+                    panel = { enabled = false },
+                })
+            end,
+        },
+    },
+    {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+            { "zbirenbaum/copilot.lua" },
+            { "nvim-lua/plenary.nvim", branch = "master" },
+        },
+        build = "make tiktoken",
+        config = function()
+            require("CopilotChat").setup ({})
+        end
     },
 })
 
