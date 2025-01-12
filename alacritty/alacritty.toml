@@ -1,3 +1,4 @@
+[general]
 live_config_reload = true
 
 [colors.normal]
@@ -36,31 +37,31 @@ background = "#ffffff"
 foreground = "#000000"
 
 [font]
-size = 17
+size = 16
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
 style = "SemiBold"
 
-[font.bold_italic]
-family = "CaskaydiaCove Nerd Font"
-style = "SemiBold Italic"
-
 [font.italic]
 family = "JetBrainsMono Nerd Font"
 style = "Light Italic"
 
-[font.normal]
+[font.bold_italic]
 family = "JetBrainsMono Nerd Font"
-style = "Regular"
+style = "SemiBold Italic"
 
 [font.glyph_offset]
 x = 0
 y = 0
 
 [font.offset]
-x = 0
-y = 8
+x = -2
+y = 2
 
 [selection]
 save_to_clipboard = true
@@ -74,14 +75,6 @@ decorations = "buttonless"
 hide_when_typing = true
 
 # ---------- Key bindings ----------
-# A list with all available `key` names can be found here
-# https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
-#
-# Run "xxd -psd" to find hex codes of keys.
-#
-# Alacritty + Zellij key integratio
-#   `\x02` is `C-b` as tmux prefix
-#   `\x19` is `C-y` as tmux prefix
 # ----- unbind -----
 [[keyboard.bindings]]
 action = "None"
@@ -94,10 +87,11 @@ key = "Q"
 mods = "Command"
 
 [[keyboard.bindings]]
-action = "None"
-key = "T"
+action = "CreateNewTab"
+key = "N"
 mods = "Command"
 
+# Bindings for tmux, `\x02` is `C-b`.
 # ----- change font size ----
 [[keyboard.bindings]]
 action = "ResetFontSize"
@@ -116,23 +110,23 @@ mods = "Command"
 
 # ----- new pane/tab/window -----
 [[keyboard.bindings]]
-chars = "\u0002%"
-key = "S"
+chars = "\u0002="
+key = "D"
 mods = "Command"
 
 [[keyboard.bindings]]
 chars = "\u0002-"
 key = "S"
-mods = "Command|Shift"
+mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002n"
-key = "N"
+chars = "\u0002t"
+key = "T"
 mods = "Command"
 
 # ----- close pane/tab/window -----
 [[keyboard.bindings]]
-chars = "\u0002X"
+chars = "\u0002w"
 key = "W"
 mods = "Command"
 
@@ -161,10 +155,9 @@ mods = "Command"
 action = "ToggleSimpleFullscreen"
 key = "F"
 mods = "Command|Shift"
-
 [[keyboard.bindings]]
 chars = "\u0002r"
-key = "r"
+key = "R"
 mods = "Command"
 
 # ----- resize panes -----
@@ -252,5 +245,5 @@ mods = "Command"
 # ------ vim mode ------
 [[keyboard.bindings]]
 chars = "\u0002c"
-key = "y"
+key = "Y"
 mods = "Command"

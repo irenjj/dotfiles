@@ -125,6 +125,9 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     end,
 })
 
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+
 ------------------------------ Kyebindings ------------------------------
 local opt = { noremap = true, silent = true }
 
@@ -186,7 +189,7 @@ require("lazy").setup({
                     colors.bg_float = "#ffffff"
                     colors.popup = "#ffffff"
                     colors.bg_sidebar = "#ffffff"
-                    colors.bg_statusline = "#ffffff"
+                    colors.bg_statusline = "#f0f0f0"
 
                     colors.bg_highlight = "#bbbbbb"
                     colors.fg_gutter = "#cccccc"
@@ -361,7 +364,7 @@ require("lazy").setup({
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
 
                     map('n', '<leader>td', gitsigns.toggle_deleted)
-                    map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
+                    -- map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
 
                     -- Text object
                     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
@@ -768,16 +771,57 @@ require("lazy").setup({
         },
     },
     {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        dependencies = {
-            { "zbirenbaum/copilot.lua" },
-            { "nvim-lua/plenary.nvim", branch = "master" },
+        "yetone/avante.nvim",
+        event = "VeryLazy",
+        lazy = false,
+        version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+        opts = {
+            provider = "copilot",
+            auto_suggestions_provider = "copilot",
+            copilot = {
+                endpoint = "https://api.githubcopilot.com",
+                model = "gpt-4o-2024-08-06",
+                proxy = nil, -- [protocol://]host[:port] Use this proxy
+                allow_insecure = false, -- Allow insecure server connections
+                timeout = 30000, -- Timeout in milliseconds
+                temperature = 0,
+                max_tokens = 4096,
+            },
+            windows = {
+                width = 40,
+            },
         },
-        build = "make tiktoken",
-        config = function()
-            require("CopilotChat").setup ({})
-        end
-    },
+        build = "make BUILD_FROM_SOURCE=true",
+        dependencies = {
+            "stevearc/dressing.nvim",
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+            --- The below dependencies are optional,
+            "hrsh7th/nvim-cmp",
+            "echasnovski/mini.icons",
+            "zbirenbaum/copilot.lua",
+            {
+                "HakonHarnes/img-clip.nvim",
+                event = "VeryLazy",
+                opts = {
+                    default = {
+                        embed_image_as_base64 = false,
+                        prompt_for_file_name = false,
+                        drag_and_drop = {
+                            insert_mode = true,
+                        },
+                    },
+                },
+            },
+            {
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { "markdown", "Avante" },
+                },
+                ft = { "markdown", "Avante" },
+            },
+        },
+    }
 })
 
 -- dark
