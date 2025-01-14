@@ -72,7 +72,7 @@ decorations = "buttonless"
 #startup_mode = "SimpleFullscreen"
 
 [mouse]
-hide_when_typing = true
+#hide_when_typing = true
 
 # ---------- Key bindings ----------
 # ----- unbind -----
@@ -110,44 +110,44 @@ mods = "Command"
 
 # ----- new pane/tab/window -----
 [[keyboard.bindings]]
-chars = "\u0002="
+chars = "\u0006="
 key = "D"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002-"
+chars = "\u0006-"
 key = "S"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002t"
+chars = "\u0006t"
 key = "T"
 mods = "Command"
 
 # ----- close pane/tab/window -----
 [[keyboard.bindings]]
-chars = "\u0002w"
+chars = "\u0006w"
 key = "W"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002h"
+chars = "\u0006h"
 key = "H"
 mods = "Command"
 
 # ----- navigate panes -----
 [[keyboard.bindings]]
-chars = "\u0002j"
+chars = "\u0006j"
 key = "J"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002k"
+chars = "\u0006k"
 key = "K"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002l"
+chars = "\u0006l"
 key = "L"
 mods = "Command"
 
@@ -156,94 +156,94 @@ action = "ToggleSimpleFullscreen"
 key = "F"
 mods = "Command|Shift"
 [[keyboard.bindings]]
-chars = "\u0002r"
+chars = "\u0006r"
 key = "R"
 mods = "Command"
 
 # ----- resize panes -----
 [[keyboard.bindings]]
-chars = "\u0002H"
+chars = "\u0006H"
 key = "H"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
-chars = "\u0002J"
+chars = "\u0006J"
 key = "J"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
-chars = "\u0002K"
+chars = "\u0006K"
 key = "K"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
-chars = "\u0002L"
+chars = "\u0006L"
 key = "L"
 mods = "Command|Shift"
 
 [[keyboard.bindings]]
-chars = "\u0002m"
+chars = "\u0006m"
 key = "M"
 mods = "Command"
 
 # ----- navigate tabs -----
 [[keyboard.bindings]]
-chars = "\u0002i"
+chars = "\u0006i"
 key = "I"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u0002o"
+chars = "\u0006o"
 key = "O"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00021"
+chars = "\u00061"
 key = "Key1"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00022"
+chars = "\u00062"
 key = "Key2"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00023"
+chars = "\u00063"
 key = "Key3"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00024"
+chars = "\u00064"
 key = "Key4"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00025"
+chars = "\u00065"
 key = "Key5"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00026"
+chars = "\u00066"
 key = "Key6"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00027"
+chars = "\u00067"
 key = "Key7"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00028"
+chars = "\u00068"
 key = "Key8"
 mods = "Command"
 
 [[keyboard.bindings]]
-chars = "\u00029"
+chars = "\u00069"
 key = "Key9"
 mods = "Command"
 
 # ------ vim mode ------
 [[keyboard.bindings]]
-chars = "\u0002c"
+chars = "\u0006c"
 key = "Y"
 mods = "Command"

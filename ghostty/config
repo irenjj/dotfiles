@@ -1,4 +1,4 @@
-macos-titlebar-style = tabs
+macos-titlebar-style = hidden
 macos-non-native-fullscreen = true
 
 cursor-style = block
@@ -18,33 +18,50 @@ window-padding-y = 0,0
 ## keybindings
 keybind = cmd+d=ignore
 keybind = cmd+D=ignore
+keybind = cmd+s=ignore
+keybind = cmd+S=ignore
 keybind = cmd+w=ignore
 keybind = cmd+n=ignore
 keybind = cmd+t=ignore
-keybind = cmd+s=new_split:right
-keybind = cmd+S=new_split:down
-keybind = cmd+h=goto_split:left
-keybind = cmd+j=goto_split:bottom
-keybind = cmd+k=goto_split:top
-keybind = cmd+l=goto_split:right
+
+keybind = cmd+f=goto_split:next
 keybind = cmd+m=toggle_split_zoom
 
+keybind = cmd+1=text:\x061
+keybind = cmd+2=text:\x062
+keybind = cmd+3=text:\x063
+keybind = cmd+4=text:\x064
+keybind = cmd+5=text:\x065
+keybind = cmd+6=text:\x066
+keybind = cmd+7=text:\x067
+keybind = cmd+8=text:\x068
+keybind = cmd+9=text:\x069
 keybind = cmd+i=text:\x06i
 keybind = cmd+o=text:\x06o
 keybind = cmd+w=text:\x06w
 keybind = cmd+t=text:\x06t
-
+keybind = cmd+h=text:\x06h
+keybind = cmd+j=text:\x06j
+keybind = cmd+k=text:\x06k
+keybind = cmd+l=text:\x06l
+keybind = cmd+shift+h=text:\x06H
+keybind = cmd+shift+j=text:\x06J
+keybind = cmd+shift+k=text:\x06K
+keybind = cmd+shift+l=text:\x06L
+keybind = cmd+d=text:\x06=
+keybind = cmd+s=text:\x06-
 
 ## layout
 # font
-font-size = 16.5
+font-size = 16
 font-family = "JetBrains Mono NL"
 font-style = "SemiBold"
 font-style-bold = "ExtraBold"
 font-style-italic = "SemiBold Italic"
 font-style-bold-italic = "ExtraBold Italic"
 font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
-adjust-cell-width = -2
+adjust-cell-width = -3
+adjust-cell-height = 2
 
 # theme
 # black
