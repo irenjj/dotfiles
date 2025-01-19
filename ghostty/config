@@ -24,8 +24,10 @@ keybind = cmd+w=ignore
 keybind = cmd+n=ignore
 keybind = cmd+t=ignore
 
+keybind = cmd+\=new_split:right
+
 keybind = cmd+f=goto_split:next
-keybind = cmd+m=toggle_split_zoom
+keybind = cmd+g=toggle_split_zoom
 
 keybind = cmd+1=text:\x061
 keybind = cmd+2=text:\x062
@@ -39,6 +41,7 @@ keybind = cmd+9=text:\x069
 keybind = cmd+i=text:\x06i
 keybind = cmd+o=text:\x06o
 keybind = cmd+w=text:\x06w
+keybind = cmd+e=text:\x06e
 keybind = cmd+t=text:\x06t
 keybind = cmd+h=text:\x06h
 keybind = cmd+j=text:\x06j
@@ -50,10 +53,12 @@ keybind = cmd+shift+k=text:\x06K
 keybind = cmd+shift+l=text:\x06L
 keybind = cmd+d=text:\x06=
 keybind = cmd+s=text:\x06-
+keybind = cmd+m=text:\x06m
+keybind = cmd+;=text:\x06c
 
 ## layout
 # font
-font-size = 16
+font-size = 15
 font-family = "JetBrains Mono NL"
 font-style = "SemiBold"
 font-style-bold = "ExtraBold"
@@ -61,7 +66,7 @@ font-style-italic = "SemiBold Italic"
 font-style-bold-italic = "ExtraBold Italic"
 font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
 adjust-cell-width = -3
-adjust-cell-height = 2
+adjust-cell-height = 0
 
 # theme
 # black

@@ -312,7 +312,7 @@ require("lazy").setup({
             vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", "<C-;>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
 
@@ -329,13 +329,14 @@ require("lazy").setup({
                     buffer_close_icon = '',
                     modified_icon = '',
                     close_icon = '',
-                    max_name_length = 6,
-                    tab_size = 6,
+                    max_name_length = 4,
+                    tab_size = 4,
                     show_buffer_icons = false,
                     show_buffer_close_icons = false,
                     show_close_icon = false,
                     show_tab_indicators = false,
                     show_duplicate_prefix = false,
+                    separator_style = "thin",
                 },
             })
 
@@ -626,115 +627,6 @@ require("lazy").setup({
         event = {"CmdlineEnter"},
         ft = {"go", 'gomod'},
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-    },
-
-    -- Dap
-    {
-        "mfussenegger/nvim-dap",
-        dependencies = {
-            "rcarriga/nvim-dap-ui",
-            dependencies = {
-                "nvim-neotest/nvim-nio",
-            },
-            "nvim-telescope/telescope-dap.nvim",
-        },
-        config = function()
-            local dap = require("dap")
-            local dapui = require("dapui")
-
-            dap.adapters.codelldb = {
-                type = 'server',
-                port = "${port}",
-                executable = {
-                    command = vim.fn.expand('~/dotfiles/codelldb/extension/adapter/codelldb'),
-                    args = {"--port", "${port}"},
-                }
-            }
-
-            vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
-            vim.fn.sign_define('DapBreakpointCondition', { text = '◉', texthl = 'DapBreakpointCondition' })
-            vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
-            -- window
-            vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#cc0000' })
-            vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#cc0000' })
-            vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#227a00' })
-            vim.api.nvim_set_hl(0, "DapUIScope", { fg = "#785201", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIType", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIVariable", { fg = "#871094" })
-            vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#e89f00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = "#227a00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIDecoration", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIThread", { fg = "#785201" })
-            vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#227a00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIFrameName", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUICurrentFrameName", { fg = "#227a00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUISource", { fg = "#043abd" })
-            vim.api.nvim_set_hl(0, "DapUILineNumber", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIBreakpointsPath", { fg = "#555555" })
-
-            dapui.setup({
-               layouts = {
-                    {
-                        elements = {
-                            { id = "scopes", size = 0.6 },
-                            { id = "breakpoints", size = 0.1 },
-                            { id = "stacks", size = 0.1 },
-                            { id = "watches", size = 0.1 },
-                            { id = "console", size = 0.1 },
-                        },
-                        position = "left",
-                        size = 0.45
-                    },
-                },
-            })
-
-            dap.listeners.after.event_initialized["dapui_config"] = function()
-                dapui.open()
-            end
-            dap.listeners.before.event_terminated["dapui_config"] = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited["dapui_config"] = function()
-                dapui.close()
-            end
-
-            local keymap = vim.keymap.set
-            local opt = { noremap = true, silent = true }
-
-            keymap('n', '<C-n>', function() require('dap').step_over() end, opt)
-            keymap('n', '<C-s>', function() require('dap').step_into() end, opt)
-            keymap('n', '<Leader>do', function() require('dap').step_out() end, opt)
-            keymap('n', '<Leader>dc', function() require('dap').continue() end, opt)
-            keymap('n', '<Leader>du', function() require('dap').up() end, opt)
-            keymap('n', '<Leader>dd', function() require('dap').down() end, opt)
-            keymap('n', '<Leader>ds', function() require('dap').terminate() end, opt)
-            keymap('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, opt)
-            keymap('n', '<Leader>dB', function()
-                require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
-            end, opt)
-
-            vim.keymap.set('n', '<leader>dr', function()
-                require('dap').repl.toggle()
-            end, { desc = 'Toggle DAP REPL' })
-        end,
-    },
-    {
-        "nvim-neotest/neotest",
-        dependencies = {
-            "nvim-neotest/nvim-nio",
-            "nvim-lua/plenary.nvim",
-            "antoinemadec/FixCursorHold.nvim",
-            -- "nvim-treesitter/nvim-treesitter"
-        },
-        config = function()
-            require("neotest").setup({
-                adapters = {
-                    require('rustaceanvim.neotest')
-                },
-            })
-
-            vim.keymap.set("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opt)
-        end,
     },
 
     -- Tools
