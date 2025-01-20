@@ -58,7 +58,7 @@ keybind = cmd+;=text:\x06c
 
 ## layout
 # font
-font-size = 15
+font-size = 16
 font-family = "JetBrains Mono NL"
 font-style = "SemiBold"
 font-style-bold = "ExtraBold"
@@ -66,7 +66,7 @@ font-style-italic = "SemiBold Italic"
 font-style-bold-italic = "ExtraBold Italic"
 font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
 adjust-cell-width = -3
-adjust-cell-height = 0
+adjust-cell-height = 2
 
 # theme
 # black

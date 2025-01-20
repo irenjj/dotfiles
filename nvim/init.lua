@@ -315,8 +315,6 @@ require("lazy").setup({
             vim.keymap.set("n", "<C-;>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
         end,
     },
-
-
     {
         'akinsho/bufferline.nvim',
         version = "*",
@@ -367,7 +365,7 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = false,
                 current_line_blame_opts = { delay = 200 },
-                current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+                current_line_blame_formatter = '<summary> - <author>, <author_time:%Y-%m-%d>',
 
                 on_attach = function(bufnr)
                     local gitsigns = require('gitsigns')
@@ -408,21 +406,9 @@ require("lazy").setup({
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
 
                     map('n', '<leader>td', gitsigns.toggle_deleted)
-                    -- map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
-
-                    -- Text object
-                    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+                    map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
                 end
             })
-        end,
-    },
-    {
-        "FabijanZulj/blame.nvim",
-        lazy = false,
-        config = function()
-            require('blame').setup {
-                vim.keymap.set("n", "<leader>tb", ":BlameToggle<CR>", opt)
-            }
         end,
     },
 
@@ -537,7 +523,6 @@ require("lazy").setup({
                 sources = cmp.config.sources{
                     { name = "nvim_lsp" },
                     { name = "path" },
-                    { name = "copilot", group_index = 2 },
                 },
                 experimental = {
                     ghost_text = true,
@@ -689,21 +674,6 @@ require("lazy").setup({
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        event = "InsertEnter",
-        config = function () require("copilot_cmp").setup() end,
-        dependencies = {
-            "zbirenbaum/copilot.lua",
-            cmd = "Copilot",
-            config = function()
-                require("copilot").setup({
-                    suggestion = { enabled = false },
-                    panel = { enabled = false },
-                })
-            end,
-        },
     },
     {
         "yetone/avante.nvim",
