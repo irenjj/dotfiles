@@ -135,13 +135,12 @@ vim.keymap.set("n", "<C-f>", "", opt)
 vim.keymap.set("n", "<C-=>", "", opt)
 vim.keymap.set("n", "<C-->", "", opt)
 
-vim.keymap.set("n", "<C-f>j", "<C-w>j", opt)
-vim.keymap.set("n", "<C-f>k", "<C-w>k", opt)
-vim.keymap.set("n", "<C-f>h", "<C-w>h", opt)
-vim.keymap.set("n", "<C-f>l", "<C-w>l", opt)
-vim.keymap.set("n", "<C-f>r", "<C-w>r", opt)
-vim.keymap.set("n", "<C-f>w", ":bd!<CR>", opt)
-vim.keymap.set("n", "<C-f>e", ":%bd|e#|bd#<CR>", opt)
+vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
+vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
+vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
+vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
+vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
+vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +5<CR>", opt)
 vim.keymap.set("n", "<C-->", ":resize +5<CR>", opt)
 
@@ -189,7 +188,7 @@ require("lazy").setup({
                     colors.bg_float = "#ffffff"
                     colors.popup = "#ffffff"
                     colors.bg_sidebar = "#ffffff"
-                    colors.bg_statusline = "#f0f0f0"
+                    colors.bg_statusline = "#ffffff"
 
                     colors.bg_highlight = "#bbbbbb"
                     colors.fg_gutter = "#cccccc"
@@ -280,6 +279,7 @@ require("lazy").setup({
             local actions = require("telescope.actions")
             require("telescope").setup({
                 defaults = {
+                    layout_strategy = "vertical",
                     preview = false,
                     mappings = {
                         i = {
@@ -289,73 +289,24 @@ require("lazy").setup({
                 },
                 pickers = {
                     git_files = {
-                        theme = "ivy",
+                        preview = true,
                     },
                     live_grep = {
-                        theme = "ivy",
                         preview = true,
                     },
                     buffers = {
-                        theme = "ivy",
-                        sort_mru = true,
                         preview = true,
+                        sort_mru = true,
                     },
-                    git_status = {
-                        theme = "ivy",
-                        sort_mru = true,
-                        preview = true,
-                    }
                 },
             })
 
-            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<Leader>p", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<Leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
-            vim.keymap.set("n", "<C-;>", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes').get_ivy({}))<cr>", opts)
+            vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes'))<cr>", opts)
         end,
-    },
-    {
-        'akinsho/bufferline.nvim',
-        version = "*",
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require('bufferline').setup({
-                options = {
-                    numbers = "none",
-                    show_close_icon = false,
-                    buffer_close_icon = '',
-                    modified_icon = '',
-                    close_icon = '',
-                    max_name_length = 4,
-                    tab_size = 4,
-                    show_buffer_icons = false,
-                    show_buffer_close_icons = false,
-                    show_close_icon = false,
-                    show_tab_indicators = false,
-                    show_duplicate_prefix = false,
-                    separator_style = "thin",
-                },
-            })
-
-            vim.opt.termguicolors = true
-            vim.keymap.set('n', '<C-f>o', '<CMD>BufferLineCycleNext<CR>')
-            vim.keymap.set('n', '<C-f>i', '<CMD>BufferLineCyclePrev<CR>')
-            vim.keymap.set('n', '<C-f>1', '<CMD>BufferLineGoToBuffer 1<CR>')
-            vim.keymap.set('n', '<C-f>2', '<CMD>BufferLineGoToBuffer 2<CR>')
-            vim.keymap.set('n', '<C-f>3', '<CMD>BufferLineGoToBuffer 3<CR>')
-            vim.keymap.set('n', '<C-f>4', '<CMD>BufferLineGoToBuffer 4<CR>')
-            vim.keymap.set('n', '<C-f>5', '<CMD>BufferLineGoToBuffer 5<CR>')
-            vim.keymap.set('n', '<C-f>6', '<CMD>BufferLineGoToBuffer 6<CR>')
-            vim.keymap.set('n', '<C-f>7', '<CMD>BufferLineGoToBuffer 7<CR>')
-            vim.keymap.set('n', '<C-f>8', '<CMD>BufferLineGoToBuffer 8<CR>')
-            vim.keymap.set('n', '<C-f>9', '<CMD>BufferLineGoToBuffer 9<CR>')
-            vim.keymap.set('n', '<Leader>mo', '<CMD>BufferLineMoveNext<CR>')
-            vim.keymap.set('n', '<Leader>mi', '<CMD>BufferLineMovePrev<CR>')
-            vim.keymap.set('n', '<Leader>ms', '<CMD>BufferLineSortByDirectory<CR>')
-            vim.keymap.set('n', '<Leader>mp', '<CMD>BufferLineTogglePin<CR>')
-
-        end
     },
 
     -- Git
@@ -428,7 +379,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            -- vim.lsp.inlay_hint.enable()
+            vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -693,7 +644,13 @@ require("lazy").setup({
                 max_tokens = 4096,
             },
             windows = {
-                width = 40,
+                position = "bottom",
+                edit = {
+                    start_insert = false,
+                },
+                ask = {
+                    start_insert = false,
+                },
             },
         },
         build = "make BUILD_FROM_SOURCE=true",
@@ -726,7 +683,8 @@ require("lazy").setup({
                 ft = { "markdown", "Avante" },
             },
         },
-    }
+        vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
+    },
 })
 
 -- dark
