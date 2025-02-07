@@ -301,8 +301,8 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<Leader>p", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<Leader>g", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
+            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             -- Reopen last Telescope window, super useful for live grep
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes'))<cr>", opts)
@@ -379,7 +379,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -576,7 +576,7 @@ require("lazy").setup({
             })
             require('mini.jump2d').setup()
             require('mini.files').setup({
-                vim.keymap.set("n", "<leader>f", ":lua MiniFiles.open()<CR>", opt)
+                vim.keymap.set("n", "<Leader>j", ":lua MiniFiles.open()<CR>", opt)
             })
             require('mini.icons').setup()
             require('mini.misc').setup()
