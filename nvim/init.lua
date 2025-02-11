@@ -152,8 +152,6 @@ vim.keymap.set("n", "<C-i>", "<C-i>zz")
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
-vim.keymap.set("n", "gx", ":!open <cWORD><CR>", opt)
-
 -- Un-highlight last search result
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
 
@@ -276,8 +274,9 @@ require("lazy").setup({
         branch = '0.1.x',
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
+            local telescope = require("telescope")
             local actions = require("telescope.actions")
-            require("telescope").setup({
+            telescope.setup({
                 defaults = {
                     layout_strategy = "vertical",
                     preview = false,
@@ -288,12 +287,8 @@ require("lazy").setup({
                     },
                 },
                 pickers = {
-                    git_files = {
-                        preview = true,
-                    },
-                    live_grep = {
-                        preview = true,
-                    },
+                    git_files = { preview = true },
+                    live_grep = { preview = true },
                     buffers = {
                         preview = true,
                         sort_mru = true,
@@ -301,11 +296,42 @@ require("lazy").setup({
                 },
             })
 
-            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files)
-            vim.keymap.set("n", "<C-g>", require("telescope.builtin").live_grep) -- requires ripgrep
+            vim.keymap.set("n", "<Leader>k", require("telescope.builtin").git_files)
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
-            -- Reopen last Telescope window, super useful for live grep
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes'))<cr>", opts)
+
+            vim.keymap.set('n', '<leader>g', function()
+                vim.ui.input({ prompt = "Search directories (comma separated): " }, function(input)
+                    if input then
+                        local dirs = vim.split(input, ',', { trimempty = true })
+                        for i, dir in ipairs(dirs) do
+                            dirs[i] = vim.fn.trim(dir)
+                        end
+
+                        require('telescope.builtin').live_grep({
+                            search_dirs = dirs
+                        })
+                    end
+                end)
+            end)
+
+            vim.keymap.set('n', '<Leader>h', function()
+                vim.ui.input({ prompt = "Grep arguments: " }, function(input)
+                    if input then
+                        local args = vim.split(input, ' ', { trimempty = true })
+                        local base_args = {"rg", "--color=never", "--no-heading", "--with-filename", 
+                                         "--line-number", "--column", "--smart-case"}
+                        for _, arg in ipairs(args) do
+                            table.insert(base_args, arg)
+                        end
+
+                        require('telescope.builtin').live_grep({
+                            vimgrep_arguments = base_args
+                        })
+                    end
+                end)
+            end)
+
         end,
     },
 
@@ -644,7 +670,6 @@ require("lazy").setup({
                 max_tokens = 4096,
             },
             windows = {
-                position = "bottom",
                 edit = {
                     start_insert = false,
                 },
@@ -684,6 +709,106 @@ require("lazy").setup({
             },
         },
         vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
+    },
+    -- Dap
+    {
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "rcarriga/nvim-dap-ui",
+        },
+        config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+            dap.adapters.codelldb = {
+                type = 'server',
+                port = "${port}",
+                executable = {
+                    command = vim.fn.expand('~/dotfiles/codelldb/extension/adapter/codelldb'),
+                    args = {"--port", "${port}"},
+                }
+            }
+
+            dap.configurations.rust = {
+                {
+                    name = "Rust debug",
+                    type = "codelldb",
+                    request = "launch",
+                    program = function()
+                      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}',
+                    stopOnEntry = false,
+                    args = {},
+                    runInTerminal = false,
+                }
+            }
+            dap.configurations.cpp = dap.configurations.rust
+
+            vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
+            vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpointCondition' })
+            vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
+            -- window
+            vim.api.nvim_set_hl(0, "DapUIScope", { fg = "#785201", bold = true })
+            vim.api.nvim_set_hl(0, "DapUIType", { fg = "#c15200" })
+            vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, "DapUIVariable", { fg = "#871094" })
+            vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = "#227a00", bold = true })
+            vim.api.nvim_set_hl(0, "DapUIDecoration", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, "DapUIThread", { fg = "#785201" })
+            vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#e89f00", bold = true })
+            vim.api.nvim_set_hl(0, "DapUIFrameName", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, "DapUICurrentFrameName", { fg = "#227a00", bold = true })
+            vim.api.nvim_set_hl(0, "DapUISource", { fg = "#043abd" })
+            vim.api.nvim_set_hl(0, "DapUILineNumber", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, "DapUIBreakpointsPath", { fg = "#555555" })
+            dapui.setup({
+               layouts = {
+                    {
+                        elements = {
+                            { id = "repl", size = 1.0 },
+                        },
+                        position = "bottom",
+                        size = 0.3
+                    },
+
+                    {
+                        elements = {
+                            { id = "scopes", size = 0.5 },
+                            { id = "console", size = 0.2 },
+                        },
+                        position = "left",
+                        size = 0.45
+                    },
+                },
+            })
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+            local keymap = vim.keymap.set
+            local opt = { noremap = true, silent = true }
+            keymap('n', '<C-n>', function() require('dap').step_over() end, opt)
+            keymap('n', '<C-s>', function() require('dap').step_into() end, opt)
+            keymap('n', '<Leader>do', function() require('dap').step_out() end, opt)
+            keymap('n', '<Leader>dc', function() require('dap').continue() end, opt)
+            keymap('n', '<Leader>du', function() require('dap').up() end, opt)
+            keymap('n', '<Leader>dn', function() require('dap').down() end, opt)
+            keymap('n', '<Leader>dq', function() require('dap').terminate() end, opt)
+            keymap('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, opt)
+            keymap('n', '<Leader>dB', function()
+                require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
+            end, opt)
+            vim.keymap.set('n', '<leader>dr', function()
+                require('dap').repl.toggle()
+            end, { desc = 'Toggle DAP REPL' })
+            keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+        end,
     },
 })
 
