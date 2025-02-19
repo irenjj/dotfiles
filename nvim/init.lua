@@ -139,6 +139,7 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", opt)
 vim.keymap.set("n", "<C-k>", "<C-w>k", opt)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opt)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
+
 vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +5<CR>", opt)
@@ -539,13 +540,10 @@ require("lazy").setup({
                     on_attach = function(client, bufnr)
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
-                        vim.keymap.set("n", "<leader>ld", ":RustLsp debuggables<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
-                        vim.keymap.set("n", "<leader>lk", ":RustLsp flyCheck<CR>", opt)
                         vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
-                        vim.keymap.set("n", "<leader>lb", ":Cargo build<CR>", opt)
-                        vim.keymap.set("n", "<leader>lr", ":RustAnalyzer restart<CR>", opt)
+                        vim.keymap.set("n", "<leader>lb", ":Cargo build --workspace<CR>", opt)
 
                         -- None of this semantics tokens business.
                         -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
@@ -607,6 +605,7 @@ require("lazy").setup({
             require('mini.icons').setup()
             require('mini.misc').setup()
             MiniMisc.setup_auto_root()
+            require('mini.pairs').setup()
         end
     },
     {
@@ -646,11 +645,6 @@ require("lazy").setup({
         config = function()
             require('faster').setup()
         end
-    },
-    {
-        'windwp/nvim-autopairs',
-        event = "InsertEnter",
-        config = true
     },
     {
         "yetone/avante.nvim",
@@ -743,7 +737,20 @@ require("lazy").setup({
                     runInTerminal = false,
                 }
             }
-            dap.configurations.cpp = dap.configurations.rust
+            dap.configurations.cpp = {
+                {
+                    name = "Cpp debug",
+                    type = "codelldb",
+                    request = "launch",
+                    program = function()
+                      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}',
+                    stopOnEntry = false,
+                    args = {},
+                    runInTerminal = false,
+                }
+            }
 
             vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
             vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpointCondition' })
@@ -766,15 +773,14 @@ require("lazy").setup({
                layouts = {
                     {
                         elements = {
-                            { id = "repl", size = 1.0 },
+                            { id = "stacks", size = 1.0 },
                         },
                         position = "bottom",
-                        size = 0.3
+                        size = 0.2
                     },
-
                     {
                         elements = {
-                            { id = "scopes", size = 0.5 },
+                            { id = "scopes", size = 0.6 },
                             { id = "console", size = 0.2 },
                         },
                         position = "left",
