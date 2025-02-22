@@ -262,13 +262,6 @@ require("lazy").setup({
         },
         vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
     },
-    -- Lsp status
-    {
-        "j-hui/fidget.nvim",
-        opts = {
-            vim.keymap.set("n", "<leader>cl", ":Fidget clear<CR>", opt)
-        },
-    },
     -- Telescope
     {
         "nvim-telescope/telescope.nvim",
