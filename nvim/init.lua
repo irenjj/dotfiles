@@ -634,6 +634,20 @@ require("lazy").setup({
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
     },
     {
+        "3rd/image.nvim",
+        build = false,
+        config = function()
+          require("image").setup({})
+        end
+    },
+    {
+        "vhyrro/luarocks.nvim",
+        priority = 1001,
+        opts = { 
+            rocks = { "magick" },
+        },
+    },
+    {
         "pteroctopus/faster.nvim",
         config = function()
             require('faster').setup()
