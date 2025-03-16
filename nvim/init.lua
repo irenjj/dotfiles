@@ -336,7 +336,6 @@ require("lazy").setup({
             require("gitsigns").setup({
                 current_line_blame = false,
                 current_line_blame_opts = { delay = 200 },
-                current_line_blame_formatter = '<summary> - <author>, <author_time:%Y-%m-%d>',
 
                 on_attach = function(bufnr)
                     local gitsigns = require('gitsigns')
@@ -537,6 +536,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build --workspace<CR>", opt)
+                        vim.keymap.set("n", "<leader>ld", ":DapNew<CR>", opt)
 
                         -- None of this semantics tokens business.
                         -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
@@ -649,7 +649,7 @@ require("lazy").setup({
             auto_suggestions_provider = "copilot",
             copilot = {
                 endpoint = "https://api.githubcopilot.com",
-                model = "gpt-4o-2024-08-06",
+                model = "claude-3.5-sonnet",
                 proxy = nil, -- [protocol://]host[:port] Use this proxy
                 allow_insecure = false, -- Allow insecure server connections
                 timeout = 30000, -- Timeout in milliseconds
@@ -657,6 +657,7 @@ require("lazy").setup({
                 max_tokens = 4096,
             },
             windows = {
+                width = 25,
                 edit = {
                     start_insert = false,
                 },
@@ -686,13 +687,6 @@ require("lazy").setup({
                         },
                     },
                 },
-            },
-            {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                    file_types = { "markdown", "Avante" },
-                },
-                ft = { "markdown", "Avante" },
             },
         },
         vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
@@ -766,21 +760,16 @@ require("lazy").setup({
                layouts = {
                     {
                         elements = {
-                            { id = "stacks", size = 1.0 },
-                        },
-                        position = "bottom",
-                        size = 0.2
-                    },
-                    {
-                        elements = {
                             { id = "scopes", size = 0.6 },
-                            { id = "console", size = 0.2 },
+                            { id = "breakpoints", size = 0.15 },
+                            { id = "stacks", size = 0.25 },
                         },
                         position = "left",
-                        size = 0.45
+                        size = 0.3,
                     },
                 },
             })
+
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
@@ -790,6 +779,7 @@ require("lazy").setup({
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
+
             local keymap = vim.keymap.set
             local opt = { noremap = true, silent = true }
             keymap('n', '<C-n>', function() require('dap').step_over() end, opt)
@@ -803,9 +793,15 @@ require("lazy").setup({
             keymap('n', '<Leader>dB', function()
                 require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
             end, opt)
-            vim.keymap.set('n', '<leader>dr', function()
-                require('dap').repl.toggle()
-            end, { desc = 'Toggle DAP REPL' })
+
+            vim.keymap.set('n', '<leader>dk', function()
+                dapui.float_element('console', {
+                    relative = "editor",
+                    width = 100,
+                    height = 40,
+                })
+            end, { desc = "DAP Float Console" })
+
             keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
         end,
     },
