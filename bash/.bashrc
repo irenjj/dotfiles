@@ -94,23 +94,6 @@ export PS1=$PS1'\n\[\033[01;05m\]\$ \[\033[00m\]' # UID symbol
 
 
 # --------------------------------------------------
-# Desktop notification
-function nf() {
-    "$@"
-    local exit_code=$?
-
-    local cmd_name="$1"
-    if [ $exit_code -eq 0 ]; then
-        kitten notify "✅"
-    else
-        kitten notify "❌"
-    fi
-
-    return $exit_code
-}
-
-
-# --------------------------------------------------
 # History line
 export HISTSIZE=50000
 export HISTFILESIZE=50000
@@ -126,3 +109,4 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # --------------------------------------------------
 # Fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"

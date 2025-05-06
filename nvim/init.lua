@@ -535,8 +535,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
-                        vim.keymap.set("n", "<leader>lb", ":Cargo build --workspace<CR>", opt)
-                        vim.keymap.set("n", "<leader>ld", ":DapNew<CR>", opt)
+                        vim.keymap.set("n", "<leader>lb", ":Cargo build", opt)
 
                         -- None of this semantics tokens business.
                         -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
@@ -634,20 +633,6 @@ require("lazy").setup({
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
     },
     {
-        "3rd/image.nvim",
-        build = false,
-        config = function()
-          require("image").setup({})
-        end
-    },
-    {
-        "vhyrro/luarocks.nvim",
-        priority = 1001,
-        opts = { 
-            rocks = { "magick" },
-        },
-    },
-    {
         "pteroctopus/faster.nvim",
         config = function()
             require('faster').setup()
@@ -671,12 +656,14 @@ require("lazy").setup({
                 max_tokens = 4096,
             },
             windows = {
+                position = "left",
                 width = 25,
-                edit = {
-                    start_insert = false,
-                },
-                ask = {
-                    start_insert = false,
+                edit = { start_insert = false, },
+                ask = { start_insert = false, },
+            },
+            mappings = {
+                sidebar = {
+                    close = {},
                 },
             },
         },
@@ -774,12 +761,13 @@ require("lazy").setup({
                layouts = {
                     {
                         elements = {
-                            { id = "scopes", size = 0.6 },
+                            { id = "scopes", size = 0.5 },
                             { id = "breakpoints", size = 0.15 },
-                            { id = "stacks", size = 0.25 },
+                            { id = "console", size = 0.2 },
+                            { id = "stacks", size = 0.15  },
                         },
-                        position = "left",
-                        size = 0.3,
+                        position = "right",
+                        size = 0.25,
                     },
                 },
             })
@@ -807,18 +795,37 @@ require("lazy").setup({
             keymap('n', '<Leader>dB', function()
                 require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
             end, opt)
-
-            vim.keymap.set('n', '<leader>dk', function()
-                dapui.float_element('console', {
-                    relative = "editor",
-                    width = 100,
-                    height = 40,
-                })
-            end, { desc = "DAP Float Console" })
-
             keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
         end,
     },
+    {
+         'akinsho/bufferline.nvim',
+         version = "*",
+         dependencies = 'nvim-tree/nvim-web-devicons',
+         config = function()
+             require('bufferline').setup({
+                 options = {
+                     numbers = "none",
+                     max_name_length = 4,
+                     tab_size = 4,
+                     show_modified_icons = false,
+                     show_buffer_icons = false,
+                     show_buffer_close_icons = false,
+                     show_close_icon = false,
+                     show_tab_indicators = false,
+                     show_duplicate_prefix = false,
+                     separator_style = "thin",
+                 },
+             })
+ 
+             vim.opt.termguicolors = true
+             vim.keymap.set('n', '<C-f>o', '<CMD>BufferLineCycleNext<CR>')
+             vim.keymap.set('n', '<C-f>i', '<CMD>BufferLineCyclePrev<CR>')
+             vim.keymap.set('n', '<Leader>mo', '<CMD>BufferLineMoveNext<CR>')
+             vim.keymap.set('n', '<Leader>mi', '<CMD>BufferLineMovePrev<CR>')
+             vim.keymap.set('n', '<Leader>mp', '<CMD>BufferLineTogglePin<CR>')
+         end
+     },
 })
 
 -- dark
