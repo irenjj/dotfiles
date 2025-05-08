@@ -260,7 +260,7 @@ require("lazy").setup({
                 relative = "win",
             },
         },
-        vim.keymap.set("n", "<leader>o", ":AerialToggle<CR>")
+        vim.keymap.set("n", "<Leader>u", ":AerialToggle<CR>")
     },
     -- Telescope
     {
@@ -402,7 +402,7 @@ require("lazy").setup({
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
-            vim.keymap.set("n", "<leader>i", toggle_inlay_hints)
+            vim.keymap.set("n", "<Leader>y", toggle_inlay_hints)
 
             -- cpp
             lspconfig.clangd.setup({
@@ -593,6 +593,7 @@ require("lazy").setup({
             require('mini.jump2d').setup()
             require('mini.files').setup({
                 vim.keymap.set("n", "<Leader>j", ":lua MiniFiles.open()<CR>", opt)
+
             })
             require('mini.icons').setup()
             require('mini.misc').setup()
@@ -806,8 +807,8 @@ require("lazy").setup({
              require('bufferline').setup({
                  options = {
                      numbers = "none",
-                     max_name_length = 4,
-                     tab_size = 4,
+                     max_name_length = 15,
+                     tab_size = 15,
                      show_modified_icons = false,
                      show_buffer_icons = false,
                      show_buffer_close_icons = false,
@@ -819,11 +820,20 @@ require("lazy").setup({
              })
  
              vim.opt.termguicolors = true
-             vim.keymap.set('n', '<C-f>o', '<CMD>BufferLineCycleNext<CR>')
-             vim.keymap.set('n', '<C-f>i', '<CMD>BufferLineCyclePrev<CR>')
+             vim.keymap.set('n', '<Leader>o', '<CMD>BufferLineCycleNext<CR>')
+             vim.keymap.set('n', '<Leader>i', '<CMD>BufferLineCyclePrev<CR>')
              vim.keymap.set('n', '<Leader>mo', '<CMD>BufferLineMoveNext<CR>')
              vim.keymap.set('n', '<Leader>mi', '<CMD>BufferLineMovePrev<CR>')
              vim.keymap.set('n', '<Leader>mp', '<CMD>BufferLineTogglePin<CR>')
+             vim.keymap.set('n', '<Leader>1', '<CMD>BufferLineGoToBuffer 1<CR>')
+             vim.keymap.set('n', '<Leader>2', '<CMD>BufferLineGoToBuffer 2<CR>')
+             vim.keymap.set('n', '<Leader>3', '<CMD>BufferLineGoToBuffer 3<CR>')
+             vim.keymap.set('n', '<Leader>4', '<CMD>BufferLineGoToBuffer 4<CR>')
+             vim.keymap.set('n', '<Leader>5', '<CMD>BufferLineGoToBuffer 5<CR>')
+             vim.keymap.set('n', '<Leader>6', '<CMD>BufferLineGoToBuffer 6<CR>')
+             vim.keymap.set('n', '<Leader>7', '<CMD>BufferLineGoToBuffer 7<CR>')
+             vim.keymap.set('n', '<Leader>8', '<CMD>BufferLineGoToBuffer 8<CR>')
+             vim.keymap.set('n', '<Leader>9', '<CMD>BufferLineGoToBuffer 9<CR>')
          end
      },
 })
