@@ -1,0 +1,21 @@
+services:
+  gp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILDPLATFORM=linux/arm64
+    platform: linux/arm64
+    container_name: gp
+    volumes:
+      - ~/repo/cloudberry/:/root/cloudberry
+      - ~/repo/gpdb//:/root/gpdb
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    privileged: true
+    entrypoint: ["/bin/sh", "-c", "/usr/sbin/sshd -D"]

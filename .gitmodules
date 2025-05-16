@@ -1,0 +1,3 @@
+[submodule "kitty/grab"]
+	path = kitty/grab
+	url = https://github.com/yurikhan/kitty_grab.git

@@ -398,7 +398,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            -- vim.lsp.inlay_hint.enable()
+            vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -642,8 +642,7 @@ require("lazy").setup({
     {
         "yetone/avante.nvim",
         event = "VeryLazy",
-        lazy = false,
-        version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+        version = false,
         opts = {
             provider = "copilot",
             auto_suggestions_provider = "copilot",
@@ -657,7 +656,7 @@ require("lazy").setup({
                 max_tokens = 4096,
             },
             windows = {
-                position = "left",
+                position = "right",
                 width = 25,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
@@ -668,30 +667,17 @@ require("lazy").setup({
                 },
             },
         },
-        build = "make BUILD_FROM_SOURCE=true",
+        build = "make",
         dependencies = {
+            "nvim-treesitter/nvim-treesitter",
             "stevearc/dressing.nvim",
             "nvim-lua/plenary.nvim",
             "MunifTanjim/nui.nvim",
-            --- The below dependencies are optional,
-            "hrsh7th/nvim-cmp",
+            "nvim-telescope/telescope.nvim",
             "echasnovski/mini.icons",
             "zbirenbaum/copilot.lua",
-            {
-                "HakonHarnes/img-clip.nvim",
-                event = "VeryLazy",
-                opts = {
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                    },
-                },
-            },
         },
-        vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
+       vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
     },
     -- Dap
     {
@@ -718,7 +704,7 @@ require("lazy").setup({
                     type = "codelldb",
                     request = "launch",
                     program = function()
-                      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+                      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/datafusion-cli', 'file')
                     end,
                     cwd = '${workspaceFolder}',
                     stopOnEntry = false,
@@ -762,13 +748,13 @@ require("lazy").setup({
                layouts = {
                     {
                         elements = {
-                            { id = "scopes", size = 0.5 },
+                            { id = "scopes", size = 0.35 },
                             { id = "breakpoints", size = 0.15 },
-                            { id = "console", size = 0.2 },
                             { id = "stacks", size = 0.15  },
+                            { id = "console", size = 0.35 },
                         },
-                        position = "right",
-                        size = 0.25,
+                        position = "left",
+                        size = 0.3,
                     },
                 },
             })
@@ -797,6 +783,7 @@ require("lazy").setup({
                 require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
             end, opt)
             keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+            keymap('t', '<C-[>', [[<C-\><C-n>]], { noremap = true, silent = true })
         end,
     },
     {
@@ -807,33 +794,32 @@ require("lazy").setup({
              require('bufferline').setup({
                  options = {
                      numbers = "none",
-                     max_name_length = 15,
-                     tab_size = 15,
+                     max_name_length = 6,
+                     tab_size = 6,
                      show_modified_icons = false,
                      show_buffer_icons = false,
                      show_buffer_close_icons = false,
                      show_close_icon = false,
-                     show_tab_indicators = false,
                      show_duplicate_prefix = false,
                      separator_style = "thin",
                  },
              })
  
              vim.opt.termguicolors = true
-             vim.keymap.set('n', '<Leader>o', '<CMD>BufferLineCycleNext<CR>')
-             vim.keymap.set('n', '<Leader>i', '<CMD>BufferLineCyclePrev<CR>')
-             vim.keymap.set('n', '<Leader>mo', '<CMD>BufferLineMoveNext<CR>')
-             vim.keymap.set('n', '<Leader>mi', '<CMD>BufferLineMovePrev<CR>')
-             vim.keymap.set('n', '<Leader>mp', '<CMD>BufferLineTogglePin<CR>')
-             vim.keymap.set('n', '<Leader>1', '<CMD>BufferLineGoToBuffer 1<CR>')
-             vim.keymap.set('n', '<Leader>2', '<CMD>BufferLineGoToBuffer 2<CR>')
-             vim.keymap.set('n', '<Leader>3', '<CMD>BufferLineGoToBuffer 3<CR>')
-             vim.keymap.set('n', '<Leader>4', '<CMD>BufferLineGoToBuffer 4<CR>')
-             vim.keymap.set('n', '<Leader>5', '<CMD>BufferLineGoToBuffer 5<CR>')
-             vim.keymap.set('n', '<Leader>6', '<CMD>BufferLineGoToBuffer 6<CR>')
-             vim.keymap.set('n', '<Leader>7', '<CMD>BufferLineGoToBuffer 7<CR>')
-             vim.keymap.set('n', '<Leader>8', '<CMD>BufferLineGoToBuffer 8<CR>')
-             vim.keymap.set('n', '<Leader>9', '<CMD>BufferLineGoToBuffer 9<CR>')
+             vim.keymap.set('n', '<Leader>1', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>2', ':BufferLineGoToBuffer 2<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>3', ':BufferLineGoToBuffer 3<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>4', ':BufferLineGoToBuffer 4<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>5', ':BufferLineGoToBuffer 5<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>6', ':BufferLineGoToBuffer 6<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>7', ':BufferLineGoToBuffer 7<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>8', ':BufferLineGoToBuffer 8<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>9', ':BufferLineGoToBuffer 9<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>o', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>i', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<Leader>bp', ':BufferLineTogglePin<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<leader>bs', ':BufferLinePick<CR>', { noremap = true, silent = true })
+             vim.keymap.set('n', '<leader>bc', ':BufferLinePickClose<CR>', { noremap = true, silent = true })
          end
      },
 })
