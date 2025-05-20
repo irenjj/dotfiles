@@ -1,10 +1,7 @@
-# 基础镜像，指定使用arm64架构(适用于M1芯片)
 FROM --platform=linux/arm64 ubuntu:20.04
 
-# 避免交互式提示
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 安装基本工具和依赖
 RUN apt-get update && apt-get install -y \
     git \
     wget \
@@ -52,17 +49,23 @@ RUN apt-get update && apt-get install -y \
 	python3-pygresql \
 	python3-yaml \
 	zlib1g-dev \
+    bear \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sudo apt-get install iproute2
+RUN sudo apt-get install rsync
 
 RUN pip3 install conan
 
 RUN sudo sysctl -p
 
-# 创建工作目录并设置权限
-WORKDIR /root/
+RUN groupadd -g 1001 gpadmin
+RUN useradd -r -m -s /bin/bash -u 1000 -g 1001 gpadmin
 
-# 切换到非root用户
+
+WORKDIR /home/gpadmin/
+
 USER root
 
 RUN echo 'kernel.yama.ptrace_scope = 0' > /etc/sysctl.d/10-ptrace.conf

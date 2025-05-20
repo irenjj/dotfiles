@@ -8,8 +8,8 @@ services:
     platform: linux/arm64
     container_name: gp
     volumes:
-      - ~/repo/cloudberry/:/root/cloudberry
-      - ~/repo/gpdb//:/root/gpdb
+      - ~/repo/cloudberry/:/home/gpadmin/cloudberry
+      - ~/repo/gpdb//:/home/gpadmin/gpdb
     tty: true
     stdin_open: true
     command: /bin/bash

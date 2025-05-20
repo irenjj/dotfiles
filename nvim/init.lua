@@ -143,7 +143,9 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
 vim.keymap.set("n", "<C-=>", ":vertical resize +5<CR>", opt)
-vim.keymap.set("n", "<C-->", ":resize +5<CR>", opt)
+vim.keymap.set("n", "<C-->", ":vertical resize -5<CR>", opt)
+vim.keymap.set("n", "<Leader>=", ":resize +5<CR>", opt)
+vim.keymap.set("n", "<Leader>-", ":resize -5<CR>", opt)
 
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
@@ -155,9 +157,6 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 -- Un-highlight last search result
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
-
--- Wrap or unwrap line
-vim.keymap.set('n', '<leader>tw', ':set wrap!<CR>')
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -197,7 +196,6 @@ require("lazy").setup({
                     colors.green1 = "#871094"
                     colors.fg = "#555555"
                 end,
-
                 on_highlights = function(hl, _)
                     hl["@keyword"] = { fg = "#785201", bold = true }
                     hl["@keyword.function"] = { fg = "#785201", bold = true }
@@ -209,10 +207,13 @@ require("lazy").setup({
                     hl["@variable.builtin"] = { fg = "#c15200" }
                     hl["Type"] = { fg = "#c15200" }
                     hl["Special"] = { fg = "#c15200" }
+
                     hl["@variable.member"] = { fg = "#871094" }
                     hl["@variable.parameter.builtin"] = { fg = "#871094" }
+
                     hl["Function"] = { fg = "#043abd" }
                     hl["@constructor"] = { fg = "#043abd" }
+
                     hl["@variable.parameter"] = { fg = "#555555" }
                     hl["@variable"] = { fg = "#555555" }
                     hl["@punctuation.bracket"] = { fg = "#555555" }
@@ -375,8 +376,7 @@ require("lazy").setup({
                     map('n', '<leader>hd', gitsigns.diffthis)
                     map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
 
-                    map('n', '<leader>td', gitsigns.toggle_deleted)
-                    map('n', '<leader>tc', gitsigns.toggle_current_line_blame)
+                    map('n', '<leader>hc', gitsigns.toggle_current_line_blame)
                 end
             })
         end,
@@ -398,7 +398,7 @@ require("lazy").setup({
                 { border = 'rounded' }
             )
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -535,7 +535,7 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
-                        vim.keymap.set("n", "<leader>lb", ":Cargo build", opt)
+                        vim.keymap.set("n", "<leader>lb", ":Cargo build -p datafusion-cli", opt)
 
                         -- None of this semantics tokens business.
                         -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
@@ -565,20 +565,6 @@ require("lazy").setup({
                 },
             }
         end
-    },
-    {
-        "ray-x/go.nvim",
-        dependencies = {
-            "ray-x/guihua.lua",
-            "neovim/nvim-lspconfig",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        config = function()
-            require("go").setup()
-        end,
-        event = {"CmdlineEnter"},
-        ft = {"go", 'gomod'},
-        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     },
 
     -- Tools
@@ -625,7 +611,7 @@ require("lazy").setup({
             -- default: 1
             vim.g.mkdp_auto_close = 0
             vim.g.mkdp_filetypes = { "markdown" }
-            vim.keymap.set("n", "<Leader>tm", ":MarkdownPreview<CR>", opt)
+            vim.keymap.set("n", "<Leader>mp", ":MarkdownPreview<CR>", opt)
         end,
         ft = { "markdown" },
     },
@@ -642,22 +628,19 @@ require("lazy").setup({
     {
         "yetone/avante.nvim",
         event = "VeryLazy",
+        commit = "04336913b32f66f45b20a6ba2f033dd742f04374",
         version = false,
         opts = {
             provider = "copilot",
             auto_suggestions_provider = "copilot",
             copilot = {
-                endpoint = "https://api.githubcopilot.com",
                 model = "claude-3.5-sonnet",
-                proxy = nil, -- [protocol://]host[:port] Use this proxy
-                allow_insecure = false, -- Allow insecure server connections
-                timeout = 30000, -- Timeout in milliseconds
-                temperature = 0,
-                max_tokens = 4096,
+                temperature = 1,
+                max_tokens = 20000,
             },
             windows = {
-                position = "right",
-                width = 25,
+                position = "left",
+                width = 20,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
             },
@@ -677,7 +660,7 @@ require("lazy").setup({
             "echasnovski/mini.icons",
             "zbirenbaum/copilot.lua",
         },
-       vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
+        vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
     },
     -- Dap
     {
@@ -730,20 +713,10 @@ require("lazy").setup({
             vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
             vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpointCondition' })
             vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
-            -- window
-            vim.api.nvim_set_hl(0, "DapUIScope", { fg = "#785201", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIType", { fg = "#c15200" })
-            vim.api.nvim_set_hl(0, "DapUIValue", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIVariable", { fg = "#871094" })
-            vim.api.nvim_set_hl(0, "DapUIModifiedValue", { fg = "#227a00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIDecoration", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIThread", { fg = "#785201" })
-            vim.api.nvim_set_hl(0, "DapUIStoppedThread", { fg = "#e89f00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUIFrameName", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUICurrentFrameName", { fg = "#227a00", bold = true })
-            vim.api.nvim_set_hl(0, "DapUISource", { fg = "#043abd" })
-            vim.api.nvim_set_hl(0, "DapUILineNumber", { fg = "#555555" })
-            vim.api.nvim_set_hl(0, "DapUIBreakpointsPath", { fg = "#555555" })
+            vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#cc0000' })
+            vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#cc0000' })
+            vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#555555' })
+
             dapui.setup({
                layouts = {
                     {
@@ -753,8 +726,8 @@ require("lazy").setup({
                             { id = "stacks", size = 0.15  },
                             { id = "console", size = 0.35 },
                         },
-                        position = "left",
-                        size = 0.3,
+                        position = "right",
+                        size = 0.25,
                     },
                 },
             })
@@ -787,41 +760,57 @@ require("lazy").setup({
         end,
     },
     {
-         'akinsho/bufferline.nvim',
-         version = "*",
-         dependencies = 'nvim-tree/nvim-web-devicons',
-         config = function()
-             require('bufferline').setup({
-                 options = {
-                     numbers = "none",
-                     max_name_length = 6,
-                     tab_size = 6,
-                     show_modified_icons = false,
-                     show_buffer_icons = false,
-                     show_buffer_close_icons = false,
-                     show_close_icon = false,
-                     show_duplicate_prefix = false,
-                     separator_style = "thin",
-                 },
-             })
+        'akinsho/bufferline.nvim',
+        version = "*",
+        dependencies = 'nvim-tree/nvim-web-devicons',
+        config = function()
+            require('bufferline').setup({
+                options = {
+                    numbers = "none",
+                    max_name_length = 6,
+                    tab_size = 6,
+                    show_modified_icons = false,
+                    show_buffer_icons = false,
+                    show_buffer_close_icons = false,
+                    show_close_icon = false,
+                    show_duplicate_prefix = false,
+                    separator_style = "thin",
+                },
+            })
  
-             vim.opt.termguicolors = true
-             vim.keymap.set('n', '<Leader>1', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>2', ':BufferLineGoToBuffer 2<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>3', ':BufferLineGoToBuffer 3<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>4', ':BufferLineGoToBuffer 4<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>5', ':BufferLineGoToBuffer 5<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>6', ':BufferLineGoToBuffer 6<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>7', ':BufferLineGoToBuffer 7<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>8', ':BufferLineGoToBuffer 8<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>9', ':BufferLineGoToBuffer 9<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>o', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>i', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<Leader>bp', ':BufferLineTogglePin<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<leader>bs', ':BufferLinePick<CR>', { noremap = true, silent = true })
-             vim.keymap.set('n', '<leader>bc', ':BufferLinePickClose<CR>', { noremap = true, silent = true })
-         end
-     },
+            vim.opt.termguicolors = true
+            vim.keymap.set('n', '<Leader>1', ':BufferLineGoToBuffer 1<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>2', ':BufferLineGoToBuffer 2<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>3', ':BufferLineGoToBuffer 3<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>4', ':BufferLineGoToBuffer 4<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>5', ':BufferLineGoToBuffer 5<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>6', ':BufferLineGoToBuffer 6<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>7', ':BufferLineGoToBuffer 7<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>8', ':BufferLineGoToBuffer 8<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>9', ':BufferLineGoToBuffer 9<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>o', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>i', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<Leader>bp', ':BufferLineTogglePin<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<leader>bs', ':BufferLinePick<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<leader>c', ':BufferLinePickClose<CR>', { noremap = true, silent = true })
+        end
+    },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+        },
+        config = function()
+            require("neotest").setup({
+                adapters = {
+                    require('rustaceanvim.neotest')
+                },
+            })
+            vim.keymap.set("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opt)
+        end,
+    },
 })
 
 -- dark
