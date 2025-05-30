@@ -109,7 +109,7 @@ vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-Cursor,r-cr-o:hor20"
 vim.cmd [[
   augroup CursorColor
     autocmd!
-    autocmd InsertEnter * highlight Cursor gui=NONE guifg=white guibg=green
+    autocmd InsertEnter * highlight Cursor gui=NONE guifg=white guibg=orange
     autocmd InsertLeave * highlight Cursor gui=NONE guifg=NONE guibg=NONE
   augroup END
 ]]
@@ -222,9 +222,6 @@ require("lazy").setup({
 
                     hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
                     hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
-                    hl["MiniFilesFile"] = { fg = "#555555" }
-                    hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
-                    hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
 
                     hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
                     hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
@@ -619,7 +616,6 @@ require("lazy").setup({
     {
         "yetone/avante.nvim",
         event = "VeryLazy",
-        commit = "04336913b32f66f45b20a6ba2f033dd742f04374",
         version = false,
         opts = {
             provider = "copilot",
@@ -630,7 +626,7 @@ require("lazy").setup({
                 max_tokens = 20000,
             },
             windows = {
-                position = "left",
+                position = "right",
                 width = 20,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
@@ -716,7 +712,7 @@ require("lazy").setup({
                             { id = "stacks", size = 0.15  },
                             { id = "console", size = 0.35 },
                         },
-                        position = "right",
+                        position = "left",
                         size = 0.25,
                     },
                 },
