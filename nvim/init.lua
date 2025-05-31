@@ -227,7 +227,7 @@ require("lazy").setup({
                     hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
                 end,
             })
-            vim.cmd.colorscheme("tokyonight-day")
+            vim.cmd.colorscheme("tokyonight")
         end,
     },
     {
@@ -447,63 +447,25 @@ require("lazy").setup({
         end,
     },
     {
-        "hrsh7th/nvim-cmp",
-        -- load cmp on InsertEnter
-        event = "InsertEnter",
-        -- these dependencies will only be loaded when cmp loads
-        -- dependencies are always lazy-loaded unless specified otherwise
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "onsails/lspkind.nvim",
+        'saghen/blink.cmp',
+        event = { 'BufReadPost', 'BufNewFile' },
+        version = '1.*',
+        opts = {
+            keymap = {
+                preset = 'enter',
+                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+            },
+            completion = {
+                documentation = {
+                    auto_show = true,
+                    window = {
+                        border = "rounded",
+                    },
+                },
+                ghost_text = { enabled = true }
+            },
         },
-        config = function()
-            local cmp = require("cmp")
-            local lspkind = require('lspkind')
-            cmp.setup({
-                formatting = {
-                    format = lspkind.cmp_format({
-                        with_text = true, -- do not show text alongside icons
-                        maxwidth = 30,
-                        before = function(entry, vim_item)
-                            local m = vim_item.menu and vim_item.menu or ""
-                            if #m > 30 then
-                                vim_item.menu = string.sub(m, 1, 20) .. "..."
-                            end
-                            return vim_item
-                        end,
-                    }),
-                },
-                mapping = cmp.mapping.preset.insert({
-                    -- Accept currently selected item.
-                    -- Set `select` to `false` to only confirm explicitly selected items.
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                }),
-                sources = cmp.config.sources{
-                    { name = "nvim_lsp" },
-                    { name = "path" },
-                },
-                experimental = {
-                    ghost_text = true,
-                },
-            })
-
-            -- Enable completing paths in :
-            cmp.setup.cmdline(":", {
-                sources = cmp.config.sources({
-                    { name = "path" },
-                }),
-            })
-
-            cmp.setup {
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-            }
-        end,
     },
     {
         'mrcjkb/rustaceanvim',
