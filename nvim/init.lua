@@ -196,6 +196,8 @@ require("lazy").setup({
                     colors.fg = "#555555"
                 end,
                 on_highlights = function(hl, _)
+                    hl["Comment"] = { fg = "#888888", italic = true }
+
                     hl["@keyword"] = { fg = "#785201", bold = true }
                     hl["@keyword.function"] = { fg = "#785201", bold = true }
                     hl["Boolean"] = { fg = "#785201", bold = true }
@@ -206,6 +208,7 @@ require("lazy").setup({
                     hl["@variable.builtin"] = { fg = "#c15200" }
                     hl["Type"] = { fg = "#c15200" }
                     hl["Special"] = { fg = "#c15200" }
+                    hl["Constant"] = { fg = "#188092" }
 
                     hl["@variable.member"] = { fg = "#871094" }
                     hl["@variable.parameter.builtin"] = { fg = "#871094" }
@@ -260,7 +263,7 @@ require("lazy").setup({
                 relative = "win",
             },
         },
-        vim.keymap.set("n", "<Leader>u", ":AerialToggle<CR>")
+        vim.keymap.set("n", "<Leader>o", ":AerialToggle<CR>")
     },
     -- Telescope
     {
@@ -394,19 +397,11 @@ require("lazy").setup({
             -- Setup language servers.
             local lspconfig = require("lspconfig")
 
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-                vim.lsp.handlers.hover,
-                {border = 'rounded'}
-            )
-            vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-                vim.lsp.handlers.signature_help,
-                { border = 'rounded' }
-            )
-            -- vim.lsp.inlay_hint.enable()
+            vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
-            vim.keymap.set("n", "<Leader>y", toggle_inlay_hints)
+            vim.keymap.set("n", "<Leader>i", toggle_inlay_hints)
 
             -- cpp
             lspconfig.clangd.setup({
@@ -435,8 +430,7 @@ require("lazy").setup({
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                    -- vim.keymap.set('n', '<leader>lp', vim.diagnostic.goto_prev)
-                    -- vim.keymap.set('n', '<leader>ln', vim.diagnostic.goto_next)
+                   vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
                     vim.keymap.set('n', '<leader>lf', function()
@@ -488,9 +482,6 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         -- vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build -p datafusion-cli", opt)
-                        vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
-                        vim.keymap.set('n', 'g]', vim.diagnostic.goto_next)
-                        vim.keymap.set('n', 'g[', vim.diagnostic.goto_prev)
 
                         -- None of this semantics tokens business.
                         -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
