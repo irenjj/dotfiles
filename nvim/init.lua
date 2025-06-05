@@ -208,7 +208,7 @@ require("lazy").setup({
                     hl["@variable.builtin"] = { fg = "#c15200" }
                     hl["Type"] = { fg = "#c15200" }
                     hl["Special"] = { fg = "#c15200" }
-                    hl["Constant"] = { fg = "#188092" }
+                    hl["Constant"] = { fg = "#c15200" }
 
                     hl["@variable.member"] = { fg = "#871094" }
                     hl["@variable.parameter.builtin"] = { fg = "#871094" }
@@ -397,7 +397,7 @@ require("lazy").setup({
             -- Setup language servers.
             local lspconfig = require("lspconfig")
 
-            vim.lsp.inlay_hint.enable()
+            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -479,6 +479,7 @@ require("lazy").setup({
                     on_attach = function(client, bufnr)
                         vim.keymap.set("n", "<leader>lm", ":RustLsp expandMacro<CR>", opt)
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
+                        vim.keymap.set("n", "<leader>ld", ":RustLsp debug<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
                         -- vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build -p datafusion-cli", opt)
@@ -573,14 +574,18 @@ require("lazy").setup({
         opts = {
             provider = "copilot",
             auto_suggestions_provider = "copilot",
-            copilot = {
-                model = "claude-3.5-sonnet",
-                temperature = 1,
-                max_tokens = 20000,
+            providers = {
+                copilot = {
+                    model = "claude-3.5-sonnet",
+                    extra_request_body = {
+                        temperature = 1,
+                        max_tokens = 20000,
+                    }
+                },
             },
             windows = {
                 position = "right",
-                width = 20,
+                width = 25,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
             },
@@ -696,22 +701,6 @@ require("lazy").setup({
             end, opt)
             keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
             keymap('t', '<C-[>', [[<C-\><C-n>]], { noremap = true, silent = true })
-        end,
-    },
-    {
-        "nvim-neotest/neotest",
-        dependencies = {
-            "nvim-neotest/nvim-nio",
-            "nvim-lua/plenary.nvim",
-            "antoinemadec/FixCursorHold.nvim",
-        },
-        config = function()
-            require("neotest").setup({
-                adapters = {
-                    require('rustaceanvim.neotest')
-                },
-            })
-            vim.keymap.set("n", "<Leader>dt", ":lua require('neotest').run.run({strategy = 'dap'})<CR>", opt)
         end,
     },
     {
