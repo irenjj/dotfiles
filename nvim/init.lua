@@ -3,6 +3,8 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.o.background = 'light'
+
 -- Enable 24-bit colour
 vim.opt.termguicolors = true
 
@@ -178,58 +180,93 @@ require("lazy").setup({
         lazy = false,
         priority = 1000,
         config = function()
-            require("tokyonight").setup({
-                on_colors = function(colors)
-                    colors.bg = "#ffffff"
-                    colors.dark = "#ffffff"
-                    colors.bg_float = "#ffffff"
-                    colors.popup = "#ffffff"
-                    colors.bg_sidebar = "#ffffff"
-                    colors.bg_statusline = "#ffffff"
+            if vim.o.background == "light" then
+                require("tokyonight").setup({
+                    on_colors = function(colors)
+                        colors.bg = "#ffffff"
+                        colors.dark = "#ffffff"
+                        colors.bg_float = "#ffffff"
+                        colors.popup = "#ffffff"
+                        colors.bg_sidebar = "#ffffff"
+                        colors.bg_statusline = "#ffffff"
 
-                    colors.bg_highlight = "#bbbbbb"
-                    colors.bg_visual = "#eeeeee"
-                    colors.fg_gutter = "#cccccc"
-                    colors.bg_search = "#e0e0e0"
+                        colors.bg_highlight = "#bbbbbb"
+                        colors.bg_visual = "#eeeeee"
+                        colors.fg_gutter = "#cccccc"
+                        colors.bg_search = "#e0e0e0"
 
-                    colors.green1 = "#871094"
-                    colors.fg = "#555555"
-                end,
-                on_highlights = function(hl, _)
-                    hl["Comment"] = { fg = "#888888", italic = true }
+                        colors.green1 = "#871094"
+                        colors.fg = "#555555"
+                    end,
+                    on_highlights = function(hl, _)
+                        hl["Comment"] = { fg = "#888888", italic = true }
 
-                    hl["@keyword"] = { fg = "#785201", bold = true }
-                    hl["@keyword.function"] = { fg = "#785201", bold = true }
-                    hl["Boolean"] = { fg = "#785201", bold = true }
-                    hl["Conditional"] = { fg = "#785201", bold = true }
-                    hl["Repeat"] = { fg = "#785201", bold = true }
-                    hl["Exception"] = { fg = "#785201", bold = true }
+                        hl["@keyword"] = { fg = "#785201", bold = true }
+                        hl["@keyword.function"] = { fg = "#785201", bold = true }
+                        hl["Boolean"] = { fg = "#785201", bold = true }
+                        hl["Conditional"] = { fg = "#785201", bold = true }
+                        hl["Repeat"] = { fg = "#785201", bold = true }
+                        hl["Exception"] = { fg = "#785201", bold = true }
 
-                    hl["@variable.builtin"] = { fg = "#c15200" }
-                    hl["Type"] = { fg = "#c15200" }
-                    hl["Special"] = { fg = "#c15200" }
-                    hl["Constant"] = { fg = "#c15200" }
+                        hl["@variable.builtin"] = { fg = "#c15200" }
+                        hl["Type"] = { fg = "#c15200" }
+                        hl["Special"] = { fg = "#c15200" }
+                        hl["Constant"] = { fg = "#c15200" }
 
-                    hl["@variable.member"] = { fg = "#871094" }
-                    hl["@variable.parameter.builtin"] = { fg = "#871094" }
+                        hl["@variable.member"] = { fg = "#871094" }
+                        hl["@variable.parameter.builtin"] = { fg = "#871094" }
 
-                    hl["Function"] = { fg = "#043abd" }
-                    hl["@constructor"] = { fg = "#043abd" }
+                        hl["Function"] = { fg = "#043abd" }
+                        hl["@constructor"] = { fg = "#043abd" }
 
-                    hl["@variable.parameter"] = { fg = "#555555" }
-                    hl["@variable"] = { fg = "#555555" }
-                    hl["@punctuation.bracket"] = { fg = "#555555" }
-                    hl["@operator"] = { fg = "#555555" }
+                        hl["@variable.parameter"] = { fg = "#555555" }
+                        hl["@variable"] = { fg = "#555555" }
+                        hl["@punctuation.bracket"] = { fg = "#555555" }
+                        hl["@operator"] = { fg = "#555555" }
 
-                    hl["Search"] = { fg = "", bg = "#e0e0e0" }
+                        hl["Search"] = { fg = "", bg = "#e0e0e0" }
 
-                    hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
-                    hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
+                        hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
+                        hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
 
-                    hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
-                    hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
-                end,
-            })
+                        hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
+                        hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
+                    end,
+                })
+            else
+                require("tokyonight").setup({
+                    on_colors = function(colors)
+                        colors.green1 = "#f093fa"
+                    end,
+                    on_highlights = function(hl, _)
+                        hl["@keyword"] = { fg = "#dba72e", bold = true }
+                        hl["@keyword.function"] = { fg = "#dba72e", bold = true }
+                        hl["Boolean"] = { fg = "#dba72e", bold = true }
+                        hl["Conditional"] = { fg = "#dba72e", bold = true }
+                        hl["Repeat"] = { fg = "#dba72e", bold = true }
+                        hl["Exception"] = { fg = "#dba72e", bold = true }
+
+                        hl["@variable.builtin"] = { fg = "#38ffdc" }
+                        hl["Type"] = { fg = "#38ffdc" }
+                        hl["Special"] = { fg = "#38ffdc" }
+
+                        hl["@variable.member"] = { fg = "#fea6ff" }
+                        hl["@variable.parameter.builtin"] = { fg = "#fea6ff" }
+
+                        hl["Function"] = { fg = "#26d4ff" }
+                        hl["@constructor"] = { fg = "#26d4ff" }
+
+                        hl["@variable.parameter"] = { fg = "#ebefff" }
+                        hl["@variable"] = { fg = "#ebefff" }
+                        hl["@punctuation.bracket"] = { fg = "#ebefff" }
+                        hl["@operator"] = { fg = "#ebefff" }
+
+                        hl["LspInlayHint"] = { fg = "#5c5c5c" }
+
+                        hl["Comment"] = { fg = "#aeb6eb", italic = true }
+                    end,
+                })
+            end
             vim.cmd.colorscheme("tokyonight")
         end,
     },
@@ -249,7 +286,6 @@ require("lazy").setup({
         'stevearc/aerial.nvim',
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons"
         },
         opts = {
             layout = {
@@ -270,7 +306,8 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         branch = '0.1.x',
         dependencies = {
-            "nvim-lua/plenary.nvim",
+            -- "nvim-lua/plenary.nvim",
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
         },
         config = function()
             local telescope = require("telescope")
@@ -280,9 +317,6 @@ require("lazy").setup({
                     layout_strategy = "vertical",
                     preview = false,
                     mappings = {
-                        i = {
-                            -- ["<Esc>"] = actions.close, -- close on single <esc> press (instead of two)
-                        },
                         n = {
                             ["d"] = actions.delete_buffer,
                             ["q"] = actions.close,
@@ -290,33 +324,21 @@ require("lazy").setup({
                     },
                 },
                 pickers = {
-                    git_files = { preview = true },
-                    live_grep = { preview = true },
-                    buffers = {
-                        preview = true,
-                        sort_mru = true,
-                    },
+                    buffers = { sort_mru = true },
                 },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    }
+                }
             })
 
             vim.keymap.set("n", "<Leader>k", require("telescope.builtin").git_files)
             vim.keymap.set("n", "f", require("telescope.builtin").buffers)
             vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes'))<cr>", opts)
-
-            vim.keymap.set('n', '<leader>g', function()
-                vim.ui.input({ prompt = "Search directories (comma separated): " }, function(input)
-                    if input then
-                        local dirs = vim.split(input, ',', { trimempty = true })
-                        for i, dir in ipairs(dirs) do
-                            dirs[i] = vim.fn.trim(dir)
-                        end
-
-                        require('telescope.builtin').live_grep({
-                            search_dirs = dirs
-                        })
-                    end
-                end)
-            end)
 
             vim.keymap.set('n', '<Leader>h', function()
                 vim.ui.input({ prompt = "Grep arguments: " }, function(input)
@@ -334,9 +356,10 @@ require("lazy").setup({
                     end
                 end)
             end)
+
+            require('telescope').load_extension('fzf')
         end,
     },
-
     -- Git
     {
         "lewis6991/gitsigns.nvim",
@@ -481,7 +504,6 @@ require("lazy").setup({
                         vim.keymap.set("n", "<leader>lt", ":RustLsp testables<CR>", opt)
                         vim.keymap.set("n", "<leader>ld", ":RustLsp debug<CR>", opt)
                         vim.keymap.set("n", "<leader>lp", ":RustLsp parentModule<CR>", opt)
-                        -- vim.keymap.set("n", "<leader>le", ":RustLsp explainError<CR>", opt)
                         vim.keymap.set("n", "<leader>lb", ":Cargo build -p datafusion-cli", opt)
 
                         -- None of this semantics tokens business.
@@ -518,14 +540,9 @@ require("lazy").setup({
     {
         'echasnovski/mini.nvim',
         config = function()
-            require('mini.bracketed').setup()
-            require('mini.indentscope').setup({
-                draw = { animation = function() return 0 end },
-                symbol ='│'
+            require("mini.indentscope").setup({
+                draw = { animation = require("mini.indentscope").gen_animation.none() }
             })
-            require('mini.icons').setup()
-            require('mini.misc').setup()
-            MiniMisc.setup_auto_root()
             require('mini.pairs').setup()
         end
     },
@@ -584,7 +601,7 @@ require("lazy").setup({
                 },
             },
             windows = {
-                position = "right",
+                position = "left",
                 width = 25,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
@@ -601,10 +618,16 @@ require("lazy").setup({
             "stevearc/dressing.nvim",
             "MunifTanjim/nui.nvim",
             "nvim-telescope/telescope.nvim",
-            "echasnovski/mini.icons",
             "zbirenbaum/copilot.lua",
         },
         vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
+    },
+    {
+        "stevearc/dressing.nvim",
+        opts = {},
+        config = function()
+            require('dressing').setup({ select = { telescope = { min_width = 0.9 } } })
+        end
     },
     -- Dap
     {
@@ -705,9 +728,6 @@ require("lazy").setup({
     },
     {
         "nvim-tree/nvim-tree.lua",
-        dependencies = {
-            "nvim-tree/nvim-web-devicons"
-        },
         config = function()
             require("nvim-tree").setup({
                 view = {
@@ -741,27 +761,29 @@ require("lazy").setup({
     },
 })
 
--- dark
-vim.g.terminal_color_0 = "#000000"
-vim.g.terminal_color_8 = "#545753"
--- light
-vim.g.terminal_color_7 = "#555555"
-vim.g.terminal_color_15 = "#555555"
--- red
-vim.g.terminal_color_1 = "#cc0000"
-vim.g.terminal_color_9 = "#ef2828"
--- green
-vim.g.terminal_color_2 = "#227a00"
-vim.g.terminal_color_10 = "#3dcc06"
--- yellow
-vim.g.terminal_color_3 = "#e89f00"
-vim.g.terminal_color_11 = "#d6d600"
--- blue
-vim.g.terminal_color_4 = "#043abd"
-vim.g.terminal_color_12 = "#157ae6"
--- magenta
-vim.g.terminal_color_5 = "#8f008c"
-vim.g.terminal_color_13 = "#5a32a3"
--- cyan
-vim.g.terminal_color_6 = "#05989a"
-vim.g.terminal_color_14 = "#34e2e2"
+if vim.o.background == "light" then
+    -- dark
+    vim.g.terminal_color_0 = "#000000"
+    vim.g.terminal_color_8 = "#545753"
+    -- light
+    vim.g.terminal_color_7 = "#555555"
+    vim.g.terminal_color_15 = "#555555"
+    -- red
+    vim.g.terminal_color_1 = "#cc0000"
+    vim.g.terminal_color_9 = "#ef2828"
+    -- green
+    vim.g.terminal_color_2 = "#227a00"
+    vim.g.terminal_color_10 = "#3dcc06"
+    -- yellow
+    vim.g.terminal_color_3 = "#e89f00"
+    vim.g.terminal_color_11 = "#d6d600"
+    -- blue
+    vim.g.terminal_color_4 = "#043abd"
+    vim.g.terminal_color_12 = "#157ae6"
+    -- magenta
+    vim.g.terminal_color_5 = "#8f008c"
+    vim.g.terminal_color_13 = "#5a32a3"
+    -- cyan
+    vim.g.terminal_color_6 = "#05989a"
+    vim.g.terminal_color_14 = "#34e2e2"
+end
