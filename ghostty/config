@@ -45,7 +45,7 @@ keybind = cmd+f=text:\x06c
 
 ## layout
 # font
-font-size = 14
+font-size = 15
 font-family = "JetBrains Mono NL"
 font-style = "SemiBold"
 font-style-bold = "Bold"
@@ -54,36 +54,36 @@ font-style-italic = "SemiBold Italic"
 adjust-cell-width = -3
 adjust-cell-height = 5
 
-# # theme
-# # black
-# palette = 0=#000000
-# palette = 8=#545753
-# # red
-# palette = 1=#cc0000
-# palette = 9=#ef2828
-# # green
-# palette = 2=#227a00
-# palette = 10=#3dcc06
-# # yellow
-# palette = 3=#e89f00
-# palette = 11=#d6d600
-# # blue
-# palette = 4=#043abd
-# palette = 12=#157ae6
-# # magenta
-# palette = 5=#8f008c
-# palette = 13=#5a32a3
-# # cyan
-# palette = 6=#05989a
-# palette = 14=#34e2e2
-# # white
-# palette = 7=#d3d7cf
-# palette = 15=#ededec
-# 
-# background = ffffff
-# foreground = 000000
-# cursor-color = 000000
-# selection-background = 8d9091
-# selection-foreground = ffffff
+# theme
+# black
+palette = 0=#000000
+palette = 8=#545753
+# red
+palette = 1=#cc0000
+palette = 9=#ef2828
+# green
+palette = 2=#227a00
+palette = 10=#3dcc06
+# yellow
+palette = 3=#e89f00
+palette = 11=#d6d600
+# blue
+palette = 4=#043abd
+palette = 12=#157ae6
+# magenta
+palette = 5=#8f008c
+palette = 13=#5a32a3
+# cyan
+palette = 6=#05989a
+palette = 14=#34e2e2
+# white
+palette = 7=#d3d7cf
+palette = 15=#ededec
 
-theme = tokyonight_moon
+background = ffffff
+foreground = 000000
+cursor-color = 000000
+selection-background = 8d9091
+selection-foreground = ffffff
+
+# theme = tokyonight_moon

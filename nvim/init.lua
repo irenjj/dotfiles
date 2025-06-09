@@ -1,111 +1,36 @@
------------------------------- Options ------------------------------
--- Disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 vim.o.background = 'light'
 
--- Enable 24-bit colour
-vim.opt.termguicolors = true
-
--- Rebind leader key
+------------------------------ Options ------------------------------
+vim.opt.equalalways = false
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
--- System clipboard
 vim.o.clipboard = "unnamed"
-
--- Utf8
-vim.g.encoding = "UTF-8"
-vim.o.fileencoding = "utf-8"
-
--- Line number
 vim.wo.number = true
-
--- Highlight current line
 vim.wo.cursorline = false
-
--- Tab
 vim.o.tabstop = 4
-vim.bo.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftround = true
-
--- Replace tab with space
 vim.o.expandtab = true
-vim.bo.expandtab = true
-
--- Shift width
 vim.o.shiftwidth = 4
-vim.bo.shiftwidth = 4
-
--- Align
-vim.o.autoindent = true
-vim.bo.autoindent = true
-
--- Search
 vim.o.ignorecase = true
+vim.o.smartcase = true
 vim.o.smartindent = true
 vim.o.incsearch = true
-
-vim.wo.signcolumn = "yes"
-
--- Command height
 vim.o.cmdheight = 0
-
--- Auto reload when edited
 vim.o.autoread = true
-vim.bo.autoread = true
-
--- Line wrapping
 vim.wo.wrap = true
-
--- When the cursor is at the beginning or end of a line, <Left><Right> can jump to the next line
-vim.o.whichwrap = "<,>,[,]"
-
--- Allow hiding modified buffer
-vim.o.hidden = true
-
--- Mouse support
-vim.o.mouse = "a"
-
--- Forbide creating backup files
+vim.o.mouse = ""
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
-
--- Smaller updatetime
-vim.o.updatetime = 300
-
--- Wait for keyboard shortcut combo time
-vim.o.timeoutlen = 10000
-
--- Split window
+vim.o.list = true
+vim.o.shortmess = vim.o.shortmess .. "c"
+vim.o.signcolumn = "yes"
 vim.o.splitbelow = true
 vim.o.splitright = true
-
--- Display of invisible characters, showing only spaces as dots here
-vim.o.list = true
-vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
-
--- Enhanced autocomplete
-vim.o.wildmenu = true
-
--- Don't pass messages to |ins-completin menu|
-vim.o.shortmess = vim.o.shortmess .. "c"
-
--- Autocomplete displays up to 10 lines at most
-vim.o.pumheight = 10
 
 -- Code folding.
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.o.foldlevel = 99
-
--- Disable double click.
-vim.opt.mouse = ''
-
-vim.opt.equalalways = false
 
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-Cursor,r-cr-o:hor20"
 vim.cmd [[
@@ -121,7 +46,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
     group = 'IrreplaceableWindows',
     pattern = '*',
     callback = function()
-        local filetypes = { 'git', 'qf', 'aerial', 'Outline' }
+        local filetypes = { 'git', 'qf', 'aerial' }
         local buftypes = { 'nofile', 'terminal', 'quickfix' }
         if vim.tbl_contains(buftypes, vim.bo.buftype) and vim.tbl_contains(filetypes, vim.bo.filetype) then
             vim.cmd 'set winfixbuf'
@@ -158,6 +83,8 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 -- Un-highlight last search result
 vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
+
+vim.keymap.set("n", "<Leader>lg", ":vert Git blame -- %<CR>", opt)
 
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -282,6 +209,7 @@ require("lazy").setup({
             })
         end,
     },
+    -- outline
     {
         'stevearc/aerial.nvim',
         dependencies = {
@@ -306,7 +234,7 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         branch = '0.1.x',
         dependencies = {
-            -- "nvim-lua/plenary.nvim",
+            "nvim-lua/plenary.nvim",
             { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
         },
         config = function()
@@ -323,17 +251,7 @@ require("lazy").setup({
                         },
                     },
                 },
-                pickers = {
-                    buffers = { sort_mru = true },
-                },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    }
-                }
+                pickers = { buffers = { sort_mru = true } },
             })
 
             vim.keymap.set("n", "<Leader>k", require("telescope.builtin").git_files)
@@ -417,10 +335,8 @@ require("lazy").setup({
     {
         "neovim/nvim-lspconfig",
         config = function()
-            -- Setup language servers.
             local lspconfig = require("lspconfig")
 
-            -- vim.lsp.inlay_hint.enable()
             local function toggle_inlay_hints()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end
@@ -437,16 +353,11 @@ require("lazy").setup({
                 command = "set filetype=cpp"
             })
 
-            -- Use LspAttach autocommand to only map the following keys
-            -- after the language server attaches to the current buffer
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = vim.api.nvim_create_augroup("UserLspConfig", {}),
                 callback = function(ev)
-                    -- Enable completion triggered by <c-x><c-o>
                     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-                    -- Buffer local mappings.
-                    -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                     vim.keymap.set("n", "gl", vim.lsp.buf.declaration, opts)
@@ -540,10 +451,23 @@ require("lazy").setup({
     {
         'echasnovski/mini.nvim',
         config = function()
+            require('mini.pairs').setup()
+            require("mini.surround").setup()
             require("mini.indentscope").setup({
                 draw = { animation = require("mini.indentscope").gen_animation.none() }
             })
-            require('mini.pairs').setup()
+            require('mini.files').setup({
+                mappings = { go_in_plus  = '<CR>' },
+
+                vim.keymap.set('n', '<leader>j', function()
+                    local current_file = vim.api.nvim_buf_get_name(0)
+                    if current_file and current_file ~= '' then
+                        require('mini.files').open(current_file)
+                    else
+                        require('mini.files').open()
+                    end
+                end, { desc = 'open file' })
+            })
         end
     },
     {
@@ -565,9 +489,6 @@ require("lazy").setup({
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && yarn install",
         init = function()
-            -- set to 1, the nvim will auto close current preview window when changing
-            -- from Markdown buffer to another buffer
-            -- default: 1
             vim.g.mkdp_auto_close = 0
             vim.g.mkdp_filetypes = { "markdown" }
             vim.keymap.set("n", "<Leader>mp", ":MarkdownPreview<CR>", opt)
@@ -602,7 +523,7 @@ require("lazy").setup({
             },
             windows = {
                 position = "left",
-                width = 25,
+                width = 20,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
             },
@@ -619,6 +540,7 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim",
             "nvim-telescope/telescope.nvim",
             "zbirenbaum/copilot.lua",
+            "nvim-lua/plenary.nvim",
         },
         vim.keymap.set('n', '<C-;>', ':AvanteToggle<CR>'),
     },
@@ -682,19 +604,19 @@ require("lazy").setup({
             vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
             vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#cc0000' })
             vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#cc0000' })
-            vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#555555' })
+            vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#c9cc00' })
 
             dapui.setup({
                layouts = {
                     {
                         elements = {
                             { id = "scopes", size = 0.35 },
-                            { id = "breakpoints", size = 0.15 },
-                            { id = "stacks", size = 0.15  },
                             { id = "console", size = 0.35 },
+                            { id = "stacks", size = 0.15  },
+                            { id = "breakpoints", size = 0.15 },
                         },
                         position = "left",
-                        size = 0.25,
+                        size = 0.15,
                     },
                 },
             })
@@ -725,35 +647,6 @@ require("lazy").setup({
             keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
             keymap('t', '<C-[>', [[<C-\><C-n>]], { noremap = true, silent = true })
         end,
-    },
-    {
-        "nvim-tree/nvim-tree.lua",
-        config = function()
-            require("nvim-tree").setup({
-                view = {
-                    float = {
-                        enable = true,
-                        quit_on_focus_loss = true,
-                        open_win_config = {
-                            relative = "win",
-                            width = 50,
-                        },
-                    },
-                },
-                actions = {
-                    open_file = {
-                        quit_on_open = true,
-                        window_picker = {
-                             enable = false,
-                        },
-                    },
-                 },
-            })
-
-            vim.keymap.set('n', '<leader>j', function()
-                require('nvim-tree.api').tree.toggle({ find_file = true, focus = true })
-            end)
-        end
     },
     {
         "Pocco81/auto-save.nvim",
