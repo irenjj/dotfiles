@@ -6,6 +6,7 @@ vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 vim.g.mapleader = " "
 vim.o.clipboard = "unnamed"
 vim.wo.number = true
+vim.opt.relativenumber = true
 vim.wo.cursorline = false
 vim.o.tabstop = 4
 vim.o.expandtab = true
@@ -158,6 +159,9 @@ require("lazy").setup({
 
                         hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
                         hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
+
+                        hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
+                        hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
                     end,
                 })
             else
@@ -222,6 +226,7 @@ require("lazy").setup({
             },
             keymaps = {
                 ["o"] = "actions.jump",
+                ["<C-[>"] = "actions.close",
             },
             float = {
                 relative = "win",
@@ -453,6 +458,7 @@ require("lazy").setup({
         config = function()
             require('mini.pairs').setup()
             require("mini.surround").setup()
+            require("mini.jump2d").setup()
             require("mini.indentscope").setup({
                 draw = { animation = require("mini.indentscope").gen_animation.none() }
             })
@@ -518,12 +524,18 @@ require("lazy").setup({
                     extra_request_body = {
                         temperature = 1,
                         max_tokens = 20000,
+                    },
+                    disabled_tools = {
+                        "insert",
+                        "replace_in_file",
+                        "str_replace",
+                        "undo_edit",
                     }
                 },
             },
             windows = {
-                position = "left",
-                width = 20,
+                position = "right",
+                width = 15,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
             },
