@@ -195,6 +195,8 @@ require("lazy").setup({
                         hl["LspInlayHint"] = { fg = "#5c5c5c" }
 
                         hl["Comment"] = { fg = "#aeb6eb", italic = true }
+
+                        hl["MiniJump2dSpotUnique"] = { fg = "#ff007c", bold = true, nocombine = true }
                     end,
                 })
             end
