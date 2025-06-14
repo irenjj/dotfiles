@@ -1,5 +1,3 @@
-vim.o.background = 'light'
-
 ------------------------------ Options ------------------------------
 vim.opt.equalalways = false
 vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
@@ -108,98 +106,61 @@ require("lazy").setup({
         lazy = false,
         priority = 1000,
         config = function()
-            if vim.o.background == "light" then
-                require("tokyonight").setup({
-                    on_colors = function(colors)
-                        colors.bg = "#ffffff"
-                        colors.dark = "#ffffff"
-                        colors.bg_float = "#ffffff"
-                        colors.popup = "#ffffff"
-                        colors.bg_sidebar = "#ffffff"
-                        colors.bg_statusline = "#ffffff"
+            require("tokyonight").setup({
+                on_colors = function(colors)
+                    colors.bg = "#ffffff"
+                    colors.dark = "#ffffff"
+                    colors.bg_float = "#ffffff"
+                    colors.popup = "#ffffff"
+                    colors.bg_sidebar = "#ffffff"
+                    colors.bg_statusline = "#ffffff"
 
-                        colors.bg_highlight = "#bbbbbb"
-                        colors.bg_visual = "#eeeeee"
-                        colors.fg_gutter = "#cccccc"
-                        colors.bg_search = "#e0e0e0"
+                    colors.bg_highlight = "#bbbbbb"
+                    colors.bg_visual = "#eeeeee"
+                    colors.fg_gutter = "#cccccc"
+                    colors.bg_search = "#e0e0e0"
 
-                        colors.green1 = "#871094"
-                        colors.fg = "#555555"
-                    end,
-                    on_highlights = function(hl, _)
-                        hl["Comment"] = { fg = "#888888", italic = true }
+                    colors.green1 = "#871094"
+                    colors.fg = "#555555"
+                end,
+                on_highlights = function(hl, _)
+                    hl["Comment"] = { fg = "#888888", italic = true }
 
-                        hl["@keyword"] = { fg = "#785201", bold = true }
-                        hl["@keyword.function"] = { fg = "#785201", bold = true }
-                        hl["Boolean"] = { fg = "#785201", bold = true }
-                        hl["Conditional"] = { fg = "#785201", bold = true }
-                        hl["Repeat"] = { fg = "#785201", bold = true }
-                        hl["Exception"] = { fg = "#785201", bold = true }
+                    hl["@keyword"] = { fg = "#785201", bold = true }
+                    hl["@keyword.function"] = { fg = "#785201", bold = true }
+                    hl["Boolean"] = { fg = "#785201", bold = true }
+                    hl["Conditional"] = { fg = "#785201", bold = true }
+                    hl["Repeat"] = { fg = "#785201", bold = true }
+                    hl["Exception"] = { fg = "#785201", bold = true }
 
-                        hl["@variable.builtin"] = { fg = "#c15200" }
-                        hl["Type"] = { fg = "#c15200" }
-                        hl["Special"] = { fg = "#c15200" }
-                        hl["Constant"] = { fg = "#c15200" }
+                    hl["@variable.builtin"] = { fg = "#c15200" }
+                    hl["Type"] = { fg = "#c15200" }
+                    hl["Special"] = { fg = "#c15200" }
+                    hl["Constant"] = { fg = "#c15200" }
 
-                        hl["@variable.member"] = { fg = "#871094" }
-                        hl["@variable.parameter.builtin"] = { fg = "#871094" }
+                    hl["@variable.member"] = { fg = "#871094" }
+                    hl["@variable.parameter.builtin"] = { fg = "#871094" }
 
-                        hl["Function"] = { fg = "#043abd" }
-                        hl["@constructor"] = { fg = "#043abd" }
+                    hl["Function"] = { fg = "#043abd" }
+                    hl["@constructor"] = { fg = "#043abd" }
 
-                        hl["@variable.parameter"] = { fg = "#555555" }
-                        hl["@variable"] = { fg = "#555555" }
-                        hl["@punctuation.bracket"] = { fg = "#555555" }
-                        hl["@operator"] = { fg = "#555555" }
+                    hl["@variable.parameter"] = { fg = "#555555" }
+                    hl["@variable"] = { fg = "#555555" }
+                    hl["@punctuation.bracket"] = { fg = "#555555" }
+                    hl["@operator"] = { fg = "#555555" }
 
-                        hl["Search"] = { fg = "", bg = "#e0e0e0" }
+                    hl["Search"] = { fg = "", bg = "#e0e0e0" }
 
-                        hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
-                        hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
+                    hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
+                    hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
 
-                        hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
-                        hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
+                    hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
+                    hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
 
-                        hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
-                        hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
-                    end,
-                })
-            else
-                require("tokyonight").setup({
-                    on_colors = function(colors)
-                        colors.green1 = "#f093fa"
-                    end,
-                    on_highlights = function(hl, _)
-                        hl["@keyword"] = { fg = "#dba72e", bold = true }
-                        hl["@keyword.function"] = { fg = "#dba72e", bold = true }
-                        hl["Boolean"] = { fg = "#dba72e", bold = true }
-                        hl["Conditional"] = { fg = "#dba72e", bold = true }
-                        hl["Repeat"] = { fg = "#dba72e", bold = true }
-                        hl["Exception"] = { fg = "#dba72e", bold = true }
-
-                        hl["@variable.builtin"] = { fg = "#38ffdc" }
-                        hl["Type"] = { fg = "#38ffdc" }
-                        hl["Special"] = { fg = "#38ffdc" }
-
-                        hl["@variable.member"] = { fg = "#fea6ff" }
-                        hl["@variable.parameter.builtin"] = { fg = "#fea6ff" }
-
-                        hl["Function"] = { fg = "#26d4ff" }
-                        hl["@constructor"] = { fg = "#26d4ff" }
-
-                        hl["@variable.parameter"] = { fg = "#ebefff" }
-                        hl["@variable"] = { fg = "#ebefff" }
-                        hl["@punctuation.bracket"] = { fg = "#ebefff" }
-                        hl["@operator"] = { fg = "#ebefff" }
-
-                        hl["LspInlayHint"] = { fg = "#5c5c5c" }
-
-                        hl["Comment"] = { fg = "#aeb6eb", italic = true }
-
-                        hl["MiniJump2dSpotUnique"] = { fg = "#ff007c", bold = true, nocombine = true }
-                    end,
-                })
-            end
+                    hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
+                    hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
+                end,
+            })
             vim.cmd.colorscheme("tokyonight")
         end,
     },
@@ -461,6 +422,7 @@ require("lazy").setup({
             require('mini.pairs').setup()
             require("mini.surround").setup()
             require("mini.jump2d").setup()
+            require("mini.icons").setup()
             require("mini.indentscope").setup({
                 draw = { animation = require("mini.indentscope").gen_animation.none() }
             })
@@ -668,29 +630,27 @@ require("lazy").setup({
     },
 })
 
-if vim.o.background == "light" then
-    -- dark
-    vim.g.terminal_color_0 = "#000000"
-    vim.g.terminal_color_8 = "#545753"
-    -- light
-    vim.g.terminal_color_7 = "#555555"
-    vim.g.terminal_color_15 = "#555555"
-    -- red
-    vim.g.terminal_color_1 = "#cc0000"
-    vim.g.terminal_color_9 = "#ef2828"
-    -- green
-    vim.g.terminal_color_2 = "#227a00"
-    vim.g.terminal_color_10 = "#3dcc06"
-    -- yellow
-    vim.g.terminal_color_3 = "#e89f00"
-    vim.g.terminal_color_11 = "#d6d600"
-    -- blue
-    vim.g.terminal_color_4 = "#043abd"
-    vim.g.terminal_color_12 = "#157ae6"
-    -- magenta
-    vim.g.terminal_color_5 = "#8f008c"
-    vim.g.terminal_color_13 = "#5a32a3"
-    -- cyan
-    vim.g.terminal_color_6 = "#05989a"
-    vim.g.terminal_color_14 = "#34e2e2"
-end
+-- dark
+vim.g.terminal_color_0 = "#000000"
+vim.g.terminal_color_8 = "#545753"
+-- light
+vim.g.terminal_color_7 = "#555555"
+vim.g.terminal_color_15 = "#555555"
+-- red
+vim.g.terminal_color_1 = "#cc0000"
+vim.g.terminal_color_9 = "#ef2828"
+-- green
+vim.g.terminal_color_2 = "#227a00"
+vim.g.terminal_color_10 = "#3dcc06"
+-- yellow
+vim.g.terminal_color_3 = "#e89f00"
+vim.g.terminal_color_11 = "#d6d600"
+-- blue
+vim.g.terminal_color_4 = "#043abd"
+vim.g.terminal_color_12 = "#157ae6"
+-- magenta
+vim.g.terminal_color_5 = "#8f008c"
+vim.g.terminal_color_13 = "#5a32a3"
+-- cyan
+vim.g.terminal_color_6 = "#05989a"
+vim.g.terminal_color_14 = "#34e2e2"
