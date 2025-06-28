@@ -188,8 +188,8 @@ require("lazy").setup({
                 min_width = { 0.8 },
             },
             keymaps = {
-                ["o"] = "actions.jump",
                 ["<C-[>"] = "actions.close",
+                ["?"] = "",
             },
             float = {
                 relative = "win",
@@ -361,6 +361,20 @@ require("lazy").setup({
                 },
                 ghost_text = { enabled = true }
             },
+            sources = {
+                providers = {
+                  lsp = {
+                    enabled = function()
+                      return vim.bo.filetype ~= 'markdown'
+                    end
+                  },
+                  buffer = {
+                    enabled = function()
+                      return vim.bo.filetype ~= 'markdown'
+                    end
+                  },
+                }
+            },
         },
     },
     {
@@ -422,7 +436,6 @@ require("lazy").setup({
             require('mini.pairs').setup()
             require("mini.surround").setup()
             require("mini.jump2d").setup()
-            require("mini.icons").setup()
             require("mini.indentscope").setup({
                 draw = { animation = require("mini.indentscope").gen_animation.none() }
             })
@@ -484,22 +497,25 @@ require("lazy").setup({
             auto_suggestions_provider = "copilot",
             providers = {
                 copilot = {
-                    model = "claude-3.5-sonnet",
+                    model = "claude-sonnet-4",
                     extra_request_body = {
                         temperature = 1,
                         max_tokens = 20000,
                     },
+                    mode = "legacy",
                     disabled_tools = {
                         "insert",
                         "replace_in_file",
                         "str_replace",
                         "undo_edit",
-                    }
+                    },
+                    disable_tools = true
                 },
             },
+            mode = "legacy",
             windows = {
-                position = "right",
-                width = 15,
+                position = "left",
+                width = 18,
                 edit = { start_insert = false, },
                 ask = { start_insert = false, },
             },
