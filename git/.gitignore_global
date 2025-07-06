@@ -29,3 +29,4 @@ debug_text
 # Mac
 .DS_Store
 
+tmp*.md

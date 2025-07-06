@@ -203,7 +203,8 @@ require("lazy").setup({
         branch = '0.1.x',
         dependencies = {
             "nvim-lua/plenary.nvim",
-            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+            'nvim-telescope/telescope-project.nvim',
         },
         config = function()
             local telescope = require("telescope")
@@ -219,7 +220,10 @@ require("lazy").setup({
                         },
                     },
                 },
-                pickers = { buffers = { sort_mru = true } },
+                pickers = {
+                    buffers = { sort_mru = true },
+                    live_grep = { preview = true },
+                },
             })
 
             vim.keymap.set("n", "<Leader>k", require("telescope.builtin").git_files)
@@ -243,7 +247,15 @@ require("lazy").setup({
                 end)
             end)
 
+            vim.api.nvim_set_keymap(
+                'n',
+                '<C-p>',
+                ":lua require'telescope'.extensions.project.project{}<CR>",
+                {noremap = true, silent = true}
+            )
+
             require('telescope').load_extension('fzf')
+            require'telescope'.load_extension('project')
         end,
     },
     -- Git
@@ -607,7 +619,7 @@ require("lazy").setup({
                             { id = "stacks", size = 0.15  },
                             { id = "breakpoints", size = 0.15 },
                         },
-                        position = "left",
+                        position = "right",
                         size = 0.15,
                     },
                 },
