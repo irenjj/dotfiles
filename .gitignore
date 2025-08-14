@@ -1,3 +1,5 @@
 pack/
 codelldb/
 kitty_grab/
+maven-cache/
+ccache-cache/

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  starrocks-dev:
+    container_name: sr
+    image: sr-image
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /opt/repo:/opt/repo
+      - ./maven-cache:/root/.m2
+      - ./ccache-cache:/root/.ccache
+      - ./entrypoint.sh:/usr/local/bin/entrypoint.sh:ro
+    privileged: true
+    entrypoint: ["/usr/local/bin/entrypoint.sh"]
+
+    environment:
+      #- JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+      - STARROCKS_GCC_HOME=/usr/
+      - STARROCKS_THIRDPARTY=/opt/repo/starrocks/thirdparty
+      #- PYTHON=/usr/bin/python3
+
+networks:
+  default:
+    driver: bridge
