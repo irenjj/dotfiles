@@ -14,7 +14,6 @@ fi
 
 source $HOME/.cargo/env
 export PATH=/usr/local/lib:$PATH
-export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
 export DYLD_LIBRARY_PATH=/usr/local/lib
 export TERM=xterm-256color
 export RUST_TEST_NOCAPTURE=1

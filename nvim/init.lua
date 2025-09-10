@@ -86,6 +86,14 @@ vim.keymap.set('n', '<esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set("n", "<Leader>lg", ":vert Git blame -- %<CR>", opt)
 
+-- json format
+vim.keymap.set('n', '<leader>fj', function()
+  vim.cmd([[%s/\v^"|"$//g]])
+  vim.cmd([[%s/\\"/"/g]])
+  vim.cmd([[silent! %!jq .]])
+  vim.bo.filetype = 'json'
+end, { desc = 'JSON unescape and format' })
+
 ------------------------------ Plugins ------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -122,29 +130,29 @@ require("lazy").setup({
                         colors.fg_gutter = "#cccccc"
                         colors.bg_search = "#e0e0e0"
 
-                        colors.green1 = "#871094"
+                        colors.green1 = "#E45649"
                         colors.fg = "#555555"
                     end,
                     on_highlights = function(hl, _)
                         hl["Comment"] = { fg = "#888888", italic = true }
 
-                        hl["@keyword"] = { fg = "#785201", bold = true }
-                        hl["@keyword.function"] = { fg = "#785201", bold = true }
-                        hl["Boolean"] = { fg = "#785201", bold = true }
-                        hl["Conditional"] = { fg = "#785201", bold = true }
-                        hl["Repeat"] = { fg = "#785201", bold = true }
-                        hl["Exception"] = { fg = "#785201", bold = true }
+                        hl["@keyword"] = { fg = "#a626a4" }
+                        hl["@keyword.function"] = { fg = "#a626a4" }
+                        hl["Boolean"] = { fg = "#a626a4" }
+                        hl["Conditional"] = { fg = "#a626a4" }
+                        hl["Repeat"] = { fg = "#a626a4" }
+                        hl["Exception"] = { fg = "#a626a4" }
 
-                        hl["@variable.builtin"] = { fg = "#c15200" }
-                        hl["Type"] = { fg = "#c15200" }
-                        hl["Special"] = { fg = "#c15200" }
-                        hl["Constant"] = { fg = "#c15200" }
+                        hl["@variable.builtin"] = { fg = "#C18401" }
+                        hl["Type"] = { fg = "#C18401" }
+                        hl["Special"] = { fg = "#C18401" }
+                        hl["Constant"] = { fg = "#C18401" }
 
-                        hl["@variable.member"] = { fg = "#871094" }
-                        hl["@variable.parameter.builtin"] = { fg = "#871094" }
+                        hl["@variable.member"] = { fg = "#E45649" }
+                        hl["@variable.parameter.builtin"] = { fg = "#E45649" }
 
-                        hl["Function"] = { fg = "#043abd" }
-                        hl["@constructor"] = { fg = "#043abd" }
+                        hl["Function"] = { fg = "#4078F2" }
+                        hl["@constructor"] = { fg = "#4078F2" }
 
                         hl["@variable.parameter"] = { fg = "#555555" }
                         hl["@variable"] = { fg = "#555555" }
@@ -166,7 +174,7 @@ require("lazy").setup({
             else
                 require("tokyonight").setup({
                     on_colors = function(colors)
-                        colors.green1 = "#f093fa"
+                        colors.green1 = "#d37bd4"
                     end,
                     on_highlights = function(hl, _)
                         hl["@keyword"] = { fg = "#dba72e", bold = true }
@@ -176,24 +184,26 @@ require("lazy").setup({
                         hl["Repeat"] = { fg = "#dba72e", bold = true }
                         hl["Exception"] = { fg = "#dba72e", bold = true }
 
-                        hl["@variable.builtin"] = { fg = "#2de3c3" }
-                        hl["Type"] = { fg = "#2de3c3" }
-                        hl["Special"] = { fg = "#2de3c3" }
+                        hl["@variable.builtin"] = { fg = "#28c9ad" }
+                        hl["Type"] = { fg = "#28c9ad" }
+                        hl["Special"] = { fg = "#28c9ad" }
 
-                        hl["@variable.member"] = { fg = "#fea6ff" }
-                        hl["@variable.parameter.builtin"] = { fg = "#fea6ff" }
+                        hl["@variable.member"] = { fg = "#d37bd4" }
+                        hl["@variable.parameter.builtin"] = { fg = "#d37bd4" }
 
                         hl["Function"] = { fg = "#26d4ff" }
                         hl["@constructor"] = { fg = "#26d4ff" }
 
-                        hl["@variable.parameter"] = { fg = "#ebefff" }
-                        hl["@variable"] = { fg = "#ebefff" }
-                        hl["@punctuation.bracket"] = { fg = "#ebefff" }
-                        hl["@operator"] = { fg = "#ebefff" }
+                        hl["@variable.parameter"] = { fg = "#d5daeb" }
+                        hl["@variable"] = { fg = "#d5daeb" }
+                        hl["@punctuation.bracket"] = { fg = "#d5daeb" }
+                        hl["@operator"] = { fg = "#d5daeb" }
 
                         hl["LspInlayHint"] = { fg = "#5c5c5c" }
 
                         hl["Comment"] = { fg = "#aeb6eb", italic = true }
+
+                        hl["String"] = { fg = "#50A14F" }
 
                         hl["MiniJump2dSpotUnique"] = { fg = "#ff007c", bold = true, nocombine = true }
                     end,
@@ -382,7 +392,7 @@ require("lazy").setup({
                     vim.keymap.set("n", "gh", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                   vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
+                    vim.keymap.set("n", "<leader>lq", vim.diagnostic.setloclist)
                     vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
                     vim.keymap.set({ "n", "v" }, "<leader>.", vim.lsp.buf.code_action, opts)
                     vim.keymap.set('n', '<leader>lf', function()
@@ -585,6 +595,14 @@ require("lazy").setup({
             "nvim-telescope/telescope.nvim",
             "zbirenbaum/copilot.lua",
             "nvim-lua/plenary.nvim",
+            {
+                -- Make sure to set this up properly if you have lazy=true
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { "markdown", "Avante" },
+                },
+                ft = { "markdown", "Avante" },
+            },
         },
     },
     {
@@ -700,26 +718,26 @@ require("lazy").setup({
 if vim.o.background == "light" then
     -- dark
     vim.g.terminal_color_0 = "#000000"
-    vim.g.terminal_color_8 = "#545753"
+    vim.g.terminal_color_8 = "#000000"
     -- light
     vim.g.terminal_color_7 = "#555555"
     vim.g.terminal_color_15 = "#555555"
     -- red
-    vim.g.terminal_color_1 = "#cc0000"
-    vim.g.terminal_color_9 = "#ef2828"
+    vim.g.terminal_color_1 = "#de3d35"
+    vim.g.terminal_color_9 = "#de3d35"
     -- green
-    vim.g.terminal_color_2 = "#227a00"
-    vim.g.terminal_color_10 = "#3dcc06"
+    vim.g.terminal_color_2 = "#3e953a"
+    vim.g.terminal_color_10 = "#3e953a"
     -- yellow
-    vim.g.terminal_color_3 = "#e89f00"
-    vim.g.terminal_color_11 = "#d6d600"
+    vim.g.terminal_color_3 = "#d2b67b"
+    vim.g.terminal_color_11 = "#d2b67b"
     -- blue
-    vim.g.terminal_color_4 = "#043abd"
-    vim.g.terminal_color_12 = "#157ae6"
+    vim.g.terminal_color_4 = "#2f5af3"
+    vim.g.terminal_color_12 = "#2f5af3"
     -- magenta
-    vim.g.terminal_color_5 = "#8f008c"
-    vim.g.terminal_color_13 = "#5a32a3"
+    vim.g.terminal_color_5 = "#950095"
+    vim.g.terminal_color_13 = "#a00095"
     -- cyan
-    vim.g.terminal_color_6 = "#05989a"
-    vim.g.terminal_color_14 = "#34e2e2"
+    vim.g.terminal_color_6 = "#3e953a"
+    vim.g.terminal_color_14 = "#3e953a"
 end
