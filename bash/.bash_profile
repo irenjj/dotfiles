@@ -17,3 +17,6 @@ export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.aliyun.com/homebrew/homebrew-bott
 
 ulimit -n 102400
 . "$HOME/.cargo/env"
+
+# uv
+export PATH="/Users/renjj/.local/bin:$PATH"

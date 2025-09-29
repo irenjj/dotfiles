@@ -109,3 +109,7 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # Fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 . "$HOME/.cargo/env"
+
+# uv
+export PATH="/Users/renjj/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
