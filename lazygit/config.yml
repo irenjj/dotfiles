@@ -1,0 +1,13 @@
+# Lazygit preferences synced via dotfiles
+# Hide files not reported by `git status -uno` and lighten selection background
+
+git:
+  status:
+    showUntrackedFiles: false
+
+gui:
+  theme:
+    selectedLineBgColor:
+      - "#515b70"  # lighter highlight for the moving cursor line
+    selectedRangeBgColor:
+      - "#515b70"

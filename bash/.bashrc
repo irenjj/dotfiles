@@ -19,6 +19,9 @@ export TERM=xterm-256color
 export RUST_TEST_NOCAPTURE=1
 export RUST_BACKTRACE=1
 
+export http_proxy="http://127.0.0.1:7890"
+export https_proxy="$http_proxy"
+
 
 # --------------------------------------------------
 # alias

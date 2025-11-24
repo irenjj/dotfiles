@@ -1,11 +1,11 @@
 vim.o.background = 'light'
 ------------------------------ Options ------------------------------
 vim.opt.equalalways = false
-vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = " " }
 vim.g.mapleader = " "
 vim.o.clipboard = "unnamed"
 vim.wo.number = true
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 vim.wo.cursorline = false
 vim.o.tabstop = 4
 vim.o.expandtab = true
@@ -239,7 +239,7 @@ require("lazy").setup({
       vim.keymap.set("n", "f", require("telescope.builtin").buffers)
       vim.keymap.set("n", ";", "<cmd>lua require('telescope.builtin').resume(require('telescope.themes'))<cr>", opts)
 
-      vim.keymap.set('n', '<Leader>g', function()
+      vim.keymap.set('n', '<Leader>s', function()
         vim.ui.input({ prompt = "Grep arguments: " }, function(input)
           if input then
             local args = vim.split(input, ' ', { trimempty = true })
@@ -255,6 +255,10 @@ require("lazy").setup({
           end
         end)
       end)
+
+      vim.keymap.set("n", "<leader>g", function()
+        require("telescope.builtin").git_status()
+      end, { desc = "Git status (Telescope)" })
 
       vim.api.nvim_set_keymap(
         'n',
@@ -319,7 +323,14 @@ require("lazy").setup({
       })
     end,
   },
-
+  {
+    "sindrets/diffview.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      local actions = require("diffview.actions")
+      require("diffview").setup()
+    end,
+  },
   -- LSP
   {
     "neovim/nvim-lspconfig",
@@ -357,8 +368,14 @@ require("lazy").setup({
           }
         }
       }
- 
-      vim.lsp.enable({ "clangd", "pyright" })
+      -- Use Ruff's native language server for lint diagnostics; it reads the project's Ruff config.
+      vim.lsp.config.ruff = {
+        cmd = { "ruff", "server" },
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+      }
+
+      vim.lsp.enable({ "clangd", "pyright", "ruff" })
  
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -386,18 +403,13 @@ require("lazy").setup({
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        filetypes = {
-          markdown = false,
-          help = false,
-          gitcommit = false,
-          gitrebase = false,
-          hgcommit = false,
-          svn = false,
-          cvs = false,
-          ["."] = false,
-        },
+        -- suggestion = {
+        --   auto_trigger = true,
+        --   debounce = 75,
+        --   keymap = {
+        --     accept = "<Tab>"
+        --   }
+        -- },
       })
     end,
   },
@@ -423,7 +435,8 @@ require("lazy").setup({
         ghost_text = { enabled = true }
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "copilot" },
+        --default = { "lsp", "path", "snippets", "buffer", "copilot" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
           lsp = {
             enabled = function()
@@ -435,12 +448,12 @@ require("lazy").setup({
               return vim.bo.filetype ~= 'markdown'
             end
           },
-          copilot = {
-            name = "copilot",
-            module = "blink-cmp-copilot",
-            score_offset = 100,
-            async = true,
-          },
+          -- copilot = {
+          --   name = "copilot",
+          --   module = "blink-cmp-copilot",
+          --   score_offset = 100,
+          --   async = true,
+          -- },
         }
       },
     },
@@ -503,9 +516,10 @@ require("lazy").setup({
       require('mini.pairs').setup()
       require("mini.surround").setup()
       require("mini.jump2d").setup()
-      require("mini.indentscope").setup({
-        draw = { animation = require("mini.indentscope").gen_animation.none() }
-      })
+      -- require("mini.indentscope").setup({
+      --   draw = { animation = require("mini.indentscope").gen_animation.none() }
+      -- })
+      require("mini.cursorword").setup()
       require('mini.files').setup({
         mappings = { go_in_plus  = '<CR>' },
 
@@ -519,6 +533,67 @@ require("lazy").setup({
         end, { desc = 'open file' })
       })
     end
+  },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   main = "ibl",
+  --   opts = {
+  --     indent = {
+  --       char = "│",
+  --       highlight = {
+  --         "RainbowIndent1",
+  --         "RainbowIndent2",
+  --         "RainbowIndent3",
+  --         "RainbowIndent4",
+  --         "RainbowIndent5",
+  --         "RainbowIndent6",
+  --         "RainbowIndent7",
+  --       },
+  --     },
+  --     scope = { enabled = false },
+  --   },
+  --   config = function(_, opts)
+  --     local hooks = require("ibl.hooks")
+
+  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --       vim.api.nvim_set_hl(0, "RainbowIndent1", { fg = "#ccc733" }) -- yellow
+  --       vim.api.nvim_set_hl(0, "RainbowIndent2", { fg = "#3e953a" }) -- green
+  --       vim.api.nvim_set_hl(0, "RainbowIndent3", { fg = "#de3d35" }) -- red
+  --       vim.api.nvim_set_hl(0, "RainbowIndent4", { fg = "#2f5af3" }) -- blue
+  --       vim.api.nvim_set_hl(0, "RainbowIndent5", { fg = "#11bab7" })
+  --       vim.api.nvim_set_hl(0, "RainbowIndent6", { fg = "#de3d35" })
+  --       vim.api.nvim_set_hl(0, "RainbowIndent7", { fg = "#2f5af3" })
+  --     end)
+
+  --     require("ibl").setup(opts)
+  --   end,
+  -- },
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("hlchunk").setup({
+        indent = {
+          enable = true,
+          chars = { "│" },
+          style = {
+            "#ccc733", -- 1: yellow
+            "#3e953a", -- 2: green
+            "#de3d35", -- 3: red
+            "#2f5af3", -- 4: blue
+            "#11bab7", -- 5
+            "#de3d35", -- 6
+            "#2f5af3", -- 7
+          },
+        },
+        chunk = {
+          enable = false, -- 如果暂时只想要竖线，可以先关掉
+        },
+        blank = {
+          enable = false, -- 如果不想高亮空白字符就关掉
+        },
+      })
+    end,
   },
   {
     'RRethy/vim-illuminate',
@@ -566,11 +641,7 @@ require("lazy").setup({
       auto_suggestions_provider = "copilot",
       providers = {
         copilot = {
-          model = "gpt-5",
-          extra_request_body = {
-            temperature = 1,
-            max_tokens = 20000,
-          },
+          model = "claude-sonnet-4.5",
           mode = "legacy",
           disabled_tools = {
             "insert",
@@ -578,13 +649,13 @@ require("lazy").setup({
             "str_replace",
             "undo_edit",
           },
-          disable_tools = true
+          -- disable_tools = true
         },
       },
       mode = "legacy",
       windows = {
         position = "right",
-        width = 30,
+        width = 40,
         edit = { start_insert = false, },
         ask = { start_insert = false, },
       },
@@ -729,14 +800,6 @@ require("lazy").setup({
     ft = "python",
     opts = {},
   },
-  {
-    "xTacobaco/cursor-agent.nvim",
-    config = function()
-      vim.keymap.set("n", "<leader>ca", ":CursorAgent<CR>", { desc = "Cursor Agent: Toggle terminal" })
-      vim.keymap.set("v", "<leader>ca", ":CursorAgentSelection<CR>", { desc = "Cursor Agent: Send selection" })
-      vim.keymap.set("n", "<leader>cA", ":CursorAgentBuffer<CR>", { desc = "Cursor Agent: Send buffer" })
-    end,
-  }
 })
 
 if vim.o.background == "light" then
