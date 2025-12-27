@@ -534,47 +534,19 @@ require("lazy").setup({
       })
     end
   },
-  -- {
-  --   "lukas-reineke/indent-blankline.nvim",
-  --   main = "ibl",
-  --   opts = {
-  --     indent = {
-  --       char = "│",
-  --       highlight = {
-  --         "RainbowIndent1",
-  --         "RainbowIndent2",
-  --         "RainbowIndent3",
-  --         "RainbowIndent4",
-  --         "RainbowIndent5",
-  --         "RainbowIndent6",
-  --         "RainbowIndent7",
-  --       },
-  --     },
-  --     scope = { enabled = false },
-  --   },
-  --   config = function(_, opts)
-  --     local hooks = require("ibl.hooks")
-
-  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-  --       vim.api.nvim_set_hl(0, "RainbowIndent1", { fg = "#ccc733" }) -- yellow
-  --       vim.api.nvim_set_hl(0, "RainbowIndent2", { fg = "#3e953a" }) -- green
-  --       vim.api.nvim_set_hl(0, "RainbowIndent3", { fg = "#de3d35" }) -- red
-  --       vim.api.nvim_set_hl(0, "RainbowIndent4", { fg = "#2f5af3" }) -- blue
-  --       vim.api.nvim_set_hl(0, "RainbowIndent5", { fg = "#11bab7" })
-  --       vim.api.nvim_set_hl(0, "RainbowIndent6", { fg = "#de3d35" })
-  --       vim.api.nvim_set_hl(0, "RainbowIndent7", { fg = "#2f5af3" })
-  --     end)
-
-  --     require("ibl").setup(opts)
-  --   end,
-  -- },
   {
     "shellRaining/hlchunk.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    ft = { "python" },
     config = function()
+      local python_only = setmetatable({ python = false }, {
+        __index = function(_, _)
+          return true
+        end,
+      }) -- disable hlchunk for every filetype except python
       require("hlchunk").setup({
         indent = {
           enable = true,
+          exclude_filetypes = python_only,
           chars = { "│" },
           style = {
             "#ccc733", -- 1: yellow
@@ -588,9 +560,11 @@ require("lazy").setup({
         },
         chunk = {
           enable = false, -- 如果暂时只想要竖线，可以先关掉
+          exclude_filetypes = python_only,
         },
         blank = {
           enable = false, -- 如果不想高亮空白字符就关掉
+          exclude_filetypes = python_only,
         },
       })
     end,
