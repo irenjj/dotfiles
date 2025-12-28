@@ -1,7 +1,7 @@
 vim.o.background = 'light'
 ------------------------------ Options ------------------------------
 vim.opt.equalalways = false
-vim.opt.listchars = { trail = "~", tab = "▸ ", space = " " }
+vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 vim.g.mapleader = " "
 vim.o.clipboard = "unnamed"
 vim.wo.number = true
@@ -398,26 +398,7 @@ require("lazy").setup({
     end,
   },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        -- suggestion = {
-        --   auto_trigger = true,
-        --   debounce = 75,
-        --   keymap = {
-        --     accept = "<Tab>"
-        --   }
-        -- },
-      })
-    end,
-  },
-  {
     'saghen/blink.cmp',
-    dependencies = {
-      "giuxtaposition/blink-cmp-copilot",
-    },
     event = { 'BufReadPost', 'BufNewFile' },
     version = '1.*',
     opts = {
@@ -435,7 +416,6 @@ require("lazy").setup({
         ghost_text = { enabled = true }
       },
       sources = {
-        --default = { "lsp", "path", "snippets", "buffer", "copilot" },
         default = { "lsp", "path", "snippets", "buffer" },
         providers = {
           lsp = {
@@ -448,12 +428,6 @@ require("lazy").setup({
               return vim.bo.filetype ~= 'markdown'
             end
           },
-          -- copilot = {
-          --   name = "copilot",
-          --   module = "blink-cmp-copilot",
-          --   score_offset = 100,
-          --   async = true,
-          -- },
         }
       },
     },
@@ -605,57 +579,6 @@ require("lazy").setup({
         suggestion = { auto_trigger = true },
       })
     end
-  },
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    version = false,
-    opts = {
-      provider = "copilot",
-      auto_suggestions_provider = "copilot",
-      providers = {
-        copilot = {
-          model = "claude-sonnet-4.5",
-          mode = "legacy",
-          disabled_tools = {
-            "insert",
-            "replace_in_file",
-            "str_replace",
-            "undo_edit",
-          },
-          -- disable_tools = true
-        },
-      },
-      mode = "legacy",
-      windows = {
-        position = "right",
-        width = 40,
-        edit = { start_insert = false, },
-        ask = { start_insert = false, },
-      },
-      mappings = {
-        sidebar = {
-          close = {},
-        },
-      },
-    },
-    build = "make",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-telescope/telescope.nvim",
-      "zbirenbaum/copilot.lua",
-      "nvim-lua/plenary.nvim",
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
-    },
   },
   {
     "stevearc/dressing.nvim",
