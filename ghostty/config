@@ -30,16 +30,21 @@ keybind = cmd+m=toggle_split_zoom
 keybind = cmd+i=text:\x06i
 keybind = cmd+o=text:\x06o
 keybind = cmd+f=text:\x06c
+keybind = cmd+t=text:\x06t
+keybind = cmd+j=text:\x06j
+keybind = cmd+k=text:\x06k
 
-keybind = cmd+1=text:\x061
-keybind = cmd+2=text:\x062
-keybind = cmd+3=text:\x063
-keybind = cmd+4=text:\x064
-keybind = cmd+5=text:\x065
-keybind = cmd+6=text:\x066
-keybind = cmd+7=text:\x067
-keybind = cmd+8=text:\x068
-keybind = cmd+9=text:\x069
+# Use digit_* (physical keys) so they override Ghostty's default tab-switching
+# bindings, which are matched by physical key first.
+keybind = cmd+digit_1=text:\x061
+keybind = cmd+digit_2=text:\x062
+keybind = cmd+digit_3=text:\x063
+keybind = cmd+digit_4=text:\x064
+keybind = cmd+digit_5=text:\x065
+keybind = cmd+digit_6=text:\x066
+keybind = cmd+digit_7=text:\x067
+keybind = cmd+digit_8=text:\x068
+keybind = cmd+digit_9=text:\x069
 
 ## layout
 # font
@@ -48,8 +53,9 @@ font-family = "Maple Mono NF CN"
 font-style = "Medium"
 font-style-bold = "SemiBold"
 font-style-italic = "Medium Italic"
+font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
 adjust-cell-width = -3
-adjust-cell-height = 4
+adjust-cell-height = 5
 
 # theme
 # black

@@ -179,7 +179,23 @@ require("lazy").setup({
     config = function()
       require("nvim-treesitter.install").prefer_git = true
       require("nvim-treesitter.configs").setup({
-        ensure_installed = "all",
+        ensure_installed = {
+          "bash",
+          "c",
+          "cpp",
+          "json",
+          "lua",
+          "markdown",
+          "python",
+          "query",
+          "rust",
+          "toml",
+          "vim",
+          "vimdoc",
+          "yaml",
+        },
+        sync_install = false,
+        auto_install = false,
         highlight = { enable = true },
         fold = { enable = true },
       })
@@ -221,7 +237,7 @@ require("lazy").setup({
       telescope.setup({
         defaults = {
           layout_strategy = "vertical",
-          preview = false,
+          preview = true,
           mappings = {
             n = {
               ["d"] = actions.delete_buffer,
@@ -250,7 +266,8 @@ require("lazy").setup({
             end
 
             require('telescope.builtin').live_grep({
-              vimgrep_arguments = base_args
+              vimgrep_arguments = base_args,
+              preview = true,
             })
           end
         end)
@@ -361,7 +378,7 @@ require("lazy").setup({
           python = {
             analysis = {
               autoSearchPaths = true,
-              diagnosticMode = "workspace",
+              diagnosticMode = "openFilesOnly",
               useLibraryCodeForTypes = true,
               typeCheckingMode = "basic"
             }
@@ -687,15 +704,6 @@ require("lazy").setup({
   {
     "Pocco81/auto-save.nvim",
     opts = { enabled = true },
-  },
-  {
-    "linux-cultist/venv-selector.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
-    },
-    ft = "python",
-    opts = {},
   },
 })
 
