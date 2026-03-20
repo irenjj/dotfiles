@@ -5,7 +5,7 @@ vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
 vim.g.mapleader = " "
 vim.o.clipboard = "unnamed"
 vim.wo.number = true
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 vim.wo.cursorline = false
 vim.o.tabstop = 4
 vim.o.expandtab = true
@@ -183,6 +183,7 @@ require("lazy").setup({
           "bash",
           "c",
           "cpp",
+          "javascript",
           "json",
           "lua",
           "markdown",
@@ -190,6 +191,8 @@ require("lazy").setup({
           "query",
           "rust",
           "toml",
+          "tsx",
+          "typescript",
           "vim",
           "vimdoc",
           "yaml",
@@ -344,8 +347,23 @@ require("lazy").setup({
     "sindrets/diffview.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
-      local actions = require("diffview.actions")
-      require("diffview").setup()
+      local function set_diffview_local_opts()
+        vim.opt_local.wrap = false
+        vim.opt_local.list = false
+      end
+
+      require("diffview").setup({
+        hooks = {
+          diff_buf_read = function(_)
+            -- Keep global `wrap/list` defaults for normal editing, but disable
+            -- them in Diffview buffers to avoid expensive redraw in terminals.
+            set_diffview_local_opts()
+          end,
+          diff_buf_win_enter = function(_, _, _)
+            set_diffview_local_opts()
+          end,
+        },
+      })
     end,
   },
   -- LSP
@@ -356,7 +374,7 @@ require("lazy").setup({
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
       end
       vim.keymap.set("n", "<Leader>i", toggle_inlay_hints)
- 
+
       vim.lsp.config.clangd = {
         cmd = { "clangd" },
         filetypes = { "h", "c", "cpp", "tpp", "cc", "objc", "objcpp" },
@@ -368,7 +386,7 @@ require("lazy").setup({
         command = "set filetype=cpp"
       })
 
- 
+
       vim.lsp.config.pyright = {
         cmd = { "pyright-langserver", "--stdio" },
         filetypes = { "python" },
@@ -392,8 +410,31 @@ require("lazy").setup({
         root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
       }
 
-      vim.lsp.enable({ "clangd", "pyright", "ruff" })
- 
+      vim.lsp.config.tsserver = {
+        cmd = { "typescript-language-server", "--stdio" },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
+        },
+        root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+        capabilities = capabilities,
+        settings = {
+          typescript = {
+            inlayHints = { includeInlayParameterNameHints = "all" },
+            preferences = { importModuleSpecifierPreference = "non-relative" },
+          },
+          javascript = {
+            inlayHints = { includeInlayParameterNameHints = "all" },
+          },
+        },
+      }
+
+      vim.lsp.enable({ "clangd", "pyright", "ruff", "tsserver" })
+
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
@@ -529,15 +570,9 @@ require("lazy").setup({
     "shellRaining/hlchunk.nvim",
     ft = { "python" },
     config = function()
-      local python_only = setmetatable({ python = false }, {
-        __index = function(_, _)
-          return true
-        end,
-      }) -- disable hlchunk for every filetype except python
       require("hlchunk").setup({
         indent = {
           enable = true,
-          exclude_filetypes = python_only,
           chars = { "│" },
           style = {
             "#ccc733", -- 1: yellow
@@ -550,12 +585,10 @@ require("lazy").setup({
           },
         },
         chunk = {
-          enable = false, -- 如果暂时只想要竖线，可以先关掉
-          exclude_filetypes = python_only,
+          enable = false,
         },
         blank = {
-          enable = false, -- 如果不想高亮空白字符就关掉
-          exclude_filetypes = python_only,
+          enable = false,
         },
       })
     end,

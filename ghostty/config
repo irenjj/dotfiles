@@ -17,9 +17,10 @@ window-padding-y = 0,0
 
 ## keybindings
 keybind = cmd+n=ignore
+keybind = cmd+1=ignore
 
-keybind = cmd+d=new_split:right
-keybind = cmd+s=new_split:down
+#keybind = cmd+d=new_split:right
+#keybind = cmd+s=new_split:down
 
 keybind = cmd+h=goto_split:left
 keybind = cmd+l=goto_split:right
@@ -31,11 +32,19 @@ keybind = cmd+i=text:\x06i
 keybind = cmd+o=text:\x06o
 keybind = cmd+f=text:\x06c
 keybind = cmd+t=text:\x06t
+keybind = cmd+w=text:\x06w
+
+keybind = cmd+h=text:\x06h
 keybind = cmd+j=text:\x06j
 keybind = cmd+k=text:\x06k
+keybind = cmd+l=text:\x06l
+keybind = cmd+shift+h=text:\x06H
+keybind = cmd+shift+j=text:\x06J
+keybind = cmd+shift+k=text:\x06K
+keybind = cmd+shift+l=text:\x06L
 
-# Use digit_* (physical keys) so they override Ghostty's default tab-switching
-# bindings, which are matched by physical key first.
+keybind = cmd+m=text:\x06m
+
 keybind = cmd+digit_1=text:\x061
 keybind = cmd+digit_2=text:\x062
 keybind = cmd+digit_3=text:\x063
@@ -46,12 +55,18 @@ keybind = cmd+digit_7=text:\x067
 keybind = cmd+digit_8=text:\x068
 keybind = cmd+digit_9=text:\x069
 
+
+# Use digit_* (physical keys) so they override Ghostty's default tab-switching
+# bindings, which are matched by physical key first.
+keybind = cmd+d=text:\x06=
+keybind = cmd+s=text:\x06-
+
 ## layout
 # font
-font-size = 14
+font-size = 13
 font-family = "Maple Mono NF CN"
-font-style = "Medium"
-font-style-bold = "SemiBold"
+font-style = "SemiBold"
+font-style-bold = "Bold"
 font-style-italic = "Medium Italic"
 font-codepoint-map = U+00B7=CaskaydiaCove Nerd Font Mono
 adjust-cell-width = -3

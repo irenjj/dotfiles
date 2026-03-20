@@ -32,10 +32,16 @@ alias .....='cd ../../../..'
 alias vim=nvim
 alias lg=lazygit
 
-if [ "$(uname)"=="Darwin" ]; then
-    alias ls='exa --group-directories-first --classify'
-    alias la='exa --group-directories-first --classify --all' # 'ls -A'
-    alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
+if [[ "$(uname)" == "Darwin" ]]; then
+    if command -v gls >/dev/null 2>&1; then
+        alias ls='gls --color=auto --group-directories-first'
+        alias la='gls --color=auto --group-directories-first -A' # 'ls -A'
+        alias ll='gls --color=auto --group-directories-first -alF' # 'ls -alF'
+    elif command -v exa >/dev/null 2>&1; then
+        alias ls='exa --group-directories-first --classify'
+        alias la='exa --group-directories-first --classify --all' # 'ls -A'
+        alias ll='exa --long --group-directories-first --classify --all' # 'ls -alF'
+    fi
 fi
 
 
