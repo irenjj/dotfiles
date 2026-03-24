@@ -252,6 +252,11 @@ require("lazy").setup({
           buffers = { sort_mru = true },
           live_grep = { preview = true },
         },
+        extensions = {
+          project = {
+            hidden_files = true,
+          },
+        },
       })
 
       vim.keymap.set("n", "<Leader>k", require("telescope.builtin").git_files)
@@ -282,7 +287,7 @@ require("lazy").setup({
 
       vim.api.nvim_set_keymap(
         'n',
-        '<C-p>',
+        '<leader>p',
         ":lua require'telescope'.extensions.project.project{}<CR>",
         {noremap = true, silent = true}
       )
@@ -290,6 +295,12 @@ require("lazy").setup({
       require('telescope').load_extension('fzf')
       require'telescope'.load_extension('project')
     end,
+  },
+  {
+    "linux-cultist/venv-selector.nvim",
+    branch = "main",
+    ft = "python",
+    opts = {},
   },
   -- Git
   {
@@ -348,15 +359,16 @@ require("lazy").setup({
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
       local function set_diffview_local_opts()
-        vim.opt_local.wrap = false
+        vim.opt_local.wrap = true
+        vim.opt_local.linebreak = true
+        vim.opt_local.breakindent = true
         vim.opt_local.list = false
       end
 
       require("diffview").setup({
         hooks = {
           diff_buf_read = function(_)
-            -- Keep global `wrap/list` defaults for normal editing, but disable
-            -- them in Diffview buffers to avoid expensive redraw in terminals.
+            -- Keep Diffview readable for long lines without affecting normal editing.
             set_diffview_local_opts()
           end,
           diff_buf_win_enter = function(_, _, _)
