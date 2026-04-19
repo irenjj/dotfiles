@@ -1,4 +1,4 @@
-vim.o.background = 'light'
+vim.o.background = 'dark'
 ------------------------------ Options ------------------------------
 vim.opt.equalalways = false
 vim.opt.listchars = { trail = "~", tab = "▸ ", space = "·" }
@@ -68,11 +68,6 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", opt)
 
 vim.keymap.set("n", "<Leader>w", ":bd!<CR>", opt)
 vim.keymap.set("n", "<Leader>e", ":%bd|e#|bd#<CR>", opt)
-vim.keymap.set("n", "<C-=>", ":vertical resize +5<CR>", opt)
-vim.keymap.set("n", "<C-->", ":vertical resize -5<CR>", opt)
-vim.keymap.set("n", "<Leader>=", ":resize +5<CR>", opt)
-vim.keymap.set("n", "<Leader>-", ":resize -5<CR>", opt)
-
 
 vim.keymap.set("n", "<C-o>", "<C-o>zz")
 vim.keymap.set("n", "<C-i>", "<C-i>zz")
@@ -108,6 +103,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local rainbow_highlight = {
+  "RainbowRed",
+  "RainbowYellow",
+  "RainbowBlue",
+  "RainbowOrange",
+  "RainbowGreen",
+  "RainbowViolet",
+  "RainbowCyan",
+}
+
 require("lazy").setup({
   -- Layout
   {
@@ -115,66 +120,105 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function()
-      require("tokyonight").setup({
-        on_colors = function(colors)
-          colors.bg = "#ffffff"
-          colors.dark = "#ffffff"
-          colors.bg_float = "#ffffff"
-          colors.popup = "#ffffff"
-          colors.bg_sidebar = "#ffffff"
-          colors.bg_statusline = "#ffffff"
+      if vim.o.background == "light" then
+        require("tokyonight").setup({
+          on_colors = function(colors)
+            colors.bg = "#ffffff"
+            colors.dark = "#ffffff"
+            colors.bg_float = "#ffffff"
+            colors.popup = "#ffffff"
+            colors.bg_sidebar = "#ffffff"
+            colors.bg_statusline = "#ffffff"
 
-          colors.bg_highlight = "#bbbbbb"
-          colors.bg_visual = "#eeeeee"
-          colors.fg_gutter = "#cccccc"
-          colors.bg_search = "#e0e0e0"
+            colors.bg_highlight = "#bbbbbb"
+            colors.bg_visual = "#eeeeee"
+            colors.fg_gutter = "#cccccc"
+            colors.bg_search = "#e0e0e0"
 
-          colors.green1 = "#E45649"
-          colors.fg = "#555555"
-        end,
-        on_highlights = function(hl, _)
-          hl["Comment"] = { fg = "#888888", italic = true }
+            colors.green1 = "#E45649"
+            colors.fg = "#555555"
+          end,
+          on_highlights = function(hl, _)
+            hl["Comment"] = { fg = "#888888", italic = true }
 
-          hl["@keyword"] = { fg = "#a626a4" }
-          hl["@keyword.function"] = { fg = "#a626a4" }
-          hl["Boolean"] = { fg = "#a626a4" }
-          hl["Conditional"] = { fg = "#a626a4" }
-          hl["Repeat"] = { fg = "#a626a4" }
-          hl["Exception"] = { fg = "#a626a4" }
+            hl["@keyword"] = { fg = "#a626a4" }
+            hl["@keyword.function"] = { fg = "#a626a4" }
+            hl["Boolean"] = { fg = "#a626a4" }
+            hl["Conditional"] = { fg = "#a626a4" }
+            hl["Repeat"] = { fg = "#a626a4" }
+            hl["Exception"] = { fg = "#a626a4" }
 
-          hl["@variable.builtin"] = { fg = "#C18401" }
-          hl["Type"] = { fg = "#C18401" }
-          hl["Special"] = { fg = "#C18401" }
-          hl["Constant"] = { fg = "#C18401" }
+            hl["@variable.builtin"] = { fg = "#C18401" }
+            hl["Type"] = { fg = "#C18401" }
+            hl["Special"] = { fg = "#C18401" }
+            hl["Constant"] = { fg = "#C18401" }
 
-          hl["@variable.member"] = { fg = "#E45649" }
-          hl["@variable.parameter.builtin"] = { fg = "#E45649" }
+            hl["@variable.member"] = { fg = "#E45649" }
+            hl["@variable.parameter.builtin"] = { fg = "#E45649" }
 
-          hl["Function"] = { fg = "#4078F2" }
-          hl["@constructor"] = { fg = "#4078F2" }
+            hl["Function"] = { fg = "#4078F2" }
+            hl["@constructor"] = { fg = "#4078F2" }
 
-          hl["@variable.parameter"] = { fg = "#555555" }
-          hl["@variable"] = { fg = "#555555" }
-          hl["@punctuation.bracket"] = { fg = "#555555" }
-          hl["@operator"] = { fg = "#555555" }
+            hl["@variable.parameter"] = { fg = "#555555" }
+            hl["@variable"] = { fg = "#555555" }
+            hl["@punctuation.bracket"] = { fg = "#555555" }
+            hl["@operator"] = { fg = "#555555" }
 
-          hl["Search"] = { fg = "", bg = "#e0e0e0" }
+            hl["Search"] = { fg = "", bg = "#e0e0e0" }
 
-          hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
-          hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
+            hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
+            hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
 
-          hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
-          hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
+            hl["RenderMarkdownCode"] = { bg = "#e6f2f1" }
+            hl["@markup.raw.markdown_inline"] = { bg = "#e6f2f1" }
 
-          hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
-          hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
-        end,
-      })
+            hl["MiniJump2dSpot"] = { fg = "#000000", bold = true, nocombine = true }
+            hl["MiniJump2dSpotUnique"] = { fg = "#000000", bold = true, nocombine = true }
+          end,
+        })
+      else
+        require("tokyonight").setup({
+          on_colors = function(colors)
+            colors.green1 = "#f093fa"
+          end,
+          on_highlights = function(hl, _)
+            hl["@keyword"] = { fg = "#dba72e", bold = true }
+            hl["@keyword.function"] = { fg = "#dba72e", bold = true }
+            hl["Boolean"] = { fg = "#dba72e", bold = true }
+            hl["Conditional"] = { fg = "#dba72e", bold = true }
+            hl["Repeat"] = { fg = "#dba72e", bold = true }
+            hl["Exception"] = { fg = "#dba72e", bold = true }
+
+            hl["@variable.builtin"] = { fg = "#38ffdc" }
+            hl["Type"] = { fg = "#38ffdc" }
+            hl["Special"] = { fg = "#38ffdc" }
+
+            hl["@variable.member"] = { fg = "#fea6ff" }
+            hl["@variable.parameter.builtin"] = { fg = "#fea6ff" }
+
+            hl["Function"] = { fg = "#26d4ff" }
+            hl["@constructor"] = { fg = "#26d4ff" }
+
+            hl["@variable.parameter"] = { fg = "#ebefff" }
+            hl["@variable"] = { fg = "#ebefff" }
+            hl["@punctuation.bracket"] = { fg = "#ebefff" }
+            hl["@operator"] = { fg = "#ebefff" }
+            hl["MatchParen"] = { fg = "#ffffff", bg = "#4b5a88", bold = true, nocombine = true }
+
+            hl["LspInlayHint"] = { fg = "#5c5c5c" }
+
+            hl["Comment"] = { fg = "#aeb6eb", italic = true }
+
+            hl["MiniJump2dSpotUnique"] = { fg = "#ff007c", bold = true, nocombine = true }
+          end,
+        })
+      end
       vim.cmd.colorscheme("tokyonight")
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.install").prefer_git = true
@@ -358,6 +402,46 @@ require("lazy").setup({
     "sindrets/diffview.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
+      local diffview_ibl_buffers = {}
+
+      local function disable_ibl_for_current_diff_buffer(bufnr)
+        local ok_ibl, ibl = pcall(require, "ibl")
+        if not ok_ibl or not ibl.initialized then
+          return
+        end
+
+        local tabpage = vim.api.nvim_get_current_tabpage()
+        diffview_ibl_buffers[tabpage] = diffview_ibl_buffers[tabpage] or {}
+        diffview_ibl_buffers[tabpage][bufnr] = true
+
+        ibl.setup_buffer(bufnr, {
+          enabled = false,
+          scope = { enabled = false },
+        })
+      end
+
+      local function restore_ibl_for_view(view)
+        local ok_ibl, ibl = pcall(require, "ibl")
+        local ok_conf, ibl_config = pcall(require, "ibl.config")
+        if not ok_ibl or not ok_conf then
+          return
+        end
+
+        local tracked = diffview_ibl_buffers[view.tabpage]
+        if not tracked then
+          return
+        end
+
+        for bufnr, _ in pairs(tracked) do
+          if vim.api.nvim_buf_is_valid(bufnr) then
+            ibl_config.clear_buffer_config(bufnr)
+            ibl.refresh(bufnr)
+          end
+        end
+
+        diffview_ibl_buffers[view.tabpage] = nil
+      end
+
       local function set_diffview_local_opts()
         vim.opt_local.wrap = true
         vim.opt_local.linebreak = true
@@ -367,12 +451,17 @@ require("lazy").setup({
 
       require("diffview").setup({
         hooks = {
-          diff_buf_read = function(_)
+          diff_buf_read = function(bufnr)
             -- Keep Diffview readable for long lines without affecting normal editing.
             set_diffview_local_opts()
+            disable_ibl_for_current_diff_buffer(bufnr)
           end,
-          diff_buf_win_enter = function(_, _, _)
+          diff_buf_win_enter = function(bufnr, _, _)
             set_diffview_local_opts()
+            disable_ibl_for_current_diff_buffer(bufnr)
+          end,
+          view_leave = function(view)
+            restore_ibl_for_view(view)
           end,
         },
       })
@@ -579,30 +668,98 @@ require("lazy").setup({
     end
   },
   {
-    "shellRaining/hlchunk.nvim",
-    ft = { "python" },
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      {
+        "HiPhish/rainbow-delimiters.nvim",
+        submodules = false,
+        config = function()
+          local rainbow_delimiters = require("rainbow-delimiters")
+
+          vim.g.rainbow_delimiters = {
+            strategy = {
+              [""] = rainbow_delimiters.strategy["global"],
+              vim = rainbow_delimiters.strategy["local"],
+            },
+            query = {
+              [""] = "rainbow-delimiters",
+              lua = "rainbow-blocks",
+            },
+            highlight = rainbow_highlight,
+          }
+        end,
+      },
+    },
     config = function()
-      require("hlchunk").setup({
+      local whitespace_highlight = {
+        "IndentRainbowRed",
+        "IndentRainbowYellow",
+        "IndentRainbowBlue",
+        "IndentRainbowCyan",
+      }
+      local hooks = require("ibl.hooks")
+
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#de3d35" })
+        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#ccc733" })
+        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#2f5af3" })
+        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#d98e04" })
+        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#3e953a" })
+        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#a463f2" })
+        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#11bab7" })
+
+        if vim.o.background == "light" then
+          vim.api.nvim_set_hl(0, "IndentRainbowRed", { fg = "#c85b64", bg = "#f9eceb" })
+          vim.api.nvim_set_hl(0, "IndentRainbowYellow", { fg = "#b89a32", bg = "#f7f5e8" })
+          vim.api.nvim_set_hl(0, "IndentRainbowBlue", { fg = "#356dff", bg = "#e7eeff" })
+          vim.api.nvim_set_hl(0, "IndentRainbowCyan", { fg = "#0e9f9c", bg = "#e9f7f6" })
+        else
+          vim.api.nvim_set_hl(0, "IndentRainbowRed", { fg = "#f7768e", bg = "#302425" })
+          vim.api.nvim_set_hl(0, "IndentRainbowYellow", { fg = "#e0af68", bg = "#333124" })
+          vim.api.nvim_set_hl(0, "IndentRainbowBlue", { fg = "#7aa2f7", bg = "#1f2f55" })
+          vim.api.nvim_set_hl(0, "IndentRainbowCyan", { fg = "#73daca", bg = "#203133" })
+        end
+      end)
+
+      require("ibl").setup({
         indent = {
-          enable = true,
-          chars = { "│" },
-          style = {
-            "#ccc733", -- 1: yellow
-            "#3e953a", -- 2: green
-            "#de3d35", -- 3: red
-            "#2f5af3", -- 4: blue
-            "#11bab7", -- 5
-            "#de3d35", -- 6
-            "#2f5af3", -- 7
+          highlight = rainbow_highlight,
+          char = "",
+          tab_char = "",
+        },
+        whitespace = {
+          highlight = whitespace_highlight,
+          remove_blankline_trail = true,
+        },
+        scope = {
+          enabled = true,
+          highlight = rainbow_highlight,
+          show_start = false,
+          show_end = false,
+        },
+        exclude = {
+          filetypes = {
+            "aerial",
+            "checkhealth",
+            "dashboard",
+            "DiffviewFiles",
+            "DiffviewFileHistory",
+            "gitcommit",
+            "help",
+            "lazy",
+            "markdown",
+            "minifiles",
+            "qf",
+            "TelescopePrompt",
+            "",
           },
-        },
-        chunk = {
-          enable = false,
-        },
-        blank = {
-          enable = false,
+          buftypes = { "nofile", "quickfix", "terminal" },
         },
       })
+
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
   {
