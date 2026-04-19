@@ -213,7 +213,7 @@ require("lazy").setup({
           end,
         })
       end
-      vim.cmd.colorscheme("tokyonight")
+      vim.cmd.colorscheme("tokyonight-night")
     end,
   },
   {
