@@ -127,7 +127,7 @@ require("lazy").setup({
           colors.bg_float = "#ffffff"
           colors.popup = "#ffffff"
           colors.bg_sidebar = "#ffffff"
-          colors.bg_statusline = "#ffffff"
+          colors.bg_statusline = "#dcdcdc"
 
           colors.bg_highlight = "#bbbbbb"
           colors.bg_visual = "#eeeeee"
@@ -165,6 +165,23 @@ require("lazy").setup({
 
           hl["Search"] = { fg = "", bg = "#e0e0e0" }
 
+          hl["StatusLine"] = { fg = "#303030", bg = "#dcdcdc" }
+          hl["StatusLineNC"] = { fg = "#777777", bg = "#eeeeee" }
+
+          hl["DiffAdd"] = { bg = "#dafbe1" }
+          hl["DiffDelete"] = { bg = "#ffebe9" }
+          hl["DiffChange"] = { bg = "NONE" }
+          hl["DiffText"] = { bg = "NONE" }
+
+          hl["DiffviewDiffAdd"] = { bg = "#dafbe1" }
+          hl["DiffviewDiffAddAsDelete"] = { bg = "#ffebe9" }
+          hl["DiffviewDiffDelete"] = { bg = "#ffebe9" }
+          hl["DiffviewDiffDeleteDim"] = { bg = "#fff1f0" }
+          hl["DiffviewDiffChange"] = { bg = "NONE" }
+          hl["DiffviewDiffText"] = { bg = "NONE" }
+          hl["DiffviewDiffTextAsAdd"] = { bg = "#aceebb" }
+          hl["DiffviewDiffTextAsDelete"] = { bg = "#ffcecb" }
+
           hl["MatchParen"] = { bold = true, bg = "#eeeeee" }
           hl["LspInlayHint"] = { fg = "#b8b8b8", bg = "#ffffff" }
 
@@ -195,6 +212,10 @@ require("lazy").setup({
           "markdown",
           "python",
           "query",
+          "go",
+          "gomod",
+          "gosum",
+          "gowork",
           "rust",
           "toml",
           "tsx",
@@ -411,15 +432,46 @@ require("lazy").setup({
         vim.opt_local.list = false
       end
 
+      local function set_diffview_highlights()
+        vim.api.nvim_set_hl(0, "DiffviewDiffAdd", { bg = "#dafbe1" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffAddAsDelete", { bg = "#ffebe9" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffDelete", { bg = "#ffebe9" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffDeleteDim", { bg = "#fff1f0" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffChange", { bg = "NONE" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffText", { bg = "NONE" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffTextAsAdd", { bg = "#aceebb" })
+        vim.api.nvim_set_hl(0, "DiffviewDiffTextAsDelete", { bg = "#ffcecb" })
+      end
+
+      set_diffview_highlights()
+
       require("diffview").setup({
         hooks = {
+          view_post_layout = function(view)
+            if view.winopts and view.winopts.diff2 then
+              view.winopts.diff2.a.winhl = {
+                "DiffAdd:DiffviewDiffAddAsDelete",
+                "DiffDelete:DiffviewDiffDeleteDim",
+                "DiffChange:DiffviewDiffChange",
+                "DiffText:DiffviewDiffTextAsDelete",
+              }
+              view.winopts.diff2.b.winhl = {
+                "DiffDelete:DiffviewDiffDeleteDim",
+                "DiffAdd:DiffviewDiffAdd",
+                "DiffChange:DiffviewDiffChange",
+                "DiffText:DiffviewDiffTextAsAdd",
+              }
+            end
+          end,
           diff_buf_read = function(bufnr)
             -- Keep Diffview readable for long lines without affecting normal editing.
             set_diffview_local_opts()
+            set_diffview_highlights()
             disable_ibl_for_current_diff_buffer(bufnr)
           end,
           diff_buf_win_enter = function(bufnr, _, _)
             set_diffview_local_opts()
+            set_diffview_highlights()
             disable_ibl_for_current_diff_buffer(bufnr)
           end,
           view_leave = function(view)
@@ -498,7 +550,33 @@ require("lazy").setup({
         },
       }
 
-      vim.lsp.enable({ "clangd", "pyright", "ruff", "tsserver" })
+      vim.lsp.config.gopls = {
+        cmd = { "gopls" },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_markers = { "go.work", "go.mod", ".git" },
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      }
+
+      vim.lsp.enable({ "clangd", "gopls", "pyright", "ruff", "tsserver" })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -516,6 +594,26 @@ require("lazy").setup({
           vim.keymap.set('n', '<leader>lf', function()
             vim.lsp.buf.format { async = true }
           end, opts)
+        end,
+      })
+
+      -- Go: organize imports on save
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+          local params = vim.lsp.util.make_range_params()
+          params.context = { only = { "source.organizeImports" } }
+          local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+          for _, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+              if r.edit then
+                vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
+              else
+                vim.lsp.buf.execute_command(r.command)
+              end
+            end
+          end
+          vim.lsp.buf.format({ async = false })
         end,
       })
     end,
@@ -761,103 +859,6 @@ require("lazy").setup({
     config = function()
       require('dressing').setup({ select = { telescope = { min_width = 0.9 } } })
     end
-  },
-  -- Dap
-  {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "rcarriga/nvim-dap-ui",
-    },
-    config = function()
-      local dap = require("dap")
-      local dapui = require("dapui")
-      dap.adapters.codelldb = {
-        type = 'server',
-        port = "${port}",
-        executable = {
-          command = vim.fn.expand('~/dotfiles/codelldb/extension/adapter/codelldb'),
-          args = {"--port", "${port}"},
-        }
-      }
-
-      dap.configurations.rust = {
-        {
-          name = "Rust debug",
-          type = "codelldb",
-          request = "launch",
-          program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/datafusion-cli', 'file')
-          end,
-          cwd = '${workspaceFolder}',
-          stopOnEntry = false,
-          args = {},
-          runInTerminal = false,
-        }
-      }
-      dap.configurations.cpp = {
-        {
-          name = "Cpp debug",
-          type = "codelldb",
-          request = "launch",
-          program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/build/', 'file')
-          end,
-          cwd = '${workspaceFolder}',
-          stopOnEntry = false,
-          args = {},
-          runInTerminal = false,
-        }
-      }
-
-      vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint' })
-      vim.fn.sign_define('DapBreakpointCondition', { text = '◆', texthl = 'DapBreakpointCondition' })
-      vim.fn.sign_define("DapStopped", { text = '▶', texthl = 'DapStopped' })
-      vim.api.nvim_set_hl(0, 'DapBreakpoint', { fg = '#cc0000' })
-      vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { fg = '#cc0000' })
-      vim.api.nvim_set_hl(0, 'DapStopped', { fg = '#c9cc00' })
-
-      dapui.setup({
-         layouts = {
-          {
-            elements = {
-              { id = "scopes", size = 0.35 },
-              { id = "console", size = 0.35 },
-              { id = "stacks", size = 0.15  },
-              { id = "breakpoints", size = 0.15 },
-            },
-            position = "left",
-            size = 0.2,
-          },
-        },
-      })
-
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
-      end
-
-      local keymap = vim.keymap.set
-      local opt = { noremap = true, silent = true }
-      keymap('n', '<C-n>', function() require('dap').step_over() end, opt)
-      keymap('n', '<C-s>', function() require('dap').step_into() end, opt)
-      keymap('n', '<Leader>do', function() require('dap').step_out() end, opt)
-      keymap('n', '<Leader>dc', function() require('dap').continue() end, opt)
-      keymap('n', '<Leader>du', function() require('dap').up() end, opt)
-      keymap('n', '<Leader>dn', function() require('dap').down() end, opt)
-      keymap('n', '<Leader>dq', function() require('dap').terminate() end, opt)
-      keymap('n', '<Leader>db', function() require('dap').toggle_breakpoint() end, opt)
-      keymap('n', '<Leader>dB', function()
-        require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
-      end, opt)
-      keymap('t', '<esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
-      keymap('t', '<C-[>', [[<C-\><C-n>]], { noremap = true, silent = true })
-    end,
   },
   {
     "Pocco81/auto-save.nvim",
